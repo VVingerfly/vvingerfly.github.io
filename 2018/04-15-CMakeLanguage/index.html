@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译自CMake官方文档">
+<meta name="keywords" content="cmake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake语言">
+<meta property="og:url" content="https://wei587me.github.io/2018/04-15-CMakeLanguage/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="翻译自CMake官方文档">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-15T09:49:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMake语言">
+<meta name="twitter:description" content="翻译自CMake官方文档">
+
+
+
+
+
+
+  <link rel="canonical" href="https://wei587me.github.io/2018/04-15-CMakeLanguage/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CMake语言 | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2018/04-15-CMakeLanguage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CMake语言
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-04-15 17:49:00" itemprop="dateCreated datePublished" datetime="2018-04-15T17:49:00+08:00">2018-04-15</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/" itemprop="url" rel="index"><span itemprop="name">translation</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/cmake/" itemprop="url" rel="index"><span itemprop="name">cmake</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/04-15-CMakeLanguage/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04-15-CMakeLanguage/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-description">翻译自CMake官方文档</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>翻译自<a href="https://cmake.org/cmake/help/latest/manual/cmake-language.7.html" target="_blank" rel="noopener">cmake-language</a></em></p>
+<h2 id="organization"><a class="header-anchor" href="#organization">¶</a>Organization</h2>
+<p><code>CMake</code>输入文件是用<code>CMake Language</code>写的源文件，包括叫<code>CMakeLists.txt</code>的文件和以<code>.cmake</code>作为扩展名的文件。</p>
+<p>一个项目中的<code>CMake</code>源文件被组织成三部分：</p>
+<ul>
+<li>Directories (<code>CMakeLists.txt</code>),</li>
+<li>Scripts (<code>&lt;script&gt;.cmake</code>), and</li>
+<li>Modules (<code>&lt;module&gt;.cmake</code>).</li>
+</ul>
+<h3 id="directories"><a class="header-anchor" href="#directories">¶</a>Directories</h3>
+<p>当CMake处理一个项目的源代码树时，入口点是最上层源目录里的<code>CMakeLists.txt</code>文件，这个文件可能包含整个构建规范(build specification)，或者通过使用<code>add_subdirectory()</code>命令来添加需要构建的子目录，每个通过该命令添加的子目录中也必须含有一个<code>CMakeLists.txt</code>文件来作为该路径的入口点。对于<code>CMakeLists.txt</code>文件处理的每一个源目录都会在构建树(build tree)中生成一个对应的目录，来作为默认的工作和输出目录。</p>
+<h3 id="scripts"><a class="header-anchor" href="#scripts">¶</a>Scripts</h3>
+<p>一个单独的<code>&lt;script&gt;.cmake</code>源文件可以在<code>script</code>模式下通过使用<a href="https://cmake.org/cmake/help/v3.10/manual/cmake.1.html#manual:cmake(1)" target="_blank" rel="noopener">cmake(1)</a>命令行工具中的<code>-P</code>选项来被处理，<code>Script</code>模式只是简单地运行该源文件中用<code>CMake Language</code>写的命令，不会生成一个构建系统。它不允许包含有定义构建目标或行为的<code>CMake</code>命令。</p>
+<h3 id="modules"><a class="header-anchor" href="#modules">¶</a>Modules</h3>
+<p>在<code>Directories</code>或者<code>Scripts</code>中的<code>CMake Language</code>代码可以在包含环境中使用<code>include()</code>命令来载入一个<code>&lt;script&gt;.cmake</code>源文件，可以通过查看<a href="https://cmake.org/cmake/help/v3.10/manual/cmake-modules.7.html#manual:cmake-modules(7)" target="_blank" rel="noopener">cmake-modules(7)</a>来了解<code>CMake</code>包含的所有模块。<br>
+项目源代码树可能也提供它们自己的模块，并在<code>CMAKE_MODULE_PATH</code>变量中指定它们的位置。</p>
+<h2 id="syntax"><a class="header-anchor" href="#syntax">¶</a>Syntax</h2>
+<h3 id="encoding"><a class="header-anchor" href="#encoding">¶</a>Encoding</h3>
+<p>为了最大化在所有支持平台的可移植性，一个<code>CMake</code>语言的源文件由<code>7-bit ASCII</code>文本写成，换行可以被编码成<code>\n</code>或<code>\r\n</code>，但在读入输入文件时会被转化为<code>\n</code>。</p>
+<p>注意实现是<code>8-bit clean</code>，所以源文件在系统<code>API</code>支持<code>UTF-8</code>编码的平台上会可能会使用<code>UTF-8</code>编码。此外，<code>CMake 3.2</code>及以上支持在<code>Windows</code>上使用<code>UTF-8</code>编码源文件（使用<code>UTF-16</code>调用系统<code>API</code>）。<code>CMake 3.0</code>及以上allow a leading UTF-8 Byte-Order Mark in source files。</p>
+<h3 id="source-files"><a class="header-anchor" href="#source-files">¶</a>Source Files</h3>
+<p>一个CMake语言的源文件由零个或更多的由换行和可选的空格分隔开的命令调用(Command Invocations)和注释(Comments)组成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file         ::=  file_element*</span><br><span class="line">file_element ::=  command_invocation line_ending |</span><br><span class="line">                  (bracket_comment|space)* line_ending</span><br><span class="line">line_ending  ::=  line_comment? newline</span><br><span class="line">space        ::=  &lt;match &apos;[ \t]+&apos;&gt;</span><br><span class="line">newline      ::=  &lt;match &apos;\n&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>Note that any source file line not inside Command Arguments or a Bracket Comment can end in a Line Comment.</p>
+<h3 id="command-invocations"><a class="header-anchor" href="#command-invocations">¶</a>Command Invocations</h3>
+<p>A command invocation is a name followed by paren-enclosed arguments separated by whitespace:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">command_invocation  ::=  space* identifier space* '(' arguments ')'</span><br><span class="line">identifier          ::=  &lt;match '[A-Za-z_][A-Za-z0-<span class="number">9</span>_]*'&gt;</span><br><span class="line">arguments           ::=  argument? separated_arguments*</span><br><span class="line">separated_arguments ::=  separation+ argument? |</span><br><span class="line">                         separation* '(' arguments ')'</span><br><span class="line">separation          ::=  space | line_ending</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(hello world.c)</span><br></pre></td></tr></table></figure>
+<p>命令的名字对大小写不敏感。参数中嵌套的圆括号必须平衡，<br>
+Command names are case-insensitive. Nested unquoted parentheses in the arguments must balance. Each ( or ) is given to the command invocation as a literal Unquoted Argument. This may be used in calls to the if() command to enclose conditions. For example:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">FALSE</span> <span class="keyword">AND</span> (<span class="keyword">FALSE</span> <span class="keyword">OR</span> <span class="keyword">TRUE</span>)) <span class="comment"># evaluates to FALSE</span></span><br></pre></td></tr></table></figure>
+<p>Note CMake versions prior to 3.0 require command name identifiers to be at least 2 characters.<br>
+CMake versions prior to 2.8.12 silently accept an Unquoted Argument or a Quoted Argument immediately following a Quoted Argument and not separated by any whitespace. For compatibility, CMake 2.8.12 and higher accept such code but produce a warning.</p>
+<h3 id="command-arguments"><a class="header-anchor" href="#command-arguments">¶</a>Command Arguments</h3>
+<p>命令调用中有三种形式的参数：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">argument ::=  bracket_argument | quoted_argument | unquoted_argument</span><br></pre></td></tr></table></figure>
+<h4 id="bracket-argument"><a class="header-anchor" href="#bracket-argument">¶</a>Bracket Argument</h4>
+<p>括号参数，受启发于Lua的长括号语法，将内容装入拥有同样长度的开始和结束括号：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bracket_argument ::=  bracket_open bracket_content bracket_close</span><br><span class="line">bracket_open     ::=  '[' '='* '['</span><br><span class="line">bracket_content  ::=  &lt;any text <span class="keyword">not</span> containing a bracket_close with</span><br><span class="line">                       the same number of '=' as the bracket_open&gt;</span><br><span class="line">bracket_close    ::=  ']' '='* ']'</span><br></pre></td></tr></table></figure>
+<p>开始括号首先是一个<code>[</code>，后面跟着0个或多个<code>=</code>，最后再跟着<code>]</code>，与此对应的结束括号也以<code>[</code>开头，后面跟着同样数量的<code>=</code>，然后再跟着<code>]</code>。括号不嵌套，<br>
+Brackets do not nest. A unique length may always be chosen for the opening and closing brackets to contain closing brackets of other lengths.</p>
+<p>Bracket argument content consists of all text between the opening and closing brackets, except that one newline immediately following the opening bracket, if any, is ignored. No evaluation of the enclosed content, such as Escape Sequences or Variable References, is performed. A bracket argument is always given to the command invocation as exactly one argument.</p>
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>([=[</span><br><span class="line">This is the first line in a bracket argument with bracket length <span class="number">1</span>.</span><br><span class="line">No \-escape sequences <span class="keyword">or</span> <span class="variable">$&#123;variable&#125;</span> references are evaluated.</span><br><span class="line">This is always one argument even though it contains a ; character.</span><br><span class="line">The text does <span class="keyword">not</span> end <span class="keyword">on</span> a closing bracket of length <span class="number">0</span> like ]].</span><br><span class="line">It does end in a closing bracket of length <span class="number">1</span>.</span><br><span class="line">]=])</span><br></pre></td></tr></table></figure>
+<p>Note CMake versions prior to 3.0 do not support bracket arguments. They interpret the opening bracket as the start of an Unquoted Argument.</p>
+<h4 id="quoted-argument"><a class="header-anchor" href="#quoted-argument">¶</a>Quoted Argument</h4>
+<p>A quoted argument encloses content between opening and closing double-quote characters:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">quoted_argument     ::=  '<span class="string">"' quoted_element* '"</span>'</span><br><span class="line">quoted_element      ::=  &lt;any character except '\' <span class="keyword">or</span> '<span class="string">"'&gt; |</span></span><br><span class="line"><span class="string">                         escape_sequence |</span></span><br><span class="line"><span class="string">                         quoted_continuation</span></span><br><span class="line"><span class="string">quoted_continuation ::=  '\' newline</span></span><br></pre></td></tr></table></figure>
+<p>Quoted argument content consists of all text between opening and closing quotes. Both Escape Sequences and Variable References are evaluated. A quoted argument is always given to the command invocation as exactly one argument.</p>
+<p>For example:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(<span class="string">"This is a quoted argument containing multiple lines.</span></span><br><span class="line"><span class="string">This is always one argument even though it contains a ; character.</span></span><br><span class="line"><span class="string">Both \\-escape sequences and $&#123;variable&#125; references are evaluated.</span></span><br><span class="line"><span class="string">The text does not end on an escaped double-quote like \".</span></span><br><span class="line"><span class="string">It does end in an unescaped double quote.</span></span><br><span class="line"><span class="string">"</span>)</span><br></pre></td></tr></table></figure>
+<p>The final \ on any line ending in an odd number of backslashes is treated as a line continuation and ignored along with the immediately following newline character. For example:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(<span class="string">"\</span></span><br><span class="line"><span class="string">This is the first line of a quoted argument. \</span></span><br><span class="line"><span class="string">In fact it is the only line but since it is long \</span></span><br><span class="line"><span class="string">the source code uses line continuation.\</span></span><br><span class="line"><span class="string">"</span>)</span><br></pre></td></tr></table></figure>
+<p>Note CMake versions prior to 3.0 do not support continuation with . They report errors in quoted arguments containing lines ending in an odd number of \ characters.</p>
+<h4 id="unquoted-argument"><a class="header-anchor" href="#unquoted-argument">¶</a>Unquoted Argument</h4>
+<p>An unquoted argument is not enclosed by any quoting syntax. It may not contain any whitespace, <code>(, ), #, &quot;, or \</code>except when escaped by a backslash:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unquoted_argument ::=  unquoted_element+ | unquoted_legacy</span><br><span class="line">unquoted_element  ::=  &lt;any character except whitespace <span class="keyword">or</span> one of '()<span class="comment">#"\'&gt; |</span></span><br><span class="line">                       escape_sequence</span><br><span class="line">unquoted_legacy   ::=  &lt;see note in text&gt;</span><br></pre></td></tr></table></figure>
+<p>Unquoted argument content consists of all text in a contiguous block of allowed or escaped characters. Both Escape Sequences and Variable References are evaluated. The resulting value is divided in the same way Lists divide into elements. Each non-empty element is given to the command invocation as an argument. Therefore an unquoted argument may be given to a command invocation as zero or more arguments.</p>
+<p>For example:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(arg</span><br><span class="line">    NoSpace</span><br><span class="line">    Escaped\ Space</span><br><span class="line">    This;Divides;Into;Five;Arguments</span><br><span class="line">    Escaped\;Semicolon</span><br><span class="line">    )</span><br><span class="line">  <span class="keyword">message</span>(<span class="string">"$&#123;arg&#125;"</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br></pre></td></tr></table></figure>
+<p>Note To support legacy CMake code, unquoted arguments may also contain double-quoted strings (&quot;…&quot;, possibly enclosing horizontal whitespace), and make-style variable references (<code>$(MAKEVAR)</code>).<br>
+Unescaped double-quotes must balance, may not appear at the beginning of an unquoted argument, and are treated as part of the content. For example, the unquoted arguments <code>-Da=&quot;b c&quot;</code>, <code>-Da=$(v)</code>, and <code>a&quot; &quot;b&quot;c&quot;d</code> are each interpreted literally. They may instead be written as quoted arguments <code>&quot;-Da=\&quot;b c\&quot;&quot;</code>, <code>&quot;-Da=$(v)&quot;</code>, and <code>&quot;a\&quot; \&quot;b\&quot;c\&quot;d&quot;</code>, respectively.</p>
+<p>Make-style references are treated literally as part of the content and do not undergo variable expansion. They are treated as part of a single argument (rather than as separate $, (, MAKEVAR, and ) arguments).</p>
+<p>The above “unquoted_legacy” production represents such arguments. We do not recommend using legacy unquoted arguments in new code. Instead use a Quoted Argument or a Bracket Argument to represent the content.</p>
+<h3 id="escape-sequences"><a class="header-anchor" href="#escape-sequences">¶</a>Escape Sequences</h3>
+<p>An escape sequence is a \ followed by one character:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">escape_sequence  ::=  escape_identity | escape_encoded | escape_semicolon</span><br><span class="line">escape_identity  ::=  '\' &lt;match '[^A-Za-z0-<span class="number">9</span>;]'&gt;</span><br><span class="line">escape_encoded   ::=  '\t' | '\r' | '\n'</span><br><span class="line">escape_semicolon ::=  '\;'</span><br></pre></td></tr></table></figure>
+<p>A <code>\</code> followed by a non-alphanumeric character simply encodes the literal character without interpreting it as syntax. A <code>\t</code>, <code>\r</code>, or <code>\n</code> encodes a tab, carriage return, or newline character, respectively. A <code>\;</code> outside of any Variable References encodes itself but may be used in an Unquoted Argument to encode the <code>;</code> without dividing the argument value on it. A <code>\;</code> inside Variable References encodes the literal <code>;</code> character. (See also policy CMP0053 documentation for historical considerations.)</p>
+<h3 id="variable-references"><a class="header-anchor" href="#variable-references">¶</a>Variable References</h3>
+<p>A variable reference has the form <code>${variable_name}</code> and is evaluated inside a Quoted Argument or an Unquoted Argument. A variable reference is replaced by the value of the variable, or by the empty string if the variable is not set. Variable references can nest and are evaluated from the inside out, e.g. <code>${outer_${inner_variable}_variable}</code>.</p>
+<p>Literal variable references may consist of alphanumeric characters, the characters /_.±, and Escape Sequences. Nested references may be used to evaluate variables of any name. (See also policy CMP0053 documentation for historical considerations.)</p>
+<p>The Variables section documents the scope of variable names and how their values are set.</p>
+<p>An environment variable reference has the form <code>$ENV{VAR}</code> and is evaluated in the same contexts as a normal variable reference.</p>
+<h3 id="comments"><a class="header-anchor" href="#comments">¶</a>Comments</h3>
+<p>注释从一个<code>#</code>字符开始，但<code>#</code>不能在Bracket Argument、Quoted Argument或者作为Unquoted Argument一部分的转义字符<code>\</code>中。注释有两种类型：Bracket Comment和Line Comment。</p>
+<h4 id="bracket-comment"><a class="header-anchor" href="#bracket-comment">¶</a>Bracket Comment</h4>
+<p>如果<code>#</code>后面紧跟着一个Bracket Argument则括号中包含的内容构成一个bracket comment：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bracket_comment ::=  '<span class="comment">#' bracket_argument</span></span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[This is a bracket comment.</span></span><br><span class="line">It runs until the close bracket.]]</span><br><span class="line"><span class="keyword">message</span>(<span class="string">"First Argument\n"</span> <span class="comment">#[[Bracket Comment]] "Second Argument")</span></span><br></pre></td></tr></table></figure>
+<p>注意<code>CMake 3.0</code>之前的版本不支持bracket comments，这时将<code>#</code>解释为一个Line Comment的开头。</p>
+<h4 id="line-comment"><a class="header-anchor" href="#line-comment">¶</a>Line Comment</h4>
+<p>如果<code>#</code>后面没有紧跟着一个Bracket Argument，则构成一个line comment，直到行尾结束：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">line_comment ::=  '<span class="comment">#' &lt;any text not starting in a bracket_argument</span></span><br><span class="line">                       <span class="keyword">and</span> <span class="keyword">not</span> containing a newline&gt;</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a line comment.</span></span><br><span class="line"><span class="keyword">message</span>(<span class="string">"First Argument\n"</span> <span class="comment"># This is a line comment :)</span></span><br><span class="line">        <span class="string">"Second Argument"</span>) <span class="comment"># This is a line comment.</span></span><br></pre></td></tr></table></figure>
+<h2 id="control-structures"><a class="header-anchor" href="#control-structures">¶</a>Control Structures</h2>
+<h3 id="conditional-blocks"><a class="header-anchor" href="#conditional-blocks">¶</a>Conditional Blocks</h3>
+<p><code>if()/elseif()/else()/endif()</code>命令使得代码块有条件地执行。</p>
+<h3 id="loops"><a class="header-anchor" href="#loops">¶</a>Loops</h3>
+<p><code>foreach()/endforeach()</code> and <code>while()/endwhile()</code>命令界定代码块循环执行。在每个这样的快中，<code>break()</code>命令可以终止循环，<code>continue()</code>命令可以让下一次迭代马上进行。</p>
+<h3 id="command-definitions"><a class="header-anchor" href="#command-definitions">¶</a>Command Definitions</h3>
+<p><code>macro()/endmacro()</code>和<code>function()/endfunction()</code>命令界定代码块可以在后面作为命令被调用。</p>
+<h2 id="variables"><a class="header-anchor" href="#variables">¶</a>Variables</h2>
+<p>变量是<code>CMake</code>语言中存储的基本单元，它们的值永远是字符串类型，虽然有些命令会将字符串解释为其他类型的值。<code>set()</code>和<code>unset()</code>命令显示地设置或取消设置一个变量，但是其他命令同样也有修改变量的语义。变量名是大小写敏感的，几乎可以由任意文本组成，但是一般推荐使用只包含字母数字外加<code>_</code>和<code>-</code>的变量名。</p>
+<p>变量有动态的作用域，每个变量“set”或者“unset”在当前的作用域创建一个绑定：</p>
+<p>Variables have dynamic scope. Each variable “set” or “unset” creates a binding in the current scope:</p>
+<ul>
+<li>Function Scope<br>
+通过function()命令创建的Command Definitions生成一个命令，当<br>
+Command Definitions created by the function() command create commands that, when invoked, process the recorded commands in a new variable binding scope. A variable “set” or “unset” binds in this scope and is visible for the current function and any nested calls within it, but not after the function returns.</li>
+<li>Directory Scope<br>
+Each of the Directories in a source tree has its own variable bindings. Before processing the CMakeLists.txt file for a directory, CMake copies all variable bindings currently defined in the parent directory, if any, to initialize the new directory scope. CMake Scripts, when processed with cmake -P, bind variables in one “directory” scope.</li>
+</ul>
+<p>A variable “set” or “unset” not inside a function call binds to the current directory scope.</p>
+<ul>
+<li>Persistent Cache<br>
+CMake stores a separate set of “cache” variables, or “cache entries”, whose values persist across multiple runs within a project build tree. Cache entries have an isolated binding scope modified only by explicit request, such as by the CACHE option of the set() and unset() commands.<br>
+When evaluating Variable References, CMake first searches the function call stack, if any, for a binding and then falls back to the binding in the current directory scope, if any. If a “set” binding is found, its value is used. If an “unset” binding is found, or no binding is found, CMake then searches for a cache entry. If a cache entry is found, its value is used. Otherwise, the variable reference evaluates to an empty string.</li>
+</ul>
+<p>The cmake-variables(7) manual documents many variables that are provided by CMake or have meaning to CMake when set by project code.</p>
+<h2 id="lists"><a class="header-anchor" href="#lists">¶</a>Lists</h2>
+<p>Although all values in CMake are stored as strings, a string may be treated as a list in certain contexts, such as during evaluation of an Unquoted Argument. In such contexts, a string is divided into list elements by splitting on ; characters not following an unequal number of [ and ] characters and not immediately preceded by a . The sequence ; does not divide a value but is replaced by ; in the resulting element.</p>
+<p>A list of elements is represented as a string by concatenating the elements separated by ;. For example, the set() command stores multiple values into the destination variable as a list:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(srcs a.c b.c c.c) <span class="comment"># sets "srcs" to "a.c;b.c;c.c"</span></span><br></pre></td></tr></table></figure>
+<p>Lists are meant for simple use cases such as a list of source files and should not be used for complex data processing tasks. Most commands that construct lists do not escape ; characters in list elements, thus flattening nested lists:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(x a <span class="string">"b;c"</span>) <span class="comment"># sets "x" to "a;b;c", not "a;b\;c"</span></span><br></pre></td></tr></table></figure>
+<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<ul>
+<li><a href="https://cmake.org/cmake/help/latest/manual/cmake-language.7.html" target="_blank" rel="noopener">cmake-language</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Wei</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://wei587me.github.io/2018/04-15-CMakeLanguage/" title="CMake语言">https://wei587me.github.io/2018/04-15-CMakeLanguage/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cmake/" rel="tag"># cmake</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04-15-CMakeBuildSystem/" rel="next" title="CMake构建系统">
+                <i class="fa fa-chevron-left"></i> CMake构建系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04-22-CMakeTips/" rel="prev" title="CMake Tips">
+                CMake Tips <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei">
+            
+              <p class="site-author-name" itemprop="name">Wei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#organization"><span class="nav-number">1.</span> <span class="nav-text">¶Organization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#directories"><span class="nav-number">1.1.</span> <span class="nav-text">¶Directories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scripts"><span class="nav-number">1.2.</span> <span class="nav-text">¶Scripts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#modules"><span class="nav-number">1.3.</span> <span class="nav-text">¶Modules</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#syntax"><span class="nav-number">2.</span> <span class="nav-text">¶Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoding"><span class="nav-number">2.1.</span> <span class="nav-text">¶Encoding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source-files"><span class="nav-number">2.2.</span> <span class="nav-text">¶Source Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-invocations"><span class="nav-number">2.3.</span> <span class="nav-text">¶Command Invocations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-arguments"><span class="nav-number">2.4.</span> <span class="nav-text">¶Command Arguments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bracket-argument"><span class="nav-number">2.4.1.</span> <span class="nav-text">¶Bracket Argument</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#quoted-argument"><span class="nav-number">2.4.2.</span> <span class="nav-text">¶Quoted Argument</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unquoted-argument"><span class="nav-number">2.4.3.</span> <span class="nav-text">¶Unquoted Argument</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#escape-sequences"><span class="nav-number">2.5.</span> <span class="nav-text">¶Escape Sequences</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#variable-references"><span class="nav-number">2.6.</span> <span class="nav-text">¶Variable References</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#comments"><span class="nav-number">2.7.</span> <span class="nav-text">¶Comments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bracket-comment"><span class="nav-number">2.7.1.</span> <span class="nav-text">¶Bracket Comment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#line-comment"><span class="nav-number">2.7.2.</span> <span class="nav-text">¶Line Comment</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#control-structures"><span class="nav-number">3.</span> <span class="nav-text">¶Control Structures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#conditional-blocks"><span class="nav-number">3.1.</span> <span class="nav-text">¶Conditional Blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loops"><span class="nav-number">3.2.</span> <span class="nav-text">¶Loops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-definitions"><span class="nav-number">3.3.</span> <span class="nav-text">¶Command Definitions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variables"><span class="nav-number">4.</span> <span class="nav-text">¶Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lists"><span class="nav-number">5.</span> <span class="nav-text">¶Lists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://wei587me.github.io/2018/04-15-CMakeLanguage/";
+    this.page.identifier = "2018/04-15-CMakeLanguage/";
+    this.page.title = 'CMake语言';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

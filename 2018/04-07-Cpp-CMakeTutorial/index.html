@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译自CMake官网的Tutorial">
+<meta name="keywords" content="cmake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake Tutorial">
+<meta property="og:url" content="https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="翻译自CMake官网的Tutorial">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-09T15:49:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMake Tutorial">
+<meta name="twitter:description" content="翻译自CMake官网的Tutorial">
+
+
+
+
+
+
+  <link rel="canonical" href="https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CMake Tutorial | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CMake Tutorial
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-04-07 22:42:00" itemprop="dateCreated datePublished" datetime="2018-04-07T22:42:00+08:00">2018-04-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-04-09 23:49:00" itemprop="dateModified" datetime="2018-04-09T23:49:00+08:00">2018-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/" itemprop="url" rel="index"><span itemprop="name">translation</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/cmake/" itemprop="url" rel="index"><span itemprop="name">cmake</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/04-07-Cpp-CMakeTutorial/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04-07-Cpp-CMakeTutorial/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-description">翻译自CMake官网的Tutorial</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>翻译自<a href="https://cmake.org/cmake-tutorial/" target="_blank" rel="noopener">cmake-tutorial</a></em></p>
+<h2 id="a-basic-starting-point-step1"><a class="header-anchor" href="#a-basic-starting-point-step1">¶</a>A Basic Starting Point (Step1)</h2>
+<p>一个最基本的项目是由一些源代码文件构建得到的可执行文件，对于一个简单的项目，只需要一个三行的<code>CMakeLists.txt</code>文件，这个文件也将是本教程的出发点。这样一个<code>CMakeLists.txt</code>文件像下面这样：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span> (VERSION <span class="number">2.6</span>)</span><br><span class="line"><span class="keyword">project</span> (Tutorial)</span><br><span class="line"><span class="keyword">add_executable</span>(Tutorial tutorial.cxx)</span><br></pre></td></tr></table></figure>
+<p>注意这个例子中的<code>CMakeLists.txt</code>文件使用了小写字母的命令，<code>CMake</code>支持大写、小写、混合字母的命令。源代码<code>tutorial.cxx</code>计算一个数字的平方根，第一个版本非常简单，如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A simple program that computes the square root of a number</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"Usage: %s number\n"</span>,argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">double</span> inputValue = atof(argv[<span class="number">1</span>]);</span><br><span class="line">  	<span class="keyword">double</span> outputValue = <span class="built_in">sqrt</span>(inputValue);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"The square root of %g is %g\n"</span>, inputValue, outputValue);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="adding-a-version-number-and-configured-header-file"><a class="header-anchor" href="#adding-a-version-number-and-configured-header-file">¶</a>Adding a Version Number and Configured Header File</h3>
+<p>这里要添加的第一个特性是为可执行文件和项目提供一个版本号，虽然这可以在源代码中完成，但在<code>CMakeLists.txt</code>中添加更加具有灵活性，只需简单修改<code>CMakeLists.txt</code>文件便可以添加一个版本号，这里将其做如下修改：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span> (VERSION <span class="number">2.6</span>)</span><br><span class="line"><span class="keyword">project</span> (Tutorial)</span><br><span class="line"><span class="comment"># The version number.</span></span><br><span class="line"><span class="keyword">set</span> (Tutorial_VERSION_MAJOR <span class="number">1</span>)</span><br><span class="line"><span class="keyword">set</span> (Tutorial_VERSION_MINOR <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># configure a header file to pass some of the CMake settings to the source code</span></span><br><span class="line"><span class="keyword">configure_file</span> (</span><br><span class="line">  <span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/TutorialConfig.h.in"</span></span><br><span class="line">  <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/TutorialConfig.h"</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the binary tree to the search path for include files</span></span><br><span class="line"><span class="comment"># so that we will find TutorialConfig.h</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="string">"$&#123;PROJECT_BINARY_DIR&#125;"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the executable</span></span><br><span class="line"><span class="keyword">add_executable</span>(Tutorial tutorial.cxx)</span><br></pre></td></tr></table></figure>
+<p>由于配置文件将被写入二进制树(binary tree)，所以必须将该文件路径添加到搜索路径中以包含这些文件。然后在源代码树(source tree)中创建一个包含以下内容的<code>TutorialConfig.h.in</code>文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// the configured options <span class="keyword">and</span> settings for Tutorial</span><br><span class="line"><span class="comment">#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@</span></span><br><span class="line"><span class="comment">#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@</span></span><br></pre></td></tr></table></figure>
+<p>当<code>CMake</code>配置该头文件时，<code>@Tutorial_VERSION_MAJOR@</code>和<code>@Tutorial_VERSION_MINOR@</code>的值将会被替换为<code>CMakeLists.txt</code>文件中定义的值，接下来在<code>tutorial.cxx</code>文件中包含配置头文件以使用版本号，修改后的源代码如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A simple program that computes the square root of a number</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"TutorialConfig.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc &lt; <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"%s Version %d.%d\n"</span>,</span><br><span class="line">            argv[<span class="number">0</span>],</span><br><span class="line">            Tutorial_VERSION_MAJOR,</span><br><span class="line">            Tutorial_VERSION_MINOR);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"Usage: %s number\n"</span>,argv[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">double</span> inputValue = atof(argv[<span class="number">1</span>]);</span><br><span class="line">  <span class="keyword">double</span> outputValue = <span class="built_in">sqrt</span>(inputValue);</span><br><span class="line">  <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"The square root of %g is %g\n"</span>,</span><br><span class="line">          inputValue, outputValue);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要的改变是添加了头文件<code>TutorialConfig.h</code>的包含，并将版本号作为使用信息的一部分输出到屏幕。</p>
+<h2 id="adding-a-library-step-2"><a class="header-anchor" href="#adding-a-library-step-2">¶</a>Adding a Library (Step 2)</h2>
+<p>现在需要添加一个库到项目中，这个库包含了平方根计算的实现，可执行文件便可以使用这个库，而不去使用编译器提供的平方根计算函数。本教程将把这个库放在一个叫<code>MathFunctions</code>的子文件夹中，<code>CMakeLists.txt</code>文件需要有下面这样一行：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(MathFunctions mysqrt.cxx)</span><br></pre></td></tr></table></figure>
+<p>源文件<code>mysqrt.cxx</code>有一个叫<code>mysqrt</code>的函数，拥有跟编译器自带的<code>sqrt</code>函数同样的功能，为了使用这个新库，需要在<code>CMakeLists.txt</code>文件的上一层添加<code>add_subdirectory</code>的调用，以让该库得到构建。此外还添加一个包含路径来让该函数能够找到<code>MathFunctions/MathFunctions.h</code>头文件，最后一点需要改变的是添加这个新的库到可执行文件。现在<code>CMakeLists.txt</code>文件中的最后几行如下所示：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span> (<span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/MathFunctions"</span>)</span><br><span class="line"><span class="keyword">add_subdirectory</span> (MathFunctions)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the executable</span></span><br><span class="line"><span class="keyword">add_executable</span> (Tutorial tutorial.cxx)</span><br><span class="line"><span class="keyword">target_link_libraries</span> (Tutorial MathFunctions)</span><br></pre></td></tr></table></figure>
+<p>接下来考虑将<code>MathFunctions</code>库设置为可选的，在本教程中虽然没有必要这样做，但在使用更大的库，或者库依赖第三方代码时可能需要这样去做。首先需要在<code>CMakeLists.txt</code>文件的前面添加一个选项。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># should we use our own math functions?</span></span><br><span class="line"><span class="keyword">option</span> (USE_MYMATH</span><br><span class="line">        <span class="string">"Use tutorial provided math implementation"</span> <span class="keyword">ON</span>)</span><br></pre></td></tr></table></figure>
+<p>这个选项将在<code>CMake GUI</code>中出现，且默认值为<code>ON</code>，并且用户可以自己修改这个值。这个设置会被存储在缓存中，所以用户不用在每次用<code>CMake</code>运行这个项目时都来设置。接下来需要进一步将关于<code>MathFunctions</code>库的构建和链接设置为可选，只需将<code>CMakeLists.txt</code>文件按如下示例更改：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add the MathFunctions library?</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">if</span> (USE_MYMATH)</span><br><span class="line">  <span class="keyword">include_directories</span> (<span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/MathFunctions"</span>)</span><br><span class="line">  <span class="keyword">add_subdirectory</span> (MathFunctions)</span><br><span class="line">  <span class="keyword">set</span> (EXTRA_LIBS <span class="variable">$&#123;EXTRA_LIBS&#125;</span> MathFunctions)</span><br><span class="line"><span class="keyword">endif</span> (USE_MYMATH)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the executable</span></span><br><span class="line"><span class="keyword">add_executable</span> (Tutorial tutorial.cxx)</span><br><span class="line"><span class="keyword">target_link_libraries</span> (Tutorial  <span class="variable">$&#123;EXTRA_LIBS&#125;</span>)</span><br></pre></td></tr></table></figure>
+<p>这里使用<code>USE_MYMATH</code>的设置来决定<code>MathFunctions</code>是否被编译与使用，注意这里使用变量<code>EXTRA_LIBS</code>来收集所有可选的库来在后面链接到可执行文件，这是一个保持有许多可选部件的大项目干净的通用方法。源代码对应的改变非常直观明了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A simple program that computes the square root of a number</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"TutorialConfig.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_MYMATH</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"MathFunctions.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc &lt; <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"%s Version %d.%d\n"</span>, argv[<span class="number">0</span>],</span><br><span class="line">            Tutorial_VERSION_MAJOR,</span><br><span class="line">            Tutorial_VERSION_MINOR);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"Usage: %s number\n"</span>,argv[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">double</span> inputValue = atof(argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_MYMATH</span></span><br><span class="line">  <span class="keyword">double</span> outputValue = mysqrt(inputValue);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="keyword">double</span> outputValue = <span class="built_in">sqrt</span>(inputValue);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"The square root of %g is %g\n"</span>,</span><br><span class="line">          inputValue, outputValue);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在源代码中同样使用<code>USE_MYMATH</code>，它是<code>CMake</code>通过配置文件<code>TutorialConfig.h.in</code>提供给源代码的，只需在配置文件中添加下面一行：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cmakedefine USE_MYMATH</span></span><br></pre></td></tr></table></figure>
+<h2 id="installing-and-testing-step-3"><a class="header-anchor" href="#installing-and-testing-step-3">¶</a>Installing and Testing (Step 3)</h2>
+<p>接下来添加安装规则(Install Rules)和测试(Testing)支持到项目中，安装规则非常直接明了，对于<code>MathFunctions</code>库，可以通过在<code>MathFunctions</code>的<code>CMakeLists.txt</code>文件中添加下面两行代码来安装库和头文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">install</span> (TARGETS MathFunctions DESTINATION bin)</span><br><span class="line"><span class="keyword">install</span> (FILES MathFunctions.h DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+<p>对于应用程序，通过在<code>CMakeLists.txt</code>文件的前面添加下面几行来安装可执行文件和配置头文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add the install targets</span></span><br><span class="line"><span class="keyword">install</span> (TARGETS Tutorial DESTINATION bin)</span><br><span class="line"><span class="keyword">install</span> (FILES <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/TutorialConfig.h"</span></span><br><span class="line">         DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+<p>这便是全部内容，现在便可以构建这个教程，然后输入<code>make install</code>或者从<code>IDE</code>构建<code>INSTALL</code>目标，便可以安装合适的头文件、库文件和可执行文件。<code>CMake</code>变量<code>CMAKE_INSTALL_PREFIX</code>将决定这些文件安装的根目录。</p>
+<p>添加测试同样也是一个非常简单直接的过程，通过在<code>CMakeLists.txt</code>文件的末尾添加一些基础测试来检验应用程序是否正常工作。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(CTest)</span><br><span class="line"></span><br><span class="line"><span class="comment"># does the application run</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialRuns Tutorial <span class="number">25</span>)</span><br><span class="line"><span class="comment"># does it sqrt of 25</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialComp25 Tutorial <span class="number">25</span>)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (TutorialComp25 PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"25 is 5"</span>)</span><br><span class="line"><span class="comment"># does it handle negative numbers</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialNegative Tutorial -<span class="number">25</span>)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (TutorialNegative PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"-25 is 0"</span>)</span><br><span class="line"><span class="comment"># does it handle small numbers</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialSmall Tutorial <span class="number">0.0001</span>)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (TutorialSmall PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"0.0001 is 0.01"</span>)</span><br><span class="line"><span class="comment"># does the usage message work?</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialUsage Tutorial)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (TutorialUsage PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"Usage:.*number"</span>)</span><br></pre></td></tr></table></figure>
+<p>构建以后在命令行工具中输入<code>ctest</code>便可以运行所有测试，第一个测试验证程序是否能够正常运行，不会出现段错误(segfault)或者崩溃(crash)，能够返回<code>0</code>，这是<code>CTest</code>测试最基本的形式。接下来的几个测试适当地使用<code>PASS_REGULAR_EXPRESSION</code>测试属性来验证测试的输出结构是否包含特定的字符串。在这个例子中即验证计算的平方根是否正确，当提供错误的参数时将使用信息打印到屏幕。如果需要添加许多测试来检测不同的输入值，可以考虑定义一个下面这样的宏：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define a macro to simplify adding tests, then use it</span></span><br><span class="line"><span class="keyword">macro</span> (do_test arg result)</span><br><span class="line">  <span class="keyword">add_test</span> (TutorialComp<span class="variable">$&#123;arg&#125;</span> Tutorial <span class="variable">$&#123;arg&#125;</span>)</span><br><span class="line">  <span class="keyword">set_tests_properties</span> (TutorialComp<span class="variable">$&#123;arg&#125;</span></span><br><span class="line">    PROPERTIES PASS_REGULAR_EXPRESSION <span class="variable">$&#123;result&#125;</span>)</span><br><span class="line"><span class="keyword">endmacro</span> (do_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># do a bunch of result based tests</span></span><br><span class="line">do_test (<span class="number">25</span> <span class="string">"25 is 5"</span>)</span><br><span class="line">do_test (-<span class="number">25</span> <span class="string">"-25 is 0"</span>)</span><br></pre></td></tr></table></figure>
+<p>这样对于<code>do_test</code>的每一次调用，一个新的测试便被添加到项目中，名字、输入、结果便是传入的相关参数。</p>
+<h2 id="adding-system-introspection-step-4"><a class="header-anchor" href="#adding-system-introspection-step-4">¶</a>Adding System Introspection (Step 4)</h2>
+<p>下面考虑向项目中添加一些代码，而这些代码取决于目标平台可能没有的特性。对于这个例子，这里将根据目标平台是否有<code>log</code>和<code>exp</code>函数来添加一些代码，当然，几乎所有的平台都包含这两个函数，但这个教程假设目标平台不是常见的那些。如果平台有<code>log</code>函数，则直接在<code>mysqrt</code>函数中使用这个函数计算平方根。这里首先在<code>CMakeLists.txt</code>文件中利用<code>CheckFunctionExists.cmake</code>宏来测试这些函数的可用性：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># does this system provide the log and exp functions?</span></span><br><span class="line"><span class="keyword">include</span> (CheckFunctionExists)</span><br><span class="line">check_function_exists (log HAVE_LOG)</span><br><span class="line">check_function_exists (exp HAVE_EXP)</span><br></pre></td></tr></table></figure>
+<p>然后修改<code>TutorialConfig.h.in</code>文件，如果<code>CMake</code>在平台找到这些函数则定义相应的值，如下所示：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// does the platform provide exp <span class="keyword">and</span> log functions?</span><br><span class="line"><span class="comment">#cmakedefine HAVE_LOG</span></span><br><span class="line"><span class="comment">#cmakedefine HAVE_EXP</span></span><br></pre></td></tr></table></figure>
+<p>很重要的一点，函数<code>log</code>和<code>exp</code>的可用性测试需要在<code>TutorialConfig.h</code>文件的<code>configure_file</code>命令调用前完成，<code>configure_file</code>命令立即在<code>CMake</code>中用当前的设置配置文件。最后在<code>mysqrt</code>函数中添加一个基于<code>log</code>和<code>exp</code>函数的替代实现，如果系统可以获取这两个函数，具体代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// if we have both log and exp then use them</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined (HAVE_LOG) &amp;&amp; defined (HAVE_EXP)</span></span><br><span class="line">  result = <span class="built_in">exp</span>(<span class="built_in">log</span>(x)*<span class="number">0.5</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">// otherwise use an iterative approach</span></span></span><br><span class="line">  . . .</span><br></pre></td></tr></table></figure>
+<h2 id="adding-a-generated-file-and-generator-step-5"><a class="header-anchor" href="#adding-a-generated-file-and-generator-step-5">¶</a>Adding a Generated File and Generator (Step 5)</h2>
+<p>这一小节介绍怎样在一个应用程序的构建过程中添加生成的源代码，这个例子将创建一个表，表中存储一些预先计算好的平方根作为构建过程的一部分，然后将这个表编译进应用程序。首先需要一个程序来生成这个表，在<code>MathFunctions</code>子文件夹，一个叫<code>MakeTable.cxx</code>的新的源文件会完成这个工作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A simple program that builds a sqrt table</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="keyword">double</span> result;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make sure we have enough arguments</span></span><br><span class="line">  <span class="keyword">if</span> (argc &lt; <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// open the output file</span></span><br><span class="line">  FILE *fout = fopen(argv[<span class="number">1</span>],<span class="string">"w"</span>);</span><br><span class="line">  <span class="keyword">if</span> (!fout)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// create a source file with a table of square roots</span></span><br><span class="line">  <span class="built_in">fprintf</span>(fout,<span class="string">"double sqrtTable[] = &#123;\n"</span>);</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">    result = <span class="built_in">sqrt</span>(<span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(i));</span><br><span class="line">    <span class="built_in">fprintf</span>(fout,<span class="string">"%g,\n"</span>,result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// close the table with a zero</span></span><br><span class="line">  <span class="built_in">fprintf</span>(fout,<span class="string">"0&#125;;\n"</span>);</span><br><span class="line">  fclose(fout);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这个表是通过一个有效的<code>C++</code>代码生成的，输出文件的文件名由传入的参数确定。接下来要添加合适的命令到<code>MathFunctions</code>的<code>CMakeLists.txt</code>文件中来构建<code>MakeTable</code>可执行文件，然后将其作为构建过程的一部分。下面是完成这些所需要的一些命令：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># first we add the executable that generates the table</span></span><br><span class="line"><span class="keyword">add_executable</span>(MakeTable MakeTable.cxx)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the command to generate the source code</span></span><br><span class="line"><span class="keyword">add_custom_command</span> (</span><br><span class="line">  OUTPUT <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h</span><br><span class="line">  <span class="keyword">COMMAND</span> MakeTable <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h</span><br><span class="line">  DEPENDS MakeTable</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the binary tree directory to the search path for include files</span></span><br><span class="line"><span class="keyword">include_directories</span>( <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the main library</span></span><br><span class="line"><span class="keyword">add_library</span>(MathFunctions mysqrt.cxx <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h  )</span><br></pre></td></tr></table></figure>
+<p>首先，<code>MakeTable</code>的可执行文件跟其他可执行文件的添加方式一样，然后添加一个自定义命令(custom command)来具体说明怎样通过运行<code>MakeTable</code>来生成<code>Table.h</code>，接下来必须让<code>CMake</code>知道<code>mysqrt.cxx</code>依赖于生成的<code>Table.h</code>文件，具体通过将生成的<code>Table.h</code>文件添加到<code>MathFunctions</code>库的源文件代码列表中完成。此外还必须将当前的二进制路径添加到包含文件的列表中，以让<code>Table.h</code>文件能够被<code>mysqrt.cxx</code>找到并包含。当这个项目被构建时，首先会构建<code>MakeTable</code>可执行文件，然后运行<code>MakeTable</code>生成<code>Table.h</code>，最后再编译包含有<code>Table.h</code>的<code>mysqrt.cxx</code>来生成<code>MathFunctions</code>库。现在拥有这些已添加的特性的<code>CMakeLists.txt</code>文件如下所示：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span> (VERSION <span class="number">2.6</span>)</span><br><span class="line"><span class="keyword">project</span> (Tutorial)</span><br><span class="line"><span class="keyword">include</span>(CTest)</span><br><span class="line"></span><br><span class="line"><span class="comment"># The version number.</span></span><br><span class="line"><span class="keyword">set</span> (Tutorial_VERSION_MAJOR <span class="number">1</span>)</span><br><span class="line"><span class="keyword">set</span> (Tutorial_VERSION_MINOR <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># does this system provide the log and exp functions?</span></span><br><span class="line"><span class="keyword">include</span> (<span class="variable">$&#123;CMAKE_ROOT&#125;</span>/Modules/CheckFunctionExists.cmake)</span><br><span class="line"></span><br><span class="line">check_function_exists (log HAVE_LOG)</span><br><span class="line">check_function_exists (exp HAVE_EXP)</span><br><span class="line"></span><br><span class="line"><span class="comment"># should we use our own math functions</span></span><br><span class="line"><span class="keyword">option</span>(USE_MYMATH</span><br><span class="line">  <span class="string">"Use tutorial provided math implementation"</span> <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># configure a header file to pass some of the CMake settings</span></span><br><span class="line"><span class="comment"># to the source code</span></span><br><span class="line"><span class="keyword">configure_file</span> (</span><br><span class="line">  <span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/TutorialConfig.h.in"</span></span><br><span class="line">  <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/TutorialConfig.h"</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the binary tree to the search path for include files</span></span><br><span class="line"><span class="comment"># so that we will find TutorialConfig.h</span></span><br><span class="line"><span class="keyword">include_directories</span> (<span class="string">"$&#123;PROJECT_BINARY_DIR&#125;"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the MathFunctions library?</span></span><br><span class="line"><span class="keyword">if</span> (USE_MYMATH)</span><br><span class="line">  <span class="keyword">include_directories</span> (<span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/MathFunctions"</span>)</span><br><span class="line">  <span class="keyword">add_subdirectory</span> (MathFunctions)</span><br><span class="line">  <span class="keyword">set</span> (EXTRA_LIBS <span class="variable">$&#123;EXTRA_LIBS&#125;</span> MathFunctions)</span><br><span class="line"><span class="keyword">endif</span> (USE_MYMATH)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the executable</span></span><br><span class="line"><span class="keyword">add_executable</span> (Tutorial tutorial.cxx)</span><br><span class="line"><span class="keyword">target_link_libraries</span> (Tutorial  <span class="variable">$&#123;EXTRA_LIBS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the install targets</span></span><br><span class="line"><span class="keyword">install</span> (TARGETS Tutorial DESTINATION bin)</span><br><span class="line"><span class="keyword">install</span> (FILES <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/TutorialConfig.h"</span></span><br><span class="line">         DESTINATION <span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># does the application run</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialRuns Tutorial <span class="number">25</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># does the usage message work?</span></span><br><span class="line"><span class="keyword">add_test</span> (TutorialUsage Tutorial)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (TutorialUsage</span><br><span class="line">  PROPERTIES</span><br><span class="line">  PASS_REGULAR_EXPRESSION <span class="string">"Usage:.*number"</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#define a macro to simplify adding tests</span></span><br><span class="line"><span class="keyword">macro</span> (do_test arg result)</span><br><span class="line">  <span class="keyword">add_test</span> (TutorialComp<span class="variable">$&#123;arg&#125;</span> Tutorial <span class="variable">$&#123;arg&#125;</span>)</span><br><span class="line">  <span class="keyword">set_tests_properties</span> (TutorialComp<span class="variable">$&#123;arg&#125;</span></span><br><span class="line">    PROPERTIES PASS_REGULAR_EXPRESSION <span class="variable">$&#123;result&#125;</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">endmacro</span> (do_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># do a bunch of result based tests</span></span><br><span class="line">do_test (<span class="number">4</span> <span class="string">"4 is 2"</span>)</span><br><span class="line">do_test (<span class="number">9</span> <span class="string">"9 is 3"</span>)</span><br><span class="line">do_test (<span class="number">5</span> <span class="string">"5 is 2.236"</span>)</span><br><span class="line">do_test (<span class="number">7</span> <span class="string">"7 is 2.645"</span>)</span><br><span class="line">do_test (<span class="number">25</span> <span class="string">"25 is 5"</span>)</span><br><span class="line">do_test (-<span class="number">25</span> <span class="string">"-25 is 0"</span>)</span><br><span class="line">do_test (<span class="number">0.0001</span> <span class="string">"0.0001 is 0.01"</span>)</span><br></pre></td></tr></table></figure>
+<p><code>TutorialConfig.h.in</code>文件如下：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// the configured options <span class="keyword">and</span> settings for Tutorial</span><br><span class="line"><span class="comment">#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@</span></span><br><span class="line"><span class="comment">#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@</span></span><br><span class="line"><span class="comment">#cmakedefine USE_MYMATH</span></span><br><span class="line"></span><br><span class="line">// does the platform provide exp <span class="keyword">and</span> log functions?</span><br><span class="line"><span class="comment">#cmakedefine HAVE_LOG</span></span><br><span class="line"><span class="comment">#cmakedefine HAVE_EXP</span></span><br></pre></td></tr></table></figure>
+<p><code>MathFunctions</code>的<code>CMakeLists.txt</code>文件如下所示：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># first we add the executable that generates the table</span></span><br><span class="line"><span class="keyword">add_executable</span>(MakeTable MakeTable.cxx)</span><br><span class="line"><span class="comment"># add the command to generate the source code</span></span><br><span class="line"><span class="keyword">add_custom_command</span> (</span><br><span class="line">  OUTPUT <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h</span><br><span class="line">  DEPENDS MakeTable</span><br><span class="line">  <span class="keyword">COMMAND</span> MakeTable <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h</span><br><span class="line">  )</span><br><span class="line"><span class="comment"># add the binary tree directory to the search path</span></span><br><span class="line"><span class="comment"># for include files</span></span><br><span class="line"><span class="keyword">include_directories</span>( <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment"># add the main library</span></span><br><span class="line"><span class="keyword">add_library</span>(MathFunctions mysqrt.cxx <span class="variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/Table.h)</span><br><span class="line"></span><br><span class="line"><span class="keyword">install</span> (TARGETS MathFunctions DESTINATION bin)</span><br><span class="line"><span class="keyword">install</span> (FILES MathFunctions.h DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="building-an-installer-step-6"><a class="header-anchor" href="#building-an-installer-step-6">¶</a>Building an Installer (Step 6)</h2>
+<p>接下来假设需要将项目发布给其他人使用，需要在众多平台提供二进制和源代码发布包，这和在前面<a href>第三节</a>讲的安装从源代码构建得到的二进制文件还有一点区别。这个例子将讲解如何构建安装包，并支持二进制安装和包管理这些在<code>cygwin</code>、<code>debian</code>、<code>RPMs</code>等平台都拥有的特性。为了达到这个目的，这里使用<code>CPack</code>来生成各个平台的安装程序，在<a href="https://cmake.org/Wiki/CMake:Packaging_With_CPack" target="_blank" rel="noopener">Chapter Packaging with CPack</a>有介绍。具体来说，在<code>CMakeLists.txt</code>文件的底部需要加下面几行代码：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build a CPack driven installer package</span></span><br><span class="line"><span class="keyword">include</span> (InstallRequiredSystemLibraries)</span><br><span class="line"><span class="keyword">set</span> (CPACK_RESOURCE_FILE_LICENSE</span><br><span class="line">     <span class="string">"$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/License.txt"</span>)</span><br><span class="line"><span class="keyword">set</span> (CPACK_PACKAGE_VERSION_MAJOR <span class="string">"$&#123;Tutorial_VERSION_MAJOR&#125;"</span>)</span><br><span class="line"><span class="keyword">set</span> (CPACK_PACKAGE_VERSION_MINOR <span class="string">"$&#123;Tutorial_VERSION_MINOR&#125;"</span>)</span><br><span class="line"><span class="keyword">include</span> (CPack)</span><br></pre></td></tr></table></figure>
+<p>上面就是需要添加的东西，这里首先包含<code>InstallRequiredSystemLibraries</code>，这个模块将包含项目在当前平台所需要的所有运行库(runtime libraries)，接下来设置一些<code>CPack</code>变量，包括许可协议和项目的版本信息，版本信息利用教程前面设置的变量。最后再包含<code>CPack</code>模块，<code>CPack</code>将使用这些变量和当前系统的一些特性来设置安装程序。</p>
+<p>下一步便使用通常的方法构建项目，然后运行<code>CPack</code>。要构建一个二进制发布包(binary distribution)使用如下命令：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpack --config CPackConfig.cmake</span><br></pre></td></tr></table></figure>
+<p>要生成一个源代码发布包(source distribution)需要输入如下命令：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpack --config CPackSourceConfig.cmake</span><br></pre></td></tr></table></figure>
+<h2 id="adding-support-for-a-dashboard-step-7"><a class="header-anchor" href="#adding-support-for-a-dashboard-step-7">¶</a>Adding Support for a Dashboard (Step 7)</h2>
+<p>增加提交测试结果到仪表板(<a href="http://www.taskmanagementguide.com/glossary/what-is-a-program-dashboard-.php" target="_blank" rel="noopener">dashboard</a>)的支持非常简单，前面的教程已经在项目中定义了许多测试，现在只需运行这些测试然后提交到仪表板。为了添加仪表板的支持，首先需要在<code>CMakeLists.txt</code>文件的前面包含<code>CTest</code>模块：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable dashboard scripting</span></span><br><span class="line"><span class="keyword">include</span> (CTest)</span><br></pre></td></tr></table></figure>
+<p>然后创建一个<code>CTestConfig.cmake</code>文件，并在里面设置这个项目在仪表板中的名字：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> (CTEST_PROJECT_NAME <span class="string">"Tutorial"</span>)</span><br></pre></td></tr></table></figure>
+<p><code>CTest</code>在运行时会读入这个文件。如果想创建一个简单的仪表板，可以在项目中运行<code>CMake</code>，然后将路径切换到二进制树目录，运行<code>ctest –D Experimental</code>命令，仪表板的结果会被上传到<code>Kitware</code>的<a href="https://open.cdash.org/index.php?project=PublicDashboard" target="_blank" rel="noopener">公共仪表板</a>。</p>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
+<ul>
+<li><a href="https://cmake.org/cmake-tutorial/" target="_blank" rel="noopener">cmake-tutorial</a></li>
+<li><a href="https://gitlab.kitware.com/cmake/cmake/tree/master/Tests/Tutorial" target="_blank" rel="noopener">cmake-tutorial-code</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Wei</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/" title="CMake Tutorial">https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cmake/" rel="tag"># cmake</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04-07-CV-OpenCVImageIO/" rel="next" title="OpenCV 图片的读取与存储">
+                <i class="fa fa-chevron-left"></i> OpenCV 图片的读取与存储
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04-10-Mac-StaticAndDynamicLibrary/" rel="prev" title="macOS静态库与动态库">
+                macOS静态库与动态库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei">
+            
+              <p class="site-author-name" itemprop="name">Wei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-basic-starting-point-step1"><span class="nav-number">1.</span> <span class="nav-text">¶A Basic Starting Point (Step1)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adding-a-version-number-and-configured-header-file"><span class="nav-number">1.1.</span> <span class="nav-text">¶Adding a Version Number and Configured Header File</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adding-a-library-step-2"><span class="nav-number">2.</span> <span class="nav-text">¶Adding a Library (Step 2)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#installing-and-testing-step-3"><span class="nav-number">3.</span> <span class="nav-text">¶Installing and Testing (Step 3)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adding-system-introspection-step-4"><span class="nav-number">4.</span> <span class="nav-text">¶Adding System Introspection (Step 4)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adding-a-generated-file-and-generator-step-5"><span class="nav-number">5.</span> <span class="nav-text">¶Adding a Generated File and Generator (Step 5)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#building-an-installer-step-6"><span class="nav-number">6.</span> <span class="nav-text">¶Building an Installer (Step 6)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adding-support-for-a-dashboard-step-7"><span class="nav-number">7.</span> <span class="nav-text">¶Adding Support for a Dashboard (Step 7)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://wei587me.github.io/2018/04-07-Cpp-CMakeTutorial/";
+    this.page.identifier = "2018/04-07-Cpp-CMakeTutorial/";
+    this.page.title = 'CMake Tutorial';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

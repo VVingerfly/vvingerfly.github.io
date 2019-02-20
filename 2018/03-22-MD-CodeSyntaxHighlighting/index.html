@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="¶代码高亮语法 Markdown中代码高亮的一般书写格式为：  ```language_key if (condition) { 	&amp;emsp; return true; } ```  其中language_key填写具体的语言类型。 ¶代码语言支持 注意：不同的Markdown编辑器所支持的语言可能不同。    Language language_key     1C 1c   ActionSc">
+<meta name="keywords" content="markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown中的代码语法高亮">
+<meta property="og:url" content="https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="¶代码高亮语法 Markdown中代码高亮的一般书写格式为：  ```language_key if (condition) { 	&amp;emsp; return true; } ```  其中language_key填写具体的语言类型。 ¶代码语言支持 注意：不同的Markdown编辑器所支持的语言可能不同。    Language language_key     1C 1c   ActionSc">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-22T05:59:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Markdown中的代码语法高亮">
+<meta name="twitter:description" content="¶代码高亮语法 Markdown中代码高亮的一般书写格式为：  ```language_key if (condition) { 	&amp;emsp; return true; } ```  其中language_key填写具体的语言类型。 ¶代码语言支持 注意：不同的Markdown编辑器所支持的语言可能不同。    Language language_key     1C 1c   ActionSc">
+
+
+
+
+
+
+  <link rel="canonical" href="https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Markdown中的代码语法高亮 | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Markdown中的代码语法高亮
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-22 13:59:00" itemprop="dateCreated datePublished" datetime="2018-03-22T13:59:00+08:00">2018-03-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/markdown/" itemprop="url" rel="index"><span itemprop="name">markdown</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/03-22-MD-CodeSyntaxHighlighting/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03-22-MD-CodeSyntaxHighlighting/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="代码高亮语法"><a class="header-anchor" href="#代码高亮语法">¶</a>代码高亮语法</h2>
+<p>Markdown中代码高亮的一般书写格式为：</p>
+<blockquote>
+<div>```language_key</div>
+<div>if (condition) {</div>
+<div>	&emsp; return true;</div>
+<div>}</div>
+<div>```</div>
+</blockquote>
+<p>其中<code>language_key</code>填写具体的语言类型。</p>
+<h2 id="代码语言支持"><a class="header-anchor" href="#代码语言支持">¶</a>代码语言支持</h2>
+<p><em>注意</em>：不同的Markdown编辑器所支持的语言可能不同。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Language</th>
+<th style="text-align:center">language_key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1C</td>
+<td style="text-align:center">1c</td>
+</tr>
+<tr>
+<td style="text-align:center">ActionScript</td>
+<td style="text-align:center">actionscript</td>
+</tr>
+<tr>
+<td style="text-align:center">Apache</td>
+<td style="text-align:center">apache</td>
+</tr>
+<tr>
+<td style="text-align:center">AppleScript</td>
+<td style="text-align:center">applescript</td>
+</tr>
+<tr>
+<td style="text-align:center">AsciiDoc</td>
+<td style="text-align:center">asciidoc</td>
+</tr>
+<tr>
+<td style="text-align:center">AspectJ</td>
+<td style="text-align:center">asciidoc</td>
+</tr>
+<tr>
+<td style="text-align:center">AutoHotkey</td>
+<td style="text-align:center">autohotkey</td>
+</tr>
+<tr>
+<td style="text-align:center">AVR Assembler</td>
+<td style="text-align:center">avrasm</td>
+</tr>
+<tr>
+<td style="text-align:center">Axapta</td>
+<td style="text-align:center">axapta</td>
+</tr>
+<tr>
+<td style="text-align:center">Bash</td>
+<td style="text-align:center">bash</td>
+</tr>
+<tr>
+<td style="text-align:center">BrainFuck</td>
+<td style="text-align:center">brainfuck</td>
+</tr>
+<tr>
+<td style="text-align:center">Cap’n Proto</td>
+<td style="text-align:center">capnproto</td>
+</tr>
+<tr>
+<td style="text-align:center">Clojure REPL</td>
+<td style="text-align:center">clojure</td>
+</tr>
+<tr>
+<td style="text-align:center">Clojure</td>
+<td style="text-align:center">clojure</td>
+</tr>
+<tr>
+<td style="text-align:center">CMake</td>
+<td style="text-align:center">cmake</td>
+</tr>
+<tr>
+<td style="text-align:center">CoffeeScript</td>
+<td style="text-align:center">coffeescript</td>
+</tr>
+<tr>
+<td style="text-align:center">C++</td>
+<td style="text-align:center">cpp</td>
+</tr>
+<tr>
+<td style="text-align:center">C#</td>
+<td style="text-align:center">cs</td>
+</tr>
+<tr>
+<td style="text-align:center">CSS</td>
+<td style="text-align:center">css</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">d</td>
+</tr>
+<tr>
+<td style="text-align:center">Dart</td>
+<td style="text-align:center">d</td>
+</tr>
+<tr>
+<td style="text-align:center">Delphi</td>
+<td style="text-align:center">delphi</td>
+</tr>
+<tr>
+<td style="text-align:center">Diff</td>
+<td style="text-align:center">diff</td>
+</tr>
+<tr>
+<td style="text-align:center">Django</td>
+<td style="text-align:center">django</td>
+</tr>
+<tr>
+<td style="text-align:center">DOS .bat</td>
+<td style="text-align:center">dos</td>
+</tr>
+<tr>
+<td style="text-align:center">Dust</td>
+<td style="text-align:center">dust</td>
+</tr>
+<tr>
+<td style="text-align:center">Elixir</td>
+<td style="text-align:center">elixir</td>
+</tr>
+<tr>
+<td style="text-align:center">ERB (Embedded Ruby)</td>
+<td style="text-align:center">erb</td>
+</tr>
+<tr>
+<td style="text-align:center">Erlang REPL</td>
+<td style="text-align:center">erlang-repl</td>
+</tr>
+<tr>
+<td style="text-align:center">Erlang</td>
+<td style="text-align:center">erlang</td>
+</tr>
+<tr>
+<td style="text-align:center">FIX</td>
+<td style="text-align:center">fix</td>
+</tr>
+<tr>
+<td style="text-align:center">F#</td>
+<td style="text-align:center">fsharp</td>
+</tr>
+<tr>
+<td style="text-align:center">G-code (ISO 6983)</td>
+<td style="text-align:center">gcode</td>
+</tr>
+<tr>
+<td style="text-align:center">Gherkin</td>
+<td style="text-align:center">gherkin</td>
+</tr>
+<tr>
+<td style="text-align:center">GLSL</td>
+<td style="text-align:center">glsl</td>
+</tr>
+<tr>
+<td style="text-align:center">Go</td>
+<td style="text-align:center">go</td>
+</tr>
+<tr>
+<td style="text-align:center">Gradle</td>
+<td style="text-align:center">gradle</td>
+</tr>
+<tr>
+<td style="text-align:center">Groovy</td>
+<td style="text-align:center">groovy</td>
+</tr>
+<tr>
+<td style="text-align:center">Haml</td>
+<td style="text-align:center">haml</td>
+</tr>
+<tr>
+<td style="text-align:center">Handlebars</td>
+<td style="text-align:center">handlebars</td>
+</tr>
+<tr>
+<td style="text-align:center">Haskell</td>
+<td style="text-align:center">haskell</td>
+</tr>
+<tr>
+<td style="text-align:center">Haxe</td>
+<td style="text-align:center">haxe</td>
+</tr>
+<tr>
+<td style="text-align:center">HTTP</td>
+<td style="text-align:center">http</td>
+</tr>
+<tr>
+<td style="text-align:center">Ini file</td>
+<td style="text-align:center">ini</td>
+</tr>
+<tr>
+<td style="text-align:center">Java</td>
+<td style="text-align:center">java</td>
+</tr>
+<tr>
+<td style="text-align:center">JavaScript</td>
+<td style="text-align:center">javascript</td>
+</tr>
+<tr>
+<td style="text-align:center">JSON</td>
+<td style="text-align:center">json</td>
+</tr>
+<tr>
+<td style="text-align:center">Lasso</td>
+<td style="text-align:center">lasso</td>
+</tr>
+<tr>
+<td style="text-align:center">Less</td>
+<td style="text-align:center">less</td>
+</tr>
+<tr>
+<td style="text-align:center">Lisp</td>
+<td style="text-align:center">lisp</td>
+</tr>
+<tr>
+<td style="text-align:center">LiveCode</td>
+<td style="text-align:center">livecodeserver</td>
+</tr>
+<tr>
+<td style="text-align:center">LiveScript</td>
+<td style="text-align:center">livescript</td>
+</tr>
+<tr>
+<td style="text-align:center">Lua</td>
+<td style="text-align:center">lua</td>
+</tr>
+<tr>
+<td style="text-align:center">Makefile</td>
+<td style="text-align:center">makefile</td>
+</tr>
+<tr>
+<td style="text-align:center">Markdown</td>
+<td style="text-align:center">markdown</td>
+</tr>
+<tr>
+<td style="text-align:center">Mathematica</td>
+<td style="text-align:center">mathematica</td>
+</tr>
+<tr>
+<td style="text-align:center">Matlab</td>
+<td style="text-align:center">matlab</td>
+</tr>
+<tr>
+<td style="text-align:center">MEL (Maya Embedded Language)</td>
+<td style="text-align:center">mel</td>
+</tr>
+<tr>
+<td style="text-align:center">Mercury</td>
+<td style="text-align:center">mercury</td>
+</tr>
+<tr>
+<td style="text-align:center">Mizar</td>
+<td style="text-align:center">mizar</td>
+</tr>
+<tr>
+<td style="text-align:center">Monkey</td>
+<td style="text-align:center">monkey</td>
+</tr>
+<tr>
+<td style="text-align:center">nginx</td>
+<td style="text-align:center">nginx</td>
+</tr>
+<tr>
+<td style="text-align:center">Nimrod</td>
+<td style="text-align:center">nimrod</td>
+</tr>
+<tr>
+<td style="text-align:center">Nix</td>
+<td style="text-align:center">nix</td>
+</tr>
+<tr>
+<td style="text-align:center">NSIS</td>
+<td style="text-align:center">nsis</td>
+</tr>
+<tr>
+<td style="text-align:center">Objective C</td>
+<td style="text-align:center">objectivec</td>
+</tr>
+<tr>
+<td style="text-align:center">OCaml</td>
+<td style="text-align:center">ocaml</td>
+</tr>
+<tr>
+<td style="text-align:center">Oxygene</td>
+<td style="text-align:center">oxygene</td>
+</tr>
+<tr>
+<td style="text-align:center">Parser 3</td>
+<td style="text-align:center">parser3</td>
+</tr>
+<tr>
+<td style="text-align:center">Perl</td>
+<td style="text-align:center">perl</td>
+</tr>
+<tr>
+<td style="text-align:center">PHP</td>
+<td style="text-align:center">php</td>
+</tr>
+<tr>
+<td style="text-align:center">PowerShell</td>
+<td style="text-align:center">powershell</td>
+</tr>
+<tr>
+<td style="text-align:center">Processing</td>
+<td style="text-align:center">processing</td>
+</tr>
+<tr>
+<td style="text-align:center">Python’s profiler output</td>
+<td style="text-align:center">profile</td>
+</tr>
+<tr>
+<td style="text-align:center">Protocol Buffers</td>
+<td style="text-align:center">protobuf</td>
+</tr>
+<tr>
+<td style="text-align:center">Puppet</td>
+<td style="text-align:center">puppet</td>
+</tr>
+<tr>
+<td style="text-align:center">Python</td>
+<td style="text-align:center">python</td>
+</tr>
+<tr>
+<td style="text-align:center">Q</td>
+<td style="text-align:center">q</td>
+</tr>
+<tr>
+<td style="text-align:center">R</td>
+<td style="text-align:center">r</td>
+</tr>
+<tr>
+<td style="text-align:center">RenderMan RIB</td>
+<td style="text-align:center">rib</td>
+</tr>
+<tr>
+<td style="text-align:center">Roboconf</td>
+<td style="text-align:center">roboconf</td>
+</tr>
+<tr>
+<td style="text-align:center">RenderMan RSL</td>
+<td style="text-align:center">rsl</td>
+</tr>
+<tr>
+<td style="text-align:center">Ruby</td>
+<td style="text-align:center">ruby</td>
+</tr>
+<tr>
+<td style="text-align:center">Oracle Rules Language</td>
+<td style="text-align:center">ruleslanguage</td>
+</tr>
+<tr>
+<td style="text-align:center">Rust</td>
+<td style="text-align:center">rust</td>
+</tr>
+<tr>
+<td style="text-align:center">Scala</td>
+<td style="text-align:center">scala</td>
+</tr>
+<tr>
+<td style="text-align:center">Scheme</td>
+<td style="text-align:center">scheme</td>
+</tr>
+<tr>
+<td style="text-align:center">Scilab</td>
+<td style="text-align:center">scilab</td>
+</tr>
+<tr>
+<td style="text-align:center">SCSS</td>
+<td style="text-align:center">scss</td>
+</tr>
+<tr>
+<td style="text-align:center">Smali</td>
+<td style="text-align:center">smali</td>
+</tr>
+<tr>
+<td style="text-align:center">SmallTalk</td>
+<td style="text-align:center">smalltalk</td>
+</tr>
+<tr>
+<td style="text-align:center">SML</td>
+<td style="text-align:center">sml</td>
+</tr>
+<tr>
+<td style="text-align:center">SQL</td>
+<td style="text-align:center">sql</td>
+</tr>
+<tr>
+<td style="text-align:center">Stata</td>
+<td style="text-align:center">stata</td>
+</tr>
+<tr>
+<td style="text-align:center">STEP Part 21 (ISO 10303-21)</td>
+<td style="text-align:center">step21</td>
+</tr>
+<tr>
+<td style="text-align:center">Stylus</td>
+<td style="text-align:center">stylus</td>
+</tr>
+<tr>
+<td style="text-align:center">Swift</td>
+<td style="text-align:center">swift</td>
+</tr>
+<tr>
+<td style="text-align:center">Tcl</td>
+<td style="text-align:center">tcl</td>
+</tr>
+<tr>
+<td style="text-align:center">TeX</td>
+<td style="text-align:center">tex</td>
+</tr>
+<tr>
+<td style="text-align:center">Thrift</td>
+<td style="text-align:center">thrift</td>
+</tr>
+<tr>
+<td style="text-align:center">Twig</td>
+<td style="text-align:center">twig</td>
+</tr>
+<tr>
+<td style="text-align:center">TypeScript</td>
+<td style="text-align:center">typescript</td>
+</tr>
+<tr>
+<td style="text-align:center">Vala</td>
+<td style="text-align:center">vala</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://VB.NET" target="_blank" rel="noopener">VB.NET</a></td>
+<td style="text-align:center">vbnet</td>
+</tr>
+<tr>
+<td style="text-align:center">VBScript in HTML</td>
+<td style="text-align:center">vbscript-html</td>
+</tr>
+<tr>
+<td style="text-align:center">VBScript</td>
+<td style="text-align:center">vbscript</td>
+</tr>
+<tr>
+<td style="text-align:center">Verilog</td>
+<td style="text-align:center">verilog</td>
+</tr>
+<tr>
+<td style="text-align:center">VHDL</td>
+<td style="text-align:center">vhdl</td>
+</tr>
+<tr>
+<td style="text-align:center">Vim Script</td>
+<td style="text-align:center">vim</td>
+</tr>
+<tr>
+<td style="text-align:center">Intel x86 Assembly</td>
+<td style="text-align:center">x86asm</td>
+</tr>
+<tr>
+<td style="text-align:center">XL</td>
+<td style="text-align:center">xl</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
+<ul>
+<li><a href="http://blog.csdn.net/qq_32126633/article/details/78838494" target="_blank" rel="noopener">markdown语法高亮支持</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Wei</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/" title="Markdown中的代码语法高亮">https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/markdown/" rel="tag"># markdown</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03-22-Atom-PackageInstalling/" rel="next" title="Atom插件安装">
+                <i class="fa fa-chevron-left"></i> Atom插件安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03-23-Git-FetchPull/" rel="prev" title="Git-FetchPull">
+                Git-FetchPull <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei">
+            
+              <p class="site-author-name" itemprop="name">Wei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码高亮语法"><span class="nav-number">1.</span> <span class="nav-text">¶代码高亮语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码语言支持"><span class="nav-number">2.</span> <span class="nav-text">¶代码语言支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://wei587me.github.io/2018/03-22-MD-CodeSyntaxHighlighting/";
+    this.page.identifier = "2018/03-22-MD-CodeSyntaxHighlighting/";
+    this.page.title = 'Markdown中的代码语法高亮';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

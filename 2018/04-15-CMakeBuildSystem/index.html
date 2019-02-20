@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译自CMake官方文档">
+<meta name="keywords" content="cmake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake构建系统">
+<meta property="og:url" content="https://wei587me.github.io/2018/04-15-CMakeBuildSystem/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="翻译自CMake官方文档">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-15T09:40:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMake构建系统">
+<meta name="twitter:description" content="翻译自CMake官方文档">
+
+
+
+
+
+
+  <link rel="canonical" href="https://wei587me.github.io/2018/04-15-CMakeBuildSystem/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CMake构建系统 | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2018/04-15-CMakeBuildSystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CMake构建系统
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-04-15 17:40:00" itemprop="dateCreated datePublished" datetime="2018-04-15T17:40:00+08:00">2018-04-15</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/" itemprop="url" rel="index"><span itemprop="name">translation</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/translation/cmake/" itemprop="url" rel="index"><span itemprop="name">cmake</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/04-15-CMakeBuildSystem/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04-15-CMakeBuildSystem/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-description">翻译自CMake官方文档</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>翻译自<a href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#introduction" target="_blank" rel="noopener">cmake-buildsystem</a></em></p>
+<h2 id="introduction"><a class="header-anchor" href="#introduction">¶</a>Introduction</h2>
+<p>一个基于<code>CMake</code>的构建系统由一套高层次的逻辑目标(high-level logical targets)组成，每个目标对应一个可执行文件或库，或者作为一个包含自定义命令的自定义目标。目标之间的依赖在构建系统中表达出来，来决定构建顺序和改变之后的再生成规则。</p>
+<h2 id="binary-targets"><a class="header-anchor" href="#binary-targets">¶</a>Binary Targets</h2>
+<p>可执行文件和库通过使用<code>add_executable()</code>和<code>add_library()</code>命令来定义，产生的二进制文件有当前目标平台合适的前缀(prefixes)、后缀(suffixes)和扩展名(extensions)。二进制目标之间的依赖通过命令<code>target_link_libraries()</code>来表达：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive archive.cpp zip.cpp lzma.cpp)</span><br><span class="line"><span class="keyword">add_executable</span>(zipapp zipapp.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(zipapp archive)</span><br></pre></td></tr></table></figure>
+<p><code>archive</code>被定义为一个静态库，包含由<code>archive.cpp</code>、<code>zip.cpp</code>和<code>lzma.cpp</code>编译而来的目标。<code>zipapp</code>是一个可执行文件，由编译和链接<code>zipapp.cpp</code>构成。当链接<code>zipapp</code>可执行文件时，<code>archive</code>静态库即被链接。</p>
+<h3 id="binary-executables"><a class="header-anchor" href="#binary-executables">¶</a>Binary Executables</h3>
+<p>命令<code>add_executable()</code>定义一个可执行目标：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(mytool mytool.cpp)</span><br></pre></td></tr></table></figure>
+<p>有些命令，如在构建时生成运行时规则的<code>add_custom_command()</code>命令，可以显式地使用一个<code>EXECUTABLE target</code>作为<code>COMMAND executable</code>。构建系统的规则会保证在尝试运行命令前构建好可执行文件。</p>
+<h3 id="binary-library-types"><a class="header-anchor" href="#binary-library-types">¶</a>Binary Library Types</h3>
+<h4 id="normal-libraries"><a class="header-anchor" href="#normal-libraries">¶</a>Normal Libraries</h4>
+<p>默认情况下，<code>add_library()</code>命令定义一个静态库，除非有具体类型指明。类型可以通过下面的命令指定：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive SHARED archive.cpp zip.cpp lzma.cpp)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive STATIC archive.cpp zip.cpp lzma.cpp)</span><br></pre></td></tr></table></figure>
+<p>通过开启<code>BUILD_SHARED_LIBS</code>变量，能够改变<code>add_library()</code>的行为，使得默认构建共享库。</p>
+<p>在构建系统定义的环境中，库是<code>SHARED</code>或者<code>STATIC</code>并没有什么关系，命令依赖和其他的<code>API</code>的工作方式一样，和库的类型无关。<br>
+<code>MODULE</code>库不一样，一般它不会被链接进去，它不会在<code>target_link_libraries()</code>命令的右侧使用。<code>MODULE</code>库通过运行时技术当作一个插件载入。如果一个库不导出任何非托管的符号(unmanaged symbols)（如Windows resource DLL, C++/CLI DLL），要求这个库不是<code>SHARED</code>库，因为<code>CMake</code>期待<code>SHARED</code>库至少导出一个符合。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive MODULE <span class="number">7</span>z.cpp)</span><br></pre></td></tr></table></figure>
+<h5 id="apple-frameworks"><a class="header-anchor" href="#apple-frameworks">¶</a>Apple Frameworks</h5>
+<p>一个共享库可能会被标记为<code>FRAMEWORK</code>目标属性来创建一个<code>OS X</code>或这<code>iOS</code> <code>Framework Bundle</code>，<code>MACOSX_FRAMEWORK_IDENTIFIER</code>设置<code>CFBundleIdentifier</code>键值来唯一地识别一个<code>bundle</code>。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(MyFramework SHARED MyFramework.cpp)</span><br><span class="line"><span class="keyword">set_target_properties</span>(MyFramework PROPERTIES</span><br><span class="line">  FRAMEWORK <span class="keyword">TRUE</span></span><br><span class="line">  FRAMEWORK_VERSION A</span><br><span class="line">  MACOSX_FRAMEWORK_IDENTIFIER org.cmake.MyFramework</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="object-libraries"><a class="header-anchor" href="#object-libraries">¶</a>Object Libraries</h4>
+<p><code>OBJECT</code>库同样不会被链接，它定义了从给定的源文件编译生成的一些未归档的目标文件(object files)。这些目标文件可以作为其他目标的源输入使用：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive OBJECT archive.cpp zip.cpp lzma.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_library</span>(archiveExtras STATIC $&lt;TARGET_OBJECTS:archive&gt; extras.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(test_exe $&lt;TARGET_OBJECTS:archive&gt; <span class="keyword">test</span>.cpp)</span><br></pre></td></tr></table></figure>
+<p><code>OBJECT</code>库可能不会在<code>target_link_libraries()</code>的右端项使用，它们也可能不作为<code>TARGET</code>在<code>add_custom_command(TARGET)</code>命令签名中使用。它们可能会被安装，并作为一个<code>INTERFACE</code>库导出。</p>
+<p>虽然在调用<code>target_link_libraries()</code>命令时目标库不会被直接命名，但是它们能够通过使用一个<code>Interface Library</code>间接地被链接，但<code>Interface Library</code>的<code>INTERFACE_SOURCES</code>。</p>
+<p>虽然在使用<code>add_custom_command(TARGET)</code>命令签名时目标库可能不会被当作TARGET使用，但使用<code>$&lt;TARGET_OBJECTS:objlib&gt;</code>可以让目标列表可以被<code>add_custom_command(OUTPUT)</code>或<code>file(GENERATE)</code>使用。</p>
+<h2 id="build-specification-and-usage-requirements"><a class="header-anchor" href="#build-specification-and-usage-requirements">¶</a>Build Specification and Usage Requirements</h2>
+<p>命令<a href="https://cmake.org/cmake/help/latest/command/target_include_directories.html#command:target_include_directories" target="_blank" rel="noopener"><code>target_include_directories()</code></a>、<a href="https://cmake.org/cmake/help/latest/command/target_compile_definitions.html#command:target_compile_definitions" target="_blank" rel="noopener"><code>target_compile_definitions()</code></a>和<a href="https://cmake.org/cmake/help/latest/command/target_compile_options.html#command:target_compile_options" target="_blank" rel="noopener"><code>target_compile_options()</code></a>明确二进制目标的构建规范和使用需求，这些命令分别填入(populate)<code>INCLUDE_DIRECTORIES</code>、<code>COMPILE_DEFINITIONS</code>和<code>COMPILE_OPTIONS</code>目标属性，和/或<code>INTERFACE_INCLUDE_DIRECTORIES</code>、<code>INTERFACE_COMPILE_DEFINITIONS</code>和<code>INTERFACE_COMPILE_OPTIONS</code>目标属性。</p>
+<p>每个命令都有<code>PRIVATE</code>、<code>PUBLIC</code>和<code>INTERFACE</code>三种模式。<code>PRIVATE</code>模式只填入(populate)目标属性非<code>INTERFACE_</code>变体(variant)，<code>INTERFACE</code>模式只填入<code>INTERFACE_</code>变体，<code>PUBLIC</code>模式同时填入各自目标属性的变体。每个命令可以通过使用这些关键词的组合：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_definitions</span>(archive</span><br><span class="line">  PRIVATE BUILDING_WITH_LZMA</span><br><span class="line">  INTERFACE USING_ARCHIVE_LIB</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>注意 使用要求</p>
+<p>Note that usage requirements are not designed as a way to make downstreams use particular COMPILE_OPTIONS or COMPILE_DEFINITIONS etc for convenience only. The contents of the properties must be requirements, not merely recommendations or convenience.</p>
+<p>See the Creating Relocatable Packages section of the cmake-packages(7) manual for discussion of additional care that must be taken when specifying usage requirements while creating packages for redistribution.</p>
+<h3 id="target-properties"><a class="header-anchor" href="#target-properties">¶</a>Target Properties</h3>
+<h3 id="transitive-usage-requirements"><a class="header-anchor" href="#transitive-usage-requirements">¶</a>Transitive Usage Requirements</h3>
+<h3 id="compatible-interface-properties"><a class="header-anchor" href="#compatible-interface-properties">¶</a>Compatible Interface Properties</h3>
+<h3 id="property-origin-debugging"><a class="header-anchor" href="#property-origin-debugging">¶</a>Property Origin Debugging</h3>
+<h3 id="build-specification-with-generator-expressions"><a class="header-anchor" href="#build-specification-with-generator-expressions">¶</a>Build Specification with Generator Expressions</h3>
+<h4 id="include-directories-and-usage-requirements"><a class="header-anchor" href="#include-directories-and-usage-requirements">¶</a>Include Directories and Usage Requirements</h4>
+<h3 id="link-libraries-and-generator-expressions"><a class="header-anchor" href="#link-libraries-and-generator-expressions">¶</a>Link Libraries and Generator Expressions</h3>
+<h3 id="output-artifacts"><a class="header-anchor" href="#output-artifacts">¶</a>Output Artifacts</h3>
+<h4 id="runtime-output-artifacts"><a class="header-anchor" href="#runtime-output-artifacts">¶</a>Runtime Output Artifacts</h4>
+<h4 id="library-output-artifacts"><a class="header-anchor" href="#library-output-artifacts">¶</a>Library Output Artifacts</h4>
+<h4 id="archive-output-artifacts"><a class="header-anchor" href="#archive-output-artifacts">¶</a>Archive Output Artifacts</h4>
+<h3 id="directory-scoped-commands"><a class="header-anchor" href="#directory-scoped-commands">¶</a>Directory-Scoped Commands</h3>
+<h2 id="pseudo-targets"><a class="header-anchor" href="#pseudo-targets">¶</a>Pseudo Targets</h2>
+<h3 id="imported-targets"><a class="header-anchor" href="#imported-targets">¶</a>Imported Targets</h3>
+<h3 id="alias-targets"><a class="header-anchor" href="#alias-targets">¶</a>Alias Targets</h3>
+<h3 id="interface-libraries"><a class="header-anchor" href="#interface-libraries">¶</a>Interface Libraries</h3>
+<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<ul>
+<li><a href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#introduction" target="_blank" rel="noopener">cmake-buildsystem</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Wei</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://wei587me.github.io/2018/04-15-CMakeBuildSystem/" title="CMake构建系统">https://wei587me.github.io/2018/04-15-CMakeBuildSystem/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cmake/" rel="tag"># cmake</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04-14-Cpp-FunctionParameters/" rel="next" title="C++函数参数传递详解">
+                <i class="fa fa-chevron-left"></i> C++函数参数传递详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04-15-CMakeLanguage/" rel="prev" title="CMake语言">
+                CMake语言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei">
+            
+              <p class="site-author-name" itemprop="name">Wei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">¶Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-targets"><span class="nav-number">2.</span> <span class="nav-text">¶Binary Targets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#binary-executables"><span class="nav-number">2.1.</span> <span class="nav-text">¶Binary Executables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binary-library-types"><span class="nav-number">2.2.</span> <span class="nav-text">¶Binary Library Types</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#normal-libraries"><span class="nav-number">2.2.1.</span> <span class="nav-text">¶Normal Libraries</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#apple-frameworks"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">¶Apple Frameworks</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#object-libraries"><span class="nav-number">2.2.2.</span> <span class="nav-text">¶Object Libraries</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build-specification-and-usage-requirements"><span class="nav-number">3.</span> <span class="nav-text">¶Build Specification and Usage Requirements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#target-properties"><span class="nav-number">3.1.</span> <span class="nav-text">¶Target Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transitive-usage-requirements"><span class="nav-number">3.2.</span> <span class="nav-text">¶Transitive Usage Requirements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compatible-interface-properties"><span class="nav-number">3.3.</span> <span class="nav-text">¶Compatible Interface Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property-origin-debugging"><span class="nav-number">3.4.</span> <span class="nav-text">¶Property Origin Debugging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-specification-with-generator-expressions"><span class="nav-number">3.5.</span> <span class="nav-text">¶Build Specification with Generator Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#include-directories-and-usage-requirements"><span class="nav-number">3.5.1.</span> <span class="nav-text">¶Include Directories and Usage Requirements</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#link-libraries-and-generator-expressions"><span class="nav-number">3.6.</span> <span class="nav-text">¶Link Libraries and Generator Expressions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#output-artifacts"><span class="nav-number">3.7.</span> <span class="nav-text">¶Output Artifacts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#runtime-output-artifacts"><span class="nav-number">3.7.1.</span> <span class="nav-text">¶Runtime Output Artifacts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#library-output-artifacts"><span class="nav-number">3.7.2.</span> <span class="nav-text">¶Library Output Artifacts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#archive-output-artifacts"><span class="nav-number">3.7.3.</span> <span class="nav-text">¶Archive Output Artifacts</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#directory-scoped-commands"><span class="nav-number">3.8.</span> <span class="nav-text">¶Directory-Scoped Commands</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pseudo-targets"><span class="nav-number">4.</span> <span class="nav-text">¶Pseudo Targets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#imported-targets"><span class="nav-number">4.1.</span> <span class="nav-text">¶Imported Targets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias-targets"><span class="nav-number">4.2.</span> <span class="nav-text">¶Alias Targets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interface-libraries"><span class="nav-number">4.3.</span> <span class="nav-text">¶Interface Libraries</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://wei587me.github.io/2018/04-15-CMakeBuildSystem/";
+    this.page.identifier = "2018/04-15-CMakeBuildSystem/";
+    this.page.title = 'CMake构建系统';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
