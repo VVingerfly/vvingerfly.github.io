@@ -516,7 +516,7 @@
 <code>MODULE</code>库不一样，一般它不会被链接进去，它不会在<code>target_link_libraries()</code>命令的右侧使用。<code>MODULE</code>库通过运行时技术当作一个插件载入。如果一个库不导出任何非托管的符号(unmanaged symbols)（如Windows resource DLL, C++/CLI DLL），要求这个库不是<code>SHARED</code>库，因为<code>CMake</code>期待<code>SHARED</code>库至少导出一个符合。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(archive MODULE <span class="number">7</span>z.cpp)</span><br></pre></td></tr></table></figure>
 <h5 id="apple-frameworks"><a class="header-anchor" href="#apple-frameworks">¶</a>Apple Frameworks</h5>
-<p>一个共享库可能会被标记为<code>FRAMEWORK</code>目标属性来创建一个<code>OS X</code>或这<code>iOS</code> <code>Framework Bundle</code>，<code>MACOSX_FRAMEWORK_IDENTIFIER</code>设置<code>CFBundleIdentifier</code>键值来唯一地识别一个<code>bundle</code>。</p>
+<p>一个共享库可能会被标记为<code>FRAMEWORK</code>目标属性来创建一个<code>OS X</code>或者<code>iOS</code> <code>Framework Bundle</code>，<code>MACOSX_FRAMEWORK_IDENTIFIER</code>设置<code>CFBundleIdentifier</code>键值来唯一地识别一个<code>bundle</code>。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(MyFramework SHARED MyFramework.cpp)</span><br><span class="line"><span class="keyword">set_target_properties</span>(MyFramework PROPERTIES</span><br><span class="line">  FRAMEWORK <span class="keyword">TRUE</span></span><br><span class="line">  FRAMEWORK_VERSION A</span><br><span class="line">  MACOSX_FRAMEWORK_IDENTIFIER org.cmake.MyFramework</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <h4 id="object-libraries"><a class="header-anchor" href="#object-libraries">¶</a>Object Libraries</h4>
 <p><code>OBJECT</code>库同样不会被链接，它定义了从给定的源文件编译生成的一些未归档的目标文件(object files)。这些目标文件可以作为其他目标的源输入使用：</p>
@@ -701,7 +701,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -758,7 +758,35 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -827,7 +855,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

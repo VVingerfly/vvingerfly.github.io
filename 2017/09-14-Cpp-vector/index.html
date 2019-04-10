@@ -432,7 +432,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cpp/" itemprop="url" rel="index"><span itemprop="name">cpp</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/" itemprop="url" rel="index"><span itemprop="name">coding</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/cpp/" itemprop="url" rel="index"><span itemprop="name">cpp</span></a></span>
 
                 
                 
@@ -513,7 +520,7 @@
 </li>
 </ul>
 <p>只有当需要的内存空间超过当前容量时，<code>reserve</code>调用才会改变<code>vector</code>的容量。如果需求大于当前容量，<code>reserve</code>至少分配与需求一样大的内存空间（可能更大）。如果小于等于当前容量，<code>reserve</code>什么也不做。</p>
-<p>在新标准库中，可以调用<code>shrink_to_fit</code>来要求<code>vector</code>, <code>string</code>和<code>deque</code>退回不需要的内存空间。但是，具体的实现可以选择忽略此请求，即调用<code>shrink_to_fit</code>也并不保证一定退回内存空间。</p>
+<p>在新标准库中，可以调用<code>shrink_to_fit</code>来要求<code>vector</code>, <code>string</code>和<code>deque</code>退回不需要的内存空间。但是，具体的实现可以选择忽略此请求，即==调用<code>shrink_to_fit</code>也并不保证一定退回内存空间==。</p>
 <h2 id="vector内存回收机制"><a class="header-anchor" href="#vector内存回收机制">¶</a><code>vector</code>内存回收机制</h2>
 <p>由于<code>vector</code>的内存占用空间只增不减，比如你首先分配了10,000个字节，然后erase掉后面9,999个，留下一个有效元素，但是内存占用仍为10,000个。所有内存空间是在<code>vector</code>析构时候才能被系统回收。<code>empty</code>用来检测容器是否为空的，<code>clear</code>可以清空所有元素。但是即使<code>clear</code>，<code>vector</code>所占用的内存空间依然如故，无法保证内存的回收。</p>
 <p>如果需要空间动态缩小，可以考虑使用deque。如果非vector不可，可以用swap()来帮助你释放内存。具体方法如下：</p>
@@ -678,7 +685,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -735,7 +742,35 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -804,7 +839,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

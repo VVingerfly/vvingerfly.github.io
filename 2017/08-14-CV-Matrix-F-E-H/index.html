@@ -435,7 +435,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cv/" itemprop="url" rel="index"><span itemprop="name">cv</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/cv/" itemprop="url" rel="index"><span itemprop="name">cv</span></a></span>
 
                 
                 
@@ -491,12 +498,16 @@
       
 
       
-        <h2 id="f-矩阵-基础矩阵-fundamental-matrix"><a class="header-anchor" href="#f-矩阵-基础矩阵-fundamental-matrix">¶</a>F 矩阵 - 基础矩阵 (Fundamental matrix)</h2>
-<p>在计算机视觉中，基础矩阵（Fundamental matrix） $\mathrm {F}$ 是一个3×3的矩阵，表达了立体像对的像点之间的对应关系。在对极几何中，对于立体像对中的一对同名点，它们的齐次化图像坐标分别为 $p$ 与 $p’$，$\mathrm {F} p$ 表示一条必定经过 $p$ 的直线（极线）。这意味着立体像对的所有同名点对都满足：</p>
-<p>$$p’\mathrm {F} p=0 $$</p>
+        <h2 id="f-矩阵-基础矩阵-fundamental-matrix"><a class="header-anchor" href="#f-矩阵-基础矩阵-fundamental-matrix">¶</a>F 矩阵 - 基础矩阵 (Fundamental Matrix)</h2>
+<p>在计算机视觉中，基础矩阵 $\mathrm {F}$ 是一个3×3的矩阵，表达了立体像对的像点之间的对应关系。在对极几何中，对于立体像对中的一对同名点，它们的齐次化图像坐标分别为 $p$ 与 $p’$，$\mathrm {F} p$ 表示一条必定经过 $p$ 的直线（极线）。这意味着立体像对的所有同名点对都满足：<br>
+$$<br>
+p’\mathrm {F} p=0<br>
+$$</p>
 <p>F 矩阵中蕴含了立体像对的两幅图像在拍摄时相互之间的空间几何关系（外参数）以及相机检校参数（内参数），包括旋转、位移、像主点坐标和焦距。因为 $\mathrm {F}$ 矩阵的秩为2，并且可以自由缩放（尺度化），所以只需7对同名点即可估算出 F 的值。<br>
-尽管本质矩阵也满足类似的关系式，但本质矩阵中并不蕴含相机检校参数。本质矩阵与基础矩阵之间的关系可由下式表达：</p>
-<p>$$\mathrm {E} = \mathrm{K’^TFK} $$</p>
+尽管本质矩阵也满足类似的关系式，但本质矩阵中并不蕴含相机检校参数。本质矩阵与基础矩阵之间的关系可由下式表达：<br>
+$$<br>
+\mathrm {E} = \mathrm{K’^TFK}<br>
+$$</p>
 <p>其中 $\mathrm{K}$ 和 $\mathrm{K’}$ 分别为两个相机的内参数矩阵。</p>
 <h2 id="e-矩阵-本质矩阵-essential-matrix"><a class="header-anchor" href="#e-矩阵-本质矩阵-essential-matrix">¶</a>E 矩阵 - 本质矩阵 (Essential Matrix)</h2>
 <p>本质矩阵也满足类似的关系式，</p>
@@ -506,17 +517,25 @@
 在双相机的拍摄场景中建立一个空间直角坐标系，称为世界坐标系（如下图中蓝色坐标系）。物点就是场景中物体表面上的点，比如说点 $P$ 在世界坐标系中的坐标为 $(X,Y,Z)^T$。<br>
 相机的光心从物理上讲就是相机镜头组的光学中心。以光心为原点，主光轴为Z轴建立空间直角坐标系，称为相机坐标系（如下图中绿色和红色坐标系）。像平面在相机坐标系中的方程即为 $z=1$，像点就是在物点在像平面上的投影，这个投影关系是透视投影。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-14-CV-MatrixF&E&HinCV/Fmat_ded_fig1.png" width="480" height alt><br>
-用一句话来概括相机的拍摄模型，就是物点、像点、光心三点一线，此模型称为针孔相机模型。在此模型中，世界坐标系到左右相机坐标系的变换是刚性变换，即只包含旋转和平移，因此我们分别用增广矩阵 $[R;t]$ 和 $[R’;t’]$ 表示，其中 $R$ 和 $R’$ 是 $3 \times 3$ 的旋转矩阵， $t$ 和 $t’$ 为平移向量。令 $\tilde{P}$ 为 $P$ 的齐次化坐标，那么物点 $P$ 在左右相机坐标系下的坐标分别为</p>
-<p>$$P_{cam}(X_{C},Y_{C},Z_{C})^T=[R;t]\tilde {P}$$</p>
-<p>和</p>
-<p>$$P_{cam}’(X_{C’},Y_{C’},Z_{C’})^T = [R’;t’]{\tilde {P}}$$</p>
+用一句话来概括相机的拍摄模型，就是物点、像点、光心三点一线，此模型称为针孔相机模型。在此模型中，世界坐标系到左右相机坐标系的变换是刚性变换，即只包含旋转和平移，因此我们分别用增广矩阵 $[R;t]$ 和 $[R’;t’]$ 表示，其中 $R$ 和 $R’$ 是 $3 \times 3$ 的旋转矩阵， $t$ 和 $t’$ 为平移向量。令 $\tilde{P}$ 为 $P$ 的齐次化坐标，那么物点 $P$ 在左右相机坐标系下的坐标分别为<br>
+$$<br>
+P_{cam}(X_{C},Y_{C},Z_{C})^T=[R;t]\tilde {P}<br>
+$$<br>
+和<br>
+$$<br>
+P_{cam}’(X_{C’},Y_{C’},Z_{C’})^T = [R’;t’]{\tilde {P}}<br>
+$$</p>
 <p>以一台相机为例，如图所示， $C$ 为相机光心，$Z$ 轴为主轴。物点在相机坐标系下的坐标 $\tilde{P}$ 和以相片左下角为原点的像点坐标 $p$ 有如下关系：<br>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-14-CV-MatrixF&amp;E&amp;HinCV/Fmat_ded_fig3.png?imageView2/2/w/640/q/100" alt></p>
-<p>$$x = (\frac{f_xX_c}{Z_c} + x_0)^T$$</p>
-<p>$$y = (\frac{f_yY_c}{Z_c} + y_0)^T$$</p>
-<p>式中 $(x_{0},y_{0},f)$ 为像主点在相机坐标系下的坐标。<br>
-设两相机内参数矩阵同为：</p>
-<p>$$<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-14-CV-MatrixF&amp;E&amp;HinCV/Fmat_ded_fig3.png?imageView2/2/w/640/q/100" alt><br>
+$$<br>
+x = (\frac{f_xX_c}{Z_c} + x_0)^T<br>
+$$<br>
+$$<br>
+y = (\frac{f_yY_c}{Z_c} + y_0)^T<br>
+$$<br>
+式中 $(x_{0},y_{0},f)$ 为像主点在相机坐标系下的坐标。<br>
+设两相机内参数矩阵同为：<br>
+$$<br>
 K =<br>
 \left(<br>
 \begin{matrix}<br>
@@ -526,20 +545,25 @@ f_x &amp;  0   &amp; p_{c_x} \<br>
 \end{matrix}<br>
 \right)<br>
 $$<br>
-那么物点与像点之间的关系为：</p>
-<p>$$<br>
+那么物点与像点之间的关系为：<br>
+$$<br>
 p={\frac {1}{Z_{C}}}KP_{cam}={\frac{1}{Z_{C}}}K[R;t]P<br>
-$$</p>
-<p>$$<br>
+$$<br>
+$$<br>
 p’={\frac {1}{Z_{C}}}KP’<em>{cam}={\frac {1}{Z</em>{C}}}K[R’;t’]P<br>
+$$<br>
+将 $P=[R;t]<sup>{+}P_{cam}=Z’_{C}K[R;t]</sup>{+}p$ 代入上式，并令 $H_{\pi }=K[R’;t’]K[R;t]^{+}$，得：<br>
+$$<br>
+p’={\frac {Z’<em>{C}}{Z</em>{C}}}H_{\pi }p<br>
 $$</p>
-<p>将 $P=[R;t]<sup>{+}P_{cam}=Z’_{C}K[R;t]</sup>{+}p$ 代入上式，并令 $H_{\pi }=K[R’;t’]K[R;t]^{+}$，得：</p>
-<p>$$p’={\frac {Z’<em>{C}}{Z</em>{C}}}H_{\pi }p$$</p>
 <p>由于物点、像点、光心三点一线，那么物点、一对同名点和2个光心这5个点一定处于同一个平面上，我们将这个平面称为 $\pi$ 平面。 $\pi$ 平面和像平面的交线称为极线 $l’$。显然，左片上的每一个像点 $p$ 对应于右片上的一条极线 $l’$，且 $p’$ 一定在 $l’$ 上。两个相机光心的连线与右片像平面的交点称为极点，用 $e’$ 表示。</p>
-<p>在右片像平面内，极线 $l’$ 的方程可以表示为 $Ax+By+C=0$。这个平面直线方程的一般式可以视为：</p>
-<p>$$(A,B,C)^T \cdot (x,y,1)^T=0$$</p>
-<p>因此，我们可以用一个三维向量 $(A,B,C)$ 来表示极线 $l’$，并且 $l’$ 的方程可以简单的由 $e’$ 坐标向量与 $p’$ 坐标向量做向量积得到，即 $l’:e’\times p’=[e’]_{\times }p’$。其中</p>
-<p>$$ [e’]_{\times } =<br>
+<p>在右边像平面内，极线 $l’$ 的方程可以表示为 $Ax+By+C=0$。这个平面直线方程的一般式可以视为：<br>
+$$<br>
+(A,B,C)^T \cdot (x,y,1)^T=0<br>
+$$</p>
+<p>因此，我们可以用一个三维向量 $(A,B,C)$ 来表示极线 $l’$，并且 $l’$ 的方程可以简单的由 $e’$ 坐标向量与 $p’$ 坐标向量做向量积得到，即 $l’:e’\times p’=[e’]<em>{\times }p’$。其中<br>
+$$<br>
+[e’]</em>{\times } =<br>
 \left(<br>
 \begin{matrix}<br>
 0     &amp;  -1   &amp; y_0 \<br>
@@ -548,12 +572,18 @@ $$</p>
 \end{matrix}<br>
 \right)<br>
 $$</p>
-<p>令 $[e’]x$ 表示向量积的矩阵形式，那么再将同名点之间的变换关系代入，得到极线的方程为：</p>
-<p>$$l’:{\frac {Z’<em>{C}}{Z</em>{C}}}[e’]<em>{\times }H</em>{\pi }p$$</p>
-<p>因为 $p’$ 在 $l’$ 上，所以显然有：</p>
-<p>$$p’l’=p’[e’]<em>{\times }H</em>{\pi }p=0$$</p>
-<p>令$$ \mathrm{F} =[e’]<em>{\times} H</em>{\pi}$$，即得到：</p>
-<p>$${p’}^T\mathrm{F}p = 0$$</p>
+<p>令 $[e’]x$ 表示向量积的矩阵形式，那么再将同名点之间的变换关系代入，得到极线的方程为：<br>
+$$<br>
+l’:{\frac {Z’<em>{C}}{Z</em>{C}}}[e’]<em>{\times }H</em>{\pi }p<br>
+$$</p>
+<p>因为 $p’$ 在 $l’$ 上，所以显然有：<br>
+$$<br>
+p’l’=p’[e’]<em>{\times }H</em>{\pi }p=0<br>
+$$</p>
+<p>令$ \mathrm{F} =[e’]<em>{\times} H</em>{\pi}$，即得到：<br>
+$$<br>
+{p’}^T\mathrm{F}p = 0<br>
+$$</p>
 <h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
 <ul>
 <li><a href="https://zh.wikipedia.org/wiki/%E5%9F%BA%E7%A1%80%E7%9F%A9%E9%98%B5" target="_blank" rel="noopener">维基百科-基础矩阵</a></li>
@@ -627,8 +657,8 @@ $$</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08-20-CV-SIFT/" rel="prev" title="SIFT-尺度不变特征转换">
-                SIFT-尺度不变特征转换 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08-20-CV-HOG/" rel="prev" title="方向梯度直方图">
+                方向梯度直方图 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -708,7 +738,7 @@ $$</p>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -765,7 +795,35 @@ $$</p>
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -834,7 +892,9 @@ $$</p>
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -885,7 +945,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#f-矩阵-基础矩阵-fundamental-matrix"><span class="nav-number">1.</span> <span class="nav-text">¶F 矩阵 - 基础矩阵 (Fundamental matrix)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e-矩阵-本质矩阵-essential-matrix"><span class="nav-number">2.</span> <span class="nav-text">¶E 矩阵 - 本质矩阵 (Essential Matrix)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h-矩阵-单应矩阵-homography"><span class="nav-number">3.</span> <span class="nav-text">¶H 矩阵 - 单应矩阵 (Homography)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推导"><span class="nav-number">4.</span> <span class="nav-text">¶推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#f-矩阵-基础矩阵-fundamental-matrix"><span class="nav-number">1.</span> <span class="nav-text">¶F 矩阵 - 基础矩阵 (Fundamental Matrix)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e-矩阵-本质矩阵-essential-matrix"><span class="nav-number">2.</span> <span class="nav-text">¶E 矩阵 - 本质矩阵 (Essential Matrix)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h-矩阵-单应矩阵-homography"><span class="nav-number">3.</span> <span class="nav-text">¶H 矩阵 - 单应矩阵 (Homography)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推导"><span class="nav-number">4.</span> <span class="nav-text">¶推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
             
 
           </div>

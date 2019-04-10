@@ -434,7 +434,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ml/" itemprop="url" rel="index"><span itemprop="name">ml</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/ml/" itemprop="url" rel="index"><span itemprop="name">ml</span></a></span>
 
                 
                 
@@ -499,7 +506,7 @@ $$<br>
 其中均值$\mu = \frac{1}{N} \sum_{i=1}^N (x_i)$，方差$\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2}$。</p>
 <p>标准化特征使其具有0均值1方差不仅对于比较单位不同的测量有用，而且还是众多机器学习算法的普遍要求。如果特征在不同的尺度下，不同的权重更新的速率会差异很大，不利于算法的收敛。</p>
 <h3 id="mix-max-normalization"><a class="header-anchor" href="#mix-max-normalization">¶</a>Mix-max Normalization</h3>
-<p>另一种常用的标准化叫Mix-max normalization，通常被简称为normalization(标准化)。这种方法通常将数据放缩到一个固定的区间，通常是0到1之间。</p>
+<p>另一种常用的标准化叫Mix-max normalization，通常被简称为normalization(标准化)。这种方法将数据放缩到一个固定的区间，通常是0到1之间。</p>
 <p>$$<br>
 z = \frac{x-\min{(x)}}{\max{(x)}-\min{(x)}}<br>
 $$</p>
@@ -512,7 +519,7 @@ $$</p>
 <p>类别值(Categorical values)例如性别可以编码为0和1，如男性为1，女性为0，也可以编码为-1和1.</p>
 <h3 id="manhattan-encoding"><a class="header-anchor" href="#manhattan-encoding">¶</a>Manhattan Encoding</h3>
 <p>如果是不能二进制编码的类别值，可以使用曼哈顿编码Manhattan encoding，使用0或1来表示特征是否被包含：</p>
-<p>例如：在宗教类别中，可以将穆斯林(Muslim)、印度教(Hindu)和基督教(Christian)分别编码为**[ 1 0 0 ]<strong>、</strong>[ 0 1 0 ]<strong>和</strong>[ 0 0 1 ]**。</p>
+<p>例如：在宗教类别中，可以将穆斯林(Muslim)、印度教(Hindu)和基督教(Christian)分别编码为 <strong>[1 0 0]</strong>、<strong>[0 1 0]</strong> 和 <strong>[0 0 1]</strong>。</p>
 <h2 id="示例代码"><a class="header-anchor" href="#示例代码">¶</a>示例代码</h2>
 <p>代码参考自<a href="http://sebastianraschka.com/Articles/2014_about_feature_scaling.html" target="_blank" rel="noopener">About Feature Scaling and Normalization</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.io.parsers.read_csv(</span><br><span class="line">    <span class="string">'https://raw.githubusercontent.com/rasbt/pattern_classification/master/data/wine_data.csv'</span>,</span><br><span class="line">     header=<span class="keyword">None</span>,</span><br><span class="line">     usecols=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">    )</span><br><span class="line">df.columns=[<span class="string">'Class label'</span>, <span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>]</span><br><span class="line">df.head()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute the mean and std to be used for later scaling.</span></span><br><span class="line">std_scale = preprocessing.StandardScaler().fit(df[[<span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>]]) </span><br><span class="line"><span class="comment"># Perform standardization by centering and scaling</span></span><br><span class="line">df_std = std_scale.transform(df[[<span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>]]) </span><br><span class="line"></span><br><span class="line">minmax_scale = preprocessing.MinMaxScaler().fit(df[[<span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>]])</span><br><span class="line">df_minmax = minmax_scale.transform(df[[<span class="string">'Alcohol'</span>, <span class="string">'Malic acid'</span>]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'Mean after standardization:\nAlcohol=&#123;:.2f&#125;, Malic acid=&#123;:.2f&#125;'</span></span><br><span class="line">      .format(df_std[:,<span class="number">0</span>].mean(), df_std[:,<span class="number">1</span>].mean()))</span><br><span class="line">print(<span class="string">'\nStandard deviation after standardization:\nAlcohol=&#123;:.2f&#125;, Malic acid=&#123;:.2f&#125;'</span></span><br><span class="line">      .format(df_std[:,<span class="number">0</span>].std(), df_std[:,<span class="number">1</span>].std()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nMin-value after min-max scaling:\nAlcohol=&#123;:.2f&#125;, Malic acid=&#123;:.2f&#125;'</span></span><br><span class="line">      .format(df_minmax[:,<span class="number">0</span>].min(), df_minmax[:,<span class="number">1</span>].min()))</span><br><span class="line">print(<span class="string">'Max-value after min-max scaling:\nAlcohol=&#123;:.2f&#125;, Malic acid=&#123;:.2f&#125;'</span></span><br><span class="line">      .format(df_minmax[:,<span class="number">0</span>].max(), df_minmax[:,<span class="number">1</span>].max()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> platform <span class="keyword">as</span> _platform</span><br><span class="line"><span class="keyword">if</span> _platform == <span class="string">"darwin"</span>:</span><br><span class="line">    <span class="keyword">import</span> matplotlib</span><br><span class="line">    matplotlib.use(<span class="string">'TkAgg'</span>)</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot</span><span class="params">()</span>:</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line">    plt.scatter(df[<span class="string">'Alcohol'</span>], df[<span class="string">'Malic acid'</span>],</span><br><span class="line">            color=<span class="string">'green'</span>, label=<span class="string">'input scale'</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">    plt.scatter(df_std[:,<span class="number">0</span>], df_std[:,<span class="number">1</span>], color=<span class="string">'red'</span>,</span><br><span class="line">            label=<span class="string">'Standardized [$N  (\mu=0, \; \sigma=1)$]'</span>, alpha=<span class="number">0.3</span>)</span><br><span class="line"></span><br><span class="line">    plt.scatter(df_minmax[:,<span class="number">0</span>], df_minmax[:,<span class="number">1</span>],</span><br><span class="line">            color=<span class="string">'blue'</span>, label=<span class="string">'min-max scaled [min=0, max=1]'</span>, alpha=<span class="number">0.3</span>)</span><br><span class="line"></span><br><span class="line">    plt.title(<span class="string">'Alcohol and Malic Acid content of the wine dataset'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Alcohol'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Malic Acid'</span>)</span><br><span class="line">    plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">    plt.grid()</span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line"></span><br><span class="line">plot()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
@@ -593,8 +600,8 @@ $$</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09-01-CG-Projection/" rel="prev" title="Projection">
-                Projection <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02-18-Mis-HexoBlog/" rel="prev" title="基于Hexo搭建个人博客网站">
+                基于Hexo搭建个人博客网站 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -674,7 +681,7 @@ $$</p>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -731,7 +738,35 @@ $$</p>
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -800,7 +835,9 @@ $$</p>
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

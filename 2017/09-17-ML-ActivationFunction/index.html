@@ -508,7 +508,9 @@
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/func_curves.jpg" width="460" height alt="Activation Function Curves">
 <p>深度学习的基本原理是基于人工神经网络，信号从一个神经元进入，经过非线性的activation function，传入到下一层神经元；再经过该层神经元的activate，继续往下传递，如此循环往复，直到输出层。正是由于这些非线性函数的反复叠加，才使得神经网络有足够的capacity来抓取复杂的pattern，在各个领域取得state-of-the-art的结果。显而易见，activation function在深度学习中举足轻重，也是很活跃的研究领域之一。目前来讲，选择怎样的activation function不在于它能否模拟真正的神经元，而在于能否便于优化整个深度神经网络。下面我们简单聊一下各类函数的特点以及为什么现在优先推荐ReLU函数。</p>
 <h2 id="sigmoid"><a class="header-anchor" href="#sigmoid">¶</a>sigmoid</h2>
-<p>$$\sigma(x) = \frac{1}{1+e^{-x}}$$</p>
+<p>$$<br>
+\sigma(x) = \frac{1}{1+e^{-x}}<br>
+$$</p>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/sigmoid.png" width="680" height alt="sigmoid function">
 <p>Sigmoid函数是深度学习领域开始时使用频率最高的activation function。它是便于求导的平滑函数，其导数为$\sigma(x)(1-\sigma(x))$，这是优点。然而，Sigmoid有三大缺点：</p>
 <ul>
@@ -528,11 +530,15 @@ Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变
 <p><strong>幂运算相对耗时</strong><br>
 相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。</p>
 <h2 id="tanh"><a class="header-anchor" href="#tanh">¶</a>tanh</h2>
-<p>$$\tanh(x) = \frac{e<sup>x-e</sup>{-x}}{e<sup>x+e</sup>{-x}}$$</p>
+<p>$$<br>
+\tanh(x) = \frac{e<sup>x-e</sup>{-x}}{e<sup>x+e</sup>{-x}}<br>
+$$</p>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/tanh.png" width="680" height alt="sigmoid function">
 <p>tanh读作Hyperbolic Tangent(双曲正切函数)，如上图所示，它解决了zero-centered的输出问题，然而，gradient vanishing的问题和幂运算的问题仍然存在。</p>
 <h2 id="relu-rectified-linear-unit"><a class="header-anchor" href="#relu-rectified-linear-unit">¶</a>ReLU (Rectified Linear Unit)</h2>
-<p>$$\text{ReLU}(x) = \max(0, x)$$</p>
+<p>$$<br>
+\text{ReLU}(x) = \max(0, x)<br>
+$$</p>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/relu.png" width="680" height alt="sigmoid function">
 ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点：
 <ul>
@@ -552,15 +558,19 @@ ReLU函数其实就是一个取最大值函数，注意这并不是全区间可�
 </ul>
 <p>尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！</p>
 <h2 id="leaky-relu"><a class="header-anchor" href="#leaky-relu">¶</a>Leaky ReLU</h2>
-<p>$$f(x) = \max(0.01x, x)$$</p>
+<p>$$<br>
+f(x) = \max(0.01x, x)<br>
+$$</p>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/lrelu.png" width="680" height alt="sigmoid function">
 <p>人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为$0.01x$而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU: $f(x) = \max(\alpha x, x)$，其中$\alpha$可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。</p>
 <h2 id="elu-exponential-linear-units"><a class="header-anchor" href="#elu-exponential-linear-units">¶</a>ELU (Exponential Linear Units)</h2>
-<p>$$f(x) =<br>
+<p>$$<br>
+f(x) =<br>
 \begin{cases}<br>
 x, \qquad \qquad \text{if} ,x&gt;0 \<br>
 \alpha(e^x-1), ,,; \textrm{otherwise}<br>
-\end{cases}$$</p>
+\end{cases}<br>
+$$</p>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/elu.png" width="680" height alt="sigmoid function">
 <p>ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及:</p>
 <ul>
@@ -723,7 +733,7 @@ x, \qquad \qquad \text{if} ,x&gt;0 \<br>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -780,7 +790,35 @@ x, \qquad \qquad \text{if} ,x&gt;0 \<br>
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -849,7 +887,9 @@ x, \qquad \qquad \text{if} ,x&gt;0 \<br>
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

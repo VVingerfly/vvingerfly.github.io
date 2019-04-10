@@ -497,11 +497,11 @@
       
         <p><em>翻译自<a href="https://cmake.org/cmake/help/latest/manual/cmake-language.7.html" target="_blank" rel="noopener">cmake-language</a></em></p>
 <h2 id="organization"><a class="header-anchor" href="#organization">¶</a>Organization</h2>
-<p><code>CMake</code>输入文件是用<code>CMake Language</code>写的源文件，包括叫<code>CMakeLists.txt</code>的文件和以<code>.cmake</code>作为扩展名的文件。</p>
+<p><code>CMake</code>输入文件是用<code>CMake Language</code>写的源文件，包括名叫<code>CMakeLists.txt</code>的文件和以<code>.cmake</code>作为扩展名的文件。</p>
 <p>一个项目中的<code>CMake</code>源文件被组织成三部分：</p>
 <ul>
 <li>Directories (<code>CMakeLists.txt</code>),</li>
-<li>Scripts (<code>&lt;script&gt;.cmake</code>), and</li>
+<li>Scripts (<code>&lt;script&gt;.cmake</code>),</li>
 <li>Modules (<code>&lt;module&gt;.cmake</code>).</li>
 </ul>
 <h3 id="directories"><a class="header-anchor" href="#directories">¶</a>Directories</h3>
@@ -514,7 +514,7 @@
 <h2 id="syntax"><a class="header-anchor" href="#syntax">¶</a>Syntax</h2>
 <h3 id="encoding"><a class="header-anchor" href="#encoding">¶</a>Encoding</h3>
 <p>为了最大化在所有支持平台的可移植性，一个<code>CMake</code>语言的源文件由<code>7-bit ASCII</code>文本写成，换行可以被编码成<code>\n</code>或<code>\r\n</code>，但在读入输入文件时会被转化为<code>\n</code>。</p>
-<p>注意实现是<code>8-bit clean</code>，所以源文件在系统<code>API</code>支持<code>UTF-8</code>编码的平台上会可能会使用<code>UTF-8</code>编码。此外，<code>CMake 3.2</code>及以上支持在<code>Windows</code>上使用<code>UTF-8</code>编码源文件（使用<code>UTF-16</code>调用系统<code>API</code>）。<code>CMake 3.0</code>及以上allow a leading UTF-8 Byte-Order Mark in source files。</p>
+<p>注意实现是<code>8-bit clean</code>，所以源文件在系统<code>API</code>支持<code>UTF-8</code>编码的平台上可能会使用<code>UTF-8</code>编码。此外，<code>CMake 3.2</code>及以上支持在<code>Windows</code>上使用<code>UTF-8</code>编码源文件（使用<code>UTF-16</code>调用系统<code>API</code>）。<code>CMake 3.0</code>及以上allow a leading UTF-8 Byte-Order Mark in source files。</p>
 <h3 id="source-files"><a class="header-anchor" href="#source-files">¶</a>Source Files</h3>
 <p>一个CMake语言的源文件由零个或更多的由换行和可选的空格分隔开的命令调用(Command Invocations)和注释(Comments)组成：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file         ::=  file_element*</span><br><span class="line">file_element ::=  command_invocation line_ending |</span><br><span class="line">                  (bracket_comment|space)* line_ending</span><br><span class="line">line_ending  ::=  line_comment? newline</span><br><span class="line">space        ::=  &lt;match &apos;[ \t]+&apos;&gt;</span><br><span class="line">newline      ::=  &lt;match &apos;\n&apos;&gt;</span><br></pre></td></tr></table></figure>
@@ -524,7 +524,7 @@
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">command_invocation  ::=  space* identifier space* '(' arguments ')'</span><br><span class="line">identifier          ::=  &lt;match '[A-Za-z_][A-Za-z0-<span class="number">9</span>_]*'&gt;</span><br><span class="line">arguments           ::=  argument? separated_arguments*</span><br><span class="line">separated_arguments ::=  separation+ argument? |</span><br><span class="line">                         separation* '(' arguments ')'</span><br><span class="line">separation          ::=  space | line_ending</span><br></pre></td></tr></table></figure>
 <p>例如：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(hello world.c)</span><br></pre></td></tr></table></figure>
-<p>命令的名字对大小写不敏感。参数中嵌套的圆括号必须平衡，<br>
+<p>命令的名字对大小写不敏感。参数中嵌套的圆括号必须对称，每个<code>(</code>或者<code>)</code>作为一个literal Unquoted Argument传递给命令调用。这可以在调用<code>if()</code>命令时包围条件使用。例如：<br>
 Command names are case-insensitive. Nested unquoted parentheses in the arguments must balance. Each ( or ) is given to the command invocation as a literal Unquoted Argument. This may be used in calls to the if() command to enclose conditions. For example:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">FALSE</span> <span class="keyword">AND</span> (<span class="keyword">FALSE</span> <span class="keyword">OR</span> <span class="keyword">TRUE</span>)) <span class="comment"># evaluates to FALSE</span></span><br></pre></td></tr></table></figure>
 <p>Note CMake versions prior to 3.0 require command name identifiers to be at least 2 characters.<br>
@@ -686,8 +686,8 @@ When evaluating Variable References, CMake first searches the function call stac
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04-22-CMakeTips/" rel="prev" title="CMake Tips">
-                CMake Tips <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04-22-Tips4CMake/" rel="prev" title="Tips for CMake">
+                Tips for CMake <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -767,7 +767,7 @@ When evaluating Variable References, CMake first searches the function call stac
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -824,7 +824,35 @@ When evaluating Variable References, CMake first searches the function call stac
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -893,7 +921,9 @@ When evaluating Variable References, CMake first searches the function call stac
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
