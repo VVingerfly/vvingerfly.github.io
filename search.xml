@@ -174,7 +174,6 @@
     <content type="text"><![CDATA[¶Reference What’s the CMake syntax to set and use variables?]]></content>
       <categories>
         <category>tips</category>
-        <category>cmake</category>
       </categories>
       <tags>
         <tag>cmake</tag>
@@ -229,11 +228,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++函数中使用指针]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
-    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 ¶使用指针做函数返回值 1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如： 12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; ¶使用指针做函数参数 1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为'a'；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如： 1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; ¶参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
+    <title><![CDATA[C++指针作为函数参数]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
+    <content type="text"><![CDATA[指针作为函数参数 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 ¶参考 c++函数中new申请的内存是如何释放的？]]></content>
       <categories>
-        <category>repost</category>
+        <category>coding</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -241,11 +240,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++指针作为函数参数]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
-    <content type="text"><![CDATA[指针作为函数参数 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 ¶参考 c++函数中new申请的内存是如何释放的？]]></content>
+    <title><![CDATA[C++函数中使用指针]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
+    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 ¶使用指针做函数返回值 1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如： 12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; ¶使用指针做函数参数 1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为'a'；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如： 1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; ¶参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
       <categories>
-        <category>coding</category>
+        <category>repost</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -489,7 +488,7 @@
     <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
     <content type="text"><![CDATA[¶安装OpenMesh库 使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 ¶用Qt Creator测试OpenMesh Creator的安装这里不再赘述，新建控制台项目，如test。 在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 ¶在Cmake中使用OpenMesh 在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) ¶Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
       <categories>
-        <category>tutorial</category>
+        <category>tutorials</category>
       </categories>
       <tags>
         <tag>openmesh</tag>
@@ -728,9 +727,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
-    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
-    <content type="text"><![CDATA[¶算法简介 尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别， 差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 ¶算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 ¶Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
+    <title><![CDATA[随机抽样一致算法]]></title>
+    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
+    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv</category>
@@ -740,9 +739,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[随机抽样一致算法]]></title>
-    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
-    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
+    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
+    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
+    <content type="text"><![CDATA[¶算法简介 尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别， 差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 ¶算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 ¶Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv</category>
