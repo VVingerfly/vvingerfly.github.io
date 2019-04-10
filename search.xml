@@ -228,11 +228,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++指针作为函数参数]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
-    <content type="text"><![CDATA[指针作为函数参数 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 ¶参考 c++函数中new申请的内存是如何释放的？]]></content>
+    <title><![CDATA[C++函数中使用指针]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
+    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 ¶使用指针做函数返回值 1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如： 12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; ¶使用指针做函数参数 1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为'a'；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如： 1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; ¶参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
       <categories>
-        <category>coding</category>
+        <category>repost</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -240,11 +240,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++函数中使用指针]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
-    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 ¶使用指针做函数返回值 1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如： 12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; ¶使用指针做函数参数 1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为'a'；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如： 1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; ¶参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
+    <title><![CDATA[C++指针作为函数参数]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
+    <content type="text"><![CDATA[指针作为函数参数 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 ¶参考 c++函数中new申请的内存是如何释放的？]]></content>
       <categories>
-        <category>repost</category>
+        <category>coding</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -618,18 +618,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++利用宏控制打印]]></title>
-    <url>%2F2017%2F09-17-Cpp-DbgPrintf%2F</url>
-    <content type="text"><![CDATA[¶利用宏控制打印 在程序调试时，我们经常需要输出一些调试信息，当调试完毕后，就不再需要使用了。那怎么快速的在调试状态和发布状态切换呢？通常我们使用预编译加宏定义来处理这个问题，例如： 123#ifdef DEBUG 调试代码#endif 如果我们使用printf来显示一些调试信息，那么每个地方都加上#ifdef和#endif就很麻烦了。我们可以定义一个DbgPrintf的函 数来专门处理这些事情，只在DbgPrintf函数内放上#ifdef和#endif就行了。但是这样代码在运行时，还是有调用一次函数的，浪费了时间。 那么可不可以利用宏定义，实现完全没有编译代码产生的宏呢？ 可以尝试下面的宏代码： 1234567//#define MYDEBUG#ifdef MYDEBUG#define DbgPrintf printf#else#define DbgPrintf /\/DbgPrintf#endif 如果MYDEBUG已经定义了，则用printf去代替DbgPrintf了。 如果MYDEBUG未定义的情形，这个宏定义实际上是将DbgPrintf定义成了//DbgPrintf，由于续行符的作用，#define定义时不会发现注释符//，但是在展开到代码之后，就成了注释符//了，也就是说，如果你原来的代码是DbgPrintf(&quot;%d&quot;,x);，经过这个宏展开后成了//DbgPrintf(&quot;%d&quot;,x)，相当于自动在前面加了注释符//。 注意： 续行符后面的/一定要顶格写，否则就不是//了。 另外，这个宏只能单独一行使用，因为它将该行后面的代码都注释掉了。 ¶打印信息的同时输出位置 通过logI输出一些程序运行信息，可以借助logInfo控制是否打印，对于警告和错误，分别通过logW和logE输出。 12345678910#define logInfo#ifdef logInfo#define logI (printf("--info-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #else#define logI /\/logI#endif#define logW (printf("--warn-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #define logE (printf("--error- in [%d@%s] ",__LINE__, __FUNCTION__), printf) ¶Reference 利用宏控制打印]]></content>
-      <categories>
-        <category>coding</category>
-        <category>cpp</category>
-      </categories>
-      <tags>
-        <tag>cpp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[神经网络激活函数]]></title>
     <url>%2F2017%2F09-17-ML-ActivationFunction%2F</url>
     <content type="text"><![CDATA[文章转载自知乎聊一聊深度学习的activation function。 ¶神经网络激活函数 深度学习的基本原理是基于人工神经网络，信号从一个神经元进入，经过非线性的activation function，传入到下一层神经元；再经过该层神经元的activate，继续往下传递，如此循环往复，直到输出层。正是由于这些非线性函数的反复叠加，才使得神经网络有足够的capacity来抓取复杂的pattern，在各个领域取得state-of-the-art的结果。显而易见，activation function在深度学习中举足轻重，也是很活跃的研究领域之一。目前来讲，选择怎样的activation function不在于它能否模拟真正的神经元，而在于能否便于优化整个深度神经网络。下面我们简单聊一下各类函数的特点以及为什么现在优先推荐ReLU函数。 ¶sigmoid $$ \sigma(x) = \frac{1}{1+e^{-x}} $$ Sigmoid函数是深度学习领域开始时使用频率最高的activation function。它是便于求导的平滑函数，其导数为$\sigma(x)(1-\sigma(x))$，这是优点。然而，Sigmoid有三大缺点： 容易出现gradient vanishing 函数输出并不是zero-centered 幂运算相对来讲比较耗时 Gradient Vanishing 优化神经网络的方法是Back Propagation，即导数的后向传递：先计算输出层对应的loss，然后将loss以导数的形式不断向上一层网络传递，修正相应的参数，达到降低loss的目的。 Sigmoid函数在深度网络中常常会导致导数逐渐变为0，使得参数无法被更新，神经网络无法被优化。原因在于两点： 在上图中容易看出，当$\sigma(x)$中$x$较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0 Sigmoid导数的最大值是0.25，这意味着导数在每一层至少会被压缩为原来的1/4，通过两层后被变为1/16，…，通过10层后为1/1048576。请注意这里是“至少”，导数达到最大值这种情况还是很少见的。 输出不是zero-centered Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变慢。举例来讲，对$\sigma(\sum_i w_i x_i + b)$，如果所有$x_i$均为正数或负数，那么其对$w_i$的导数总是正数或负数，这会导致如下图红色箭头所示的阶梯式更新，这显然并非一个好的优化路径。深度学习往往需要大量时间来处理大量数据，模型的收敛速度是尤为重要的。所以，总体上来讲，训练深度学习网络尽量使用zero-centered数据 (可以经过数据预处理实现) 和zero-centered输出。 幂运算相对耗时 相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。 ¶tanh $$ \tanh(x) = \frac{ex-e{-x}}{ex+e{-x}} $$ tanh读作Hyperbolic Tangent(双曲正切函数)，如上图所示，它解决了zero-centered的输出问题，然而，gradient vanishing的问题和幂运算的问题仍然存在。 ¶ReLU (Rectified Linear Unit) $$ \text{ReLU}(x) = \max(0, x) $$ ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点： 解决了gradient vanishing问题 (在正区间) 计算速度非常快，只需要判断输入是否大于0 收敛速度远快于sigmoid和tanh ReLU也有几个需要特别注意的问题： ReLU的输出不是zero-centered Dead ReLU Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。有两个主要原因可能导致这种情况产生: 非常不幸的参数初始化，这种情况比较少见 learning rate太高导致在训练过程中参数更新太大，不幸使网络进入这种状态。解决方法是可以采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。 尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！ ¶Leaky ReLU $$ f(x) = \max(0.01x, x) $$ 人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为$0.01x$而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU: $f(x) = \max(\alpha x, x)$，其中$\alpha$可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。 ¶ELU (Exponential Linear Units) $$ f(x) = \begin{cases} x, \qquad \qquad \text{if} ,x&gt;0 \ \alpha(e^x-1), ,,; \textrm{otherwise} \end{cases} $$ ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及: 不会有Deal ReLU问题 输出的均值接近0，zero-centered 它的一个小问题在于计算量稍大。类似于Leaky ReLU，理论上虽然好于ReLU，但在实际使用中目前并没有好的证据ELU总是优于ReLU。 ¶Reference 知乎 聊一聊深度学习的activation function]]></content>
@@ -639,6 +627,18 @@
       </categories>
       <tags>
         <tag>ml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C++利用宏控制打印]]></title>
+    <url>%2F2017%2F09-17-Cpp-DbgPrintf%2F</url>
+    <content type="text"><![CDATA[¶利用宏控制打印 在程序调试时，我们经常需要输出一些调试信息，当调试完毕后，就不再需要使用了。那怎么快速的在调试状态和发布状态切换呢？通常我们使用预编译加宏定义来处理这个问题，例如： 123#ifdef DEBUG 调试代码#endif 如果我们使用printf来显示一些调试信息，那么每个地方都加上#ifdef和#endif就很麻烦了。我们可以定义一个DbgPrintf的函 数来专门处理这些事情，只在DbgPrintf函数内放上#ifdef和#endif就行了。但是这样代码在运行时，还是有调用一次函数的，浪费了时间。 那么可不可以利用宏定义，实现完全没有编译代码产生的宏呢？ 可以尝试下面的宏代码： 1234567//#define MYDEBUG#ifdef MYDEBUG#define DbgPrintf printf#else#define DbgPrintf /\/DbgPrintf#endif 如果MYDEBUG已经定义了，则用printf去代替DbgPrintf了。 如果MYDEBUG未定义的情形，这个宏定义实际上是将DbgPrintf定义成了//DbgPrintf，由于续行符的作用，#define定义时不会发现注释符//，但是在展开到代码之后，就成了注释符//了，也就是说，如果你原来的代码是DbgPrintf(&quot;%d&quot;,x);，经过这个宏展开后成了//DbgPrintf(&quot;%d&quot;,x)，相当于自动在前面加了注释符//。 注意： 续行符后面的/一定要顶格写，否则就不是//了。 另外，这个宏只能单独一行使用，因为它将该行后面的代码都注释掉了。 ¶打印信息的同时输出位置 通过logI输出一些程序运行信息，可以借助logInfo控制是否打印，对于警告和错误，分别通过logW和logE输出。 12345678910#define logInfo#ifdef logInfo#define logI (printf("--info-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #else#define logI /\/logI#endif#define logW (printf("--warn-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #define logE (printf("--error- in [%d@%s] ",__LINE__, __FUNCTION__), printf) ¶Reference 利用宏控制打印]]></content>
+      <categories>
+        <category>coding</category>
+        <category>cpp</category>
+      </categories>
+      <tags>
+        <tag>cpp</tag>
       </tags>
   </entry>
   <entry>
@@ -727,9 +727,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[随机抽样一致算法]]></title>
-    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
-    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
+    <title><![CDATA[方向梯度直方图]]></title>
+    <url>%2F2017%2F08-20-CV-HOG%2F</url>
+    <content type="text"><![CDATA[¶算法简介 方向梯度直方图(Histogram of Oriented Gradient, HOG)是应用在计算机视觉和图像处理领域，用于目标检测(Object detection)的特征描述器。 ¶算法步骤 ¶Reference wikipedia:方向梯度直方图]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv</category>
@@ -751,9 +751,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[方向梯度直方图]]></title>
-    <url>%2F2017%2F08-20-CV-HOG%2F</url>
-    <content type="text"><![CDATA[¶算法简介 方向梯度直方图(Histogram of Oriented Gradient, HOG)是应用在计算机视觉和图像处理领域，用于目标检测(Object detection)的特征描述器。 ¶算法步骤 ¶Reference wikipedia:方向梯度直方图]]></content>
+    <title><![CDATA[随机抽样一致算法]]></title>
+    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
+    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv</category>
