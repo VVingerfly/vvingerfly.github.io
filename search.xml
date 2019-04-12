@@ -484,17 +484,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[macOS配置OpenMesh]]></title>
-    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
-    <content type="text"><![CDATA[¶安装OpenMesh库 使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 ¶用Qt Creator测试OpenMesh Creator的安装这里不再赘述，新建控制台项目，如test。 在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 ¶在Cmake中使用OpenMesh 在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) ¶Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
-      <categories>
-        <category>tutorials</category>
-      </categories>
-      <tags>
-        <tag>openmesh</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Tips for Homebrew]]></title>
     <url>%2F2018%2F03-07-Mac-Tips4Homebrew%2F</url>
     <content type="text"><![CDATA[¶更新Homebrew 要获取最新的包的列表，首先得更新Homebrew自己，这可以用brew update办到。 1brew update ¶安装包 安装包的命令如下： 1brew install $FORMULA # 安装指定的包 可以在Homebrew Formulas搜索你需要安装的包。比如你要安装OpenMesh库，在该网页中输入OpenMesh点击搜索，会得到一个搜索结果，点击进去，可以看到安装命令如下： 1brew install open-mesh 但通过brew install安装某些包提示找不到，可能已经废弃了，如ann，通过下面命令可以安装，参考这里. 1brew install brewsci/science/ann 12brew unlink opencvbrew link --force opencv@3 ¶卸载包 1brew uninstall $FORMULA # 卸载指定的包 注意：卸载一个包不会同时卸载其依赖的包。 ¶更新包 通过下面命令可以查看所有可更新的包 1brew outdated 然后就可以用brew upgrade去更新了。Homebrew会安装新版本的包，但旧版本仍然会保留。 12brew upgrade # 更新所有的包brew upgrade $FORMULA # 更新指定的包 ¶清理旧版本 一般情况下，新版本安装了，旧版本就不需要了。可以用brew cleanup清理旧版本和缓存文件。Homebrew只会清除比当前安装的包更老的版本，所以不用担心有些包没更新但被删了。 123brew cleanup # 清理所有包的旧版本brew cleanup $FORMULA # 清理指定包的旧版本brew cleanup -n # 查看可清理的旧版本包，不执行实际操作 ¶锁定包 如果经常更新的话，brew update一次更新所有的包是非常方便的。但有时候会担心自动升级把一些不希望更新的包更新了，这时可用brew pin去锁定这个包，然后brew update就会略过它了。 12brew pin $FORMULA # 锁定某个包brew unpin $FORMULA # 取消锁定 ¶查看包信息 brew info可以查看包的相关信息，包括包依赖和相应的命令。 12brew info $FORMULA # 显示某个包的信息brew info # 显示安装了包数量，文件数量，和总占用空间 brew deps可以显示包的依赖关系，可以用来查看已安装的包的依赖，然后判断哪些包是可以安全删除的。 1brew deps --installed --tree # 查看已安装的包的依赖，树形显示 如输出的python依赖如下： 1234567python├── gdbm├── openssl├── readline├── sqlite│ └── readline└── xz ¶查看包列表 1brew list # 列出所有安装的包 brew list命令还有一些可选参数[--unbrewed][--versions [--multiple]] [--pinned][formulae] 如果给定[formulae]参数，将列出该包的所安装的文件，如果加上--verbose参数，将进一步列出该包所有子文件夹中的文件。 如果给定--unbrewed，list all files in the Homebrew prefix not installed by Homebrew. 如果给定--versions，显示所有包或者某个包([formulae]参数指定)的版本号，如果进一步给定–multiple参数，将只显示多版本安装的包。 如果给定--pinned参数，将现实所有或者某个包被pin的包。 ¶安装其他仓库的包 一般情况下我们安装的都是主仓库(Homebrew’s master repository)中的包，但有些包可能在其他仓库，如brewsci/science和homebrew/core。这时可以通过brew tap命令做到，比如： 1brew tap brewsci/science 然后你就可以直接用brew install安装brewsci/science中的包： 1brew install $FORMULA ¶参考 你应该定期更新Homebrew Keeping Your Homebrew Up to Date Homebrew-OpenMesh]]></content>
@@ -504,6 +493,17 @@
       <tags>
         <tag>macOS</tag>
         <tag>homebrew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[macOS配置OpenMesh]]></title>
+    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
+    <content type="text"><![CDATA[¶安装OpenMesh库 使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 ¶用Qt Creator测试OpenMesh Creator的安装这里不再赘述，新建控制台项目，如test。 在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 ¶在Cmake中使用OpenMesh 在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) ¶Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
+      <categories>
+        <category>tutorials</category>
+      </categories>
+      <tags>
+        <tag>openmesh</tag>
       </tags>
   </entry>
   <entry>
@@ -618,18 +618,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[神经网络激活函数]]></title>
-    <url>%2F2017%2F09-17-ML-ActivationFunction%2F</url>
-    <content type="text"><![CDATA[文章转载自知乎聊一聊深度学习的activation function。 ¶神经网络激活函数 深度学习的基本原理是基于人工神经网络，信号从一个神经元进入，经过非线性的activation function，传入到下一层神经元；再经过该层神经元的activate，继续往下传递，如此循环往复，直到输出层。正是由于这些非线性函数的反复叠加，才使得神经网络有足够的capacity来抓取复杂的pattern，在各个领域取得state-of-the-art的结果。显而易见，activation function在深度学习中举足轻重，也是很活跃的研究领域之一。目前来讲，选择怎样的activation function不在于它能否模拟真正的神经元，而在于能否便于优化整个深度神经网络。下面我们简单聊一下各类函数的特点以及为什么现在优先推荐ReLU函数。 ¶sigmoid $$ \sigma(x) = \frac{1}{1+e^{-x}} $$ Sigmoid函数是深度学习领域开始时使用频率最高的activation function。它是便于求导的平滑函数，其导数为$\sigma(x)(1-\sigma(x))$，这是优点。然而，Sigmoid有三大缺点： 容易出现gradient vanishing 函数输出并不是zero-centered 幂运算相对来讲比较耗时 Gradient Vanishing 优化神经网络的方法是Back Propagation，即导数的后向传递：先计算输出层对应的loss，然后将loss以导数的形式不断向上一层网络传递，修正相应的参数，达到降低loss的目的。 Sigmoid函数在深度网络中常常会导致导数逐渐变为0，使得参数无法被更新，神经网络无法被优化。原因在于两点： 在上图中容易看出，当$\sigma(x)$中$x$较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0 Sigmoid导数的最大值是0.25，这意味着导数在每一层至少会被压缩为原来的1/4，通过两层后被变为1/16，…，通过10层后为1/1048576。请注意这里是“至少”，导数达到最大值这种情况还是很少见的。 输出不是zero-centered Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变慢。举例来讲，对$\sigma(\sum_i w_i x_i + b)$，如果所有$x_i$均为正数或负数，那么其对$w_i$的导数总是正数或负数，这会导致如下图红色箭头所示的阶梯式更新，这显然并非一个好的优化路径。深度学习往往需要大量时间来处理大量数据，模型的收敛速度是尤为重要的。所以，总体上来讲，训练深度学习网络尽量使用zero-centered数据 (可以经过数据预处理实现) 和zero-centered输出。 幂运算相对耗时 相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。 ¶tanh $$ \tanh(x) = \frac{ex-e{-x}}{ex+e{-x}} $$ tanh读作Hyperbolic Tangent(双曲正切函数)，如上图所示，它解决了zero-centered的输出问题，然而，gradient vanishing的问题和幂运算的问题仍然存在。 ¶ReLU (Rectified Linear Unit) $$ \text{ReLU}(x) = \max(0, x) $$ ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点： 解决了gradient vanishing问题 (在正区间) 计算速度非常快，只需要判断输入是否大于0 收敛速度远快于sigmoid和tanh ReLU也有几个需要特别注意的问题： ReLU的输出不是zero-centered Dead ReLU Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。有两个主要原因可能导致这种情况产生: 非常不幸的参数初始化，这种情况比较少见 learning rate太高导致在训练过程中参数更新太大，不幸使网络进入这种状态。解决方法是可以采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。 尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！ ¶Leaky ReLU $$ f(x) = \max(0.01x, x) $$ 人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为$0.01x$而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU: $f(x) = \max(\alpha x, x)$，其中$\alpha$可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。 ¶ELU (Exponential Linear Units) $$ f(x) = \begin{cases} x, \qquad \qquad \text{if} ,x&gt;0 \ \alpha(e^x-1), ,,; \textrm{otherwise} \end{cases} $$ ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及: 不会有Deal ReLU问题 输出的均值接近0，zero-centered 它的一个小问题在于计算量稍大。类似于Leaky ReLU，理论上虽然好于ReLU，但在实际使用中目前并没有好的证据ELU总是优于ReLU。 ¶Reference 知乎 聊一聊深度学习的activation function]]></content>
-      <categories>
-        <category>repost</category>
-        <category>ml</category>
-      </categories>
-      <tags>
-        <tag>ml</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[C++利用宏控制打印]]></title>
     <url>%2F2017%2F09-17-Cpp-DbgPrintf%2F</url>
     <content type="text"><![CDATA[¶利用宏控制打印 在程序调试时，我们经常需要输出一些调试信息，当调试完毕后，就不再需要使用了。那怎么快速的在调试状态和发布状态切换呢？通常我们使用预编译加宏定义来处理这个问题，例如： 123#ifdef DEBUG 调试代码#endif 如果我们使用printf来显示一些调试信息，那么每个地方都加上#ifdef和#endif就很麻烦了。我们可以定义一个DbgPrintf的函 数来专门处理这些事情，只在DbgPrintf函数内放上#ifdef和#endif就行了。但是这样代码在运行时，还是有调用一次函数的，浪费了时间。 那么可不可以利用宏定义，实现完全没有编译代码产生的宏呢？ 可以尝试下面的宏代码： 1234567//#define MYDEBUG#ifdef MYDEBUG#define DbgPrintf printf#else#define DbgPrintf /\/DbgPrintf#endif 如果MYDEBUG已经定义了，则用printf去代替DbgPrintf了。 如果MYDEBUG未定义的情形，这个宏定义实际上是将DbgPrintf定义成了//DbgPrintf，由于续行符的作用，#define定义时不会发现注释符//，但是在展开到代码之后，就成了注释符//了，也就是说，如果你原来的代码是DbgPrintf(&quot;%d&quot;,x);，经过这个宏展开后成了//DbgPrintf(&quot;%d&quot;,x)，相当于自动在前面加了注释符//。 注意： 续行符后面的/一定要顶格写，否则就不是//了。 另外，这个宏只能单独一行使用，因为它将该行后面的代码都注释掉了。 ¶打印信息的同时输出位置 通过logI输出一些程序运行信息，可以借助logInfo控制是否打印，对于警告和错误，分别通过logW和logE输出。 12345678910#define logInfo#ifdef logInfo#define logI (printf("--info-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #else#define logI /\/logI#endif#define logW (printf("--warn-- in [%d@%s] ",__LINE__, __FUNCTION__), printf) #define logE (printf("--error- in [%d@%s] ",__LINE__, __FUNCTION__), printf) ¶Reference 利用宏控制打印]]></content>
@@ -639,6 +627,18 @@
       </categories>
       <tags>
         <tag>cpp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[神经网络激活函数]]></title>
+    <url>%2F2017%2F09-17-ML-ActivationFunction%2F</url>
+    <content type="text"><![CDATA[文章转载自知乎聊一聊深度学习的activation function。 ¶神经网络激活函数 深度学习的基本原理是基于人工神经网络，信号从一个神经元进入，经过非线性的activation function，传入到下一层神经元；再经过该层神经元的activate，继续往下传递，如此循环往复，直到输出层。正是由于这些非线性函数的反复叠加，才使得神经网络有足够的capacity来抓取复杂的pattern，在各个领域取得state-of-the-art的结果。显而易见，activation function在深度学习中举足轻重，也是很活跃的研究领域之一。目前来讲，选择怎样的activation function不在于它能否模拟真正的神经元，而在于能否便于优化整个深度神经网络。下面我们简单聊一下各类函数的特点以及为什么现在优先推荐ReLU函数。 ¶sigmoid $$ \sigma(x) = \frac{1}{1+e^{-x}} $$ Sigmoid函数是深度学习领域开始时使用频率最高的activation function。它是便于求导的平滑函数，其导数为$\sigma(x)(1-\sigma(x))$，这是优点。然而，Sigmoid有三大缺点： 容易出现gradient vanishing 函数输出并不是zero-centered 幂运算相对来讲比较耗时 Gradient Vanishing 优化神经网络的方法是Back Propagation，即导数的后向传递：先计算输出层对应的loss，然后将loss以导数的形式不断向上一层网络传递，修正相应的参数，达到降低loss的目的。 Sigmoid函数在深度网络中常常会导致导数逐渐变为0，使得参数无法被更新，神经网络无法被优化。原因在于两点： 在上图中容易看出，当$\sigma(x)$中$x$较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0 Sigmoid导数的最大值是0.25，这意味着导数在每一层至少会被压缩为原来的1/4，通过两层后被变为1/16，…，通过10层后为1/1048576。请注意这里是“至少”，导数达到最大值这种情况还是很少见的。 输出不是zero-centered Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变慢。举例来讲，对$\sigma(\sum_i w_i x_i + b)$，如果所有$x_i$均为正数或负数，那么其对$w_i$的导数总是正数或负数，这会导致如下图红色箭头所示的阶梯式更新，这显然并非一个好的优化路径。深度学习往往需要大量时间来处理大量数据，模型的收敛速度是尤为重要的。所以，总体上来讲，训练深度学习网络尽量使用zero-centered数据 (可以经过数据预处理实现) 和zero-centered输出。 幂运算相对耗时 相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。 ¶tanh $$ \tanh(x) = \frac{ex-e{-x}}{ex+e{-x}} $$ tanh读作Hyperbolic Tangent(双曲正切函数)，如上图所示，它解决了zero-centered的输出问题，然而，gradient vanishing的问题和幂运算的问题仍然存在。 ¶ReLU (Rectified Linear Unit) $$ \text{ReLU}(x) = \max(0, x) $$ ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点： 解决了gradient vanishing问题 (在正区间) 计算速度非常快，只需要判断输入是否大于0 收敛速度远快于sigmoid和tanh ReLU也有几个需要特别注意的问题： ReLU的输出不是zero-centered Dead ReLU Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。有两个主要原因可能导致这种情况产生: 非常不幸的参数初始化，这种情况比较少见 learning rate太高导致在训练过程中参数更新太大，不幸使网络进入这种状态。解决方法是可以采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。 尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！ ¶Leaky ReLU $$ f(x) = \max(0.01x, x) $$ 人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为$0.01x$而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU: $f(x) = \max(\alpha x, x)$，其中$\alpha$可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。 ¶ELU (Exponential Linear Units) $$ f(x) = \begin{cases} x, \qquad \qquad \text{if} ,x&gt;0 \ \alpha(e^x-1), ,,; \textrm{otherwise} \end{cases} $$ ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及: 不会有Deal ReLU问题 输出的均值接近0，zero-centered 它的一个小问题在于计算量稍大。类似于Leaky ReLU，理论上虽然好于ReLU，但在实际使用中目前并没有好的证据ELU总是优于ReLU。 ¶Reference 知乎 聊一聊深度学习的activation function]]></content>
+      <categories>
+        <category>repost</category>
+        <category>ml</category>
+      </categories>
+      <tags>
+        <tag>ml</tag>
       </tags>
   </entry>
   <entry>
@@ -727,18 +727,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[随机抽样一致算法]]></title>
-    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
-    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
-      <categories>
-        <category>algorithm</category>
-        <category>cv</category>
-      </categories>
-      <tags>
-        <tag>cv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[SIFT-尺度不变特征转换]]></title>
     <url>%2F2017%2F08-20-CV-SIFT%2F</url>
     <content type="text"><![CDATA[¶算法简介 尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别， 差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 ¶算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 ¶Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
@@ -763,9 +751,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[计算机视觉中的 F 矩阵，E 矩阵与 H 矩阵]]></title>
-    <url>%2F2017%2F08-14-CV-Matrix-F-E-H%2F</url>
-    <content type="text"><![CDATA[¶F 矩阵 - 基础矩阵 (Fundamental Matrix) 在计算机视觉中，基础矩阵 $\mathrm {F}$ 是一个3×3的矩阵，表达了立体像对的像点之间的对应关系。在对极几何中，对于立体像对中的一对同名点，它们的齐次化图像坐标分别为 $p$ 与 $p’$，$\mathrm {F} p$ 表示一条必定经过 $p$ 的直线（极线）。这意味着立体像对的所有同名点对都满足： $$ p’\mathrm {F} p=0 $$ F 矩阵中蕴含了立体像对的两幅图像在拍摄时相互之间的空间几何关系（外参数）以及相机检校参数（内参数），包括旋转、位移、像主点坐标和焦距。因为 $\mathrm {F}$ 矩阵的秩为2，并且可以自由缩放（尺度化），所以只需7对同名点即可估算出 F 的值。 尽管本质矩阵也满足类似的关系式，但本质矩阵中并不蕴含相机检校参数。本质矩阵与基础矩阵之间的关系可由下式表达： $$ \mathrm {E} = \mathrm{K’^TFK} $$ 其中 $\mathrm{K}$ 和 $\mathrm{K’}$ 分别为两个相机的内参数矩阵。 ¶E 矩阵 - 本质矩阵 (Essential Matrix) 本质矩阵也满足类似的关系式， ¶H 矩阵 - 单应矩阵 (Homography) ¶推导 基础矩阵有许多种推导方式，下面介绍其中一种。 在双相机的拍摄场景中建立一个空间直角坐标系，称为世界坐标系（如下图中蓝色坐标系）。物点就是场景中物体表面上的点，比如说点 $P$ 在世界坐标系中的坐标为 $(X,Y,Z)^T$。 相机的光心从物理上讲就是相机镜头组的光学中心。以光心为原点，主光轴为Z轴建立空间直角坐标系，称为相机坐标系（如下图中绿色和红色坐标系）。像平面在相机坐标系中的方程即为 $z=1$，像点就是在物点在像平面上的投影，这个投影关系是透视投影。 用一句话来概括相机的拍摄模型，就是物点、像点、光心三点一线，此模型称为针孔相机模型。在此模型中，世界坐标系到左右相机坐标系的变换是刚性变换，即只包含旋转和平移，因此我们分别用增广矩阵 $[R;t]$ 和 $[R’;t’]$ 表示，其中 $R$ 和 $R’$ 是 $3 \times 3$ 的旋转矩阵， $t$ 和 $t’$ 为平移向量。令 $\tilde{P}$ 为 $P$ 的齐次化坐标，那么物点 $P$ 在左右相机坐标系下的坐标分别为 $$ P_{cam}(X_{C},Y_{C},Z_{C})^T=[R;t]\tilde {P} $$ 和 $$ P_{cam}’(X_{C’},Y_{C’},Z_{C’})^T = [R’;t’]{\tilde {P}} $$ 以一台相机为例，如图所示， $C$ 为相机光心，$Z$ 轴为主轴。物点在相机坐标系下的坐标 $\tilde{P}$ 和以相片左下角为原点的像点坐标 $p$ 有如下关系： $$ x = (\frac{f_xX_c}{Z_c} + x_0)^T $$ $$ y = (\frac{f_yY_c}{Z_c} + y_0)^T $$ 式中 $(x_{0},y_{0},f)$ 为像主点在相机坐标系下的坐标。 设两相机内参数矩阵同为： $$ K = \left( \begin{matrix} f_x &amp; 0 &amp; p_{c_x} \ 0 &amp; f_y &amp; p_{c_y} \ 0 &amp; 0 &amp; 1 \end{matrix} \right) $$ 那么物点与像点之间的关系为： $$ p={\frac {1}{Z_{C}}}KP_{cam}={\frac{1}{Z_{C}}}K[R;t]P $$ $$ p’={\frac {1}{Z_{C}}}KP’{cam}={\frac {1}{Z{C}}}K[R’;t’]P $$ 将 $P=[R;t]{+}P_{cam}=Z’_{C}K[R;t]{+}p$ 代入上式，并令 $H_{\pi }=K[R’;t’]K[R;t]^{+}$，得： $$ p’={\frac {Z’{C}}{Z{C}}}H_{\pi }p $$ 由于物点、像点、光心三点一线，那么物点、一对同名点和2个光心这5个点一定处于同一个平面上，我们将这个平面称为 $\pi$ 平面。 $\pi$ 平面和像平面的交线称为极线 $l’$。显然，左片上的每一个像点 $p$ 对应于右片上的一条极线 $l’$，且 $p’$ 一定在 $l’$ 上。两个相机光心的连线与右片像平面的交点称为极点，用 $e’$ 表示。 在右边像平面内，极线 $l’$ 的方程可以表示为 $Ax+By+C=0$。这个平面直线方程的一般式可以视为： $$ (A,B,C)^T \cdot (x,y,1)^T=0 $$ 因此，我们可以用一个三维向量 $(A,B,C)$ 来表示极线 $l’$，并且 $l’$ 的方程可以简单的由 $e’$ 坐标向量与 $p’$ 坐标向量做向量积得到，即 $l’:e’\times p’=[e’]{\times }p’$。其中 $$ [e’]{\times } = \left( \begin{matrix} 0 &amp; -1 &amp; y_0 \ 1 &amp; 0 &amp; -x_0 \ -y_0 &amp; x_0 &amp; 0 \end{matrix} \right) $$ 令 $[e’]x$ 表示向量积的矩阵形式，那么再将同名点之间的变换关系代入，得到极线的方程为： $$ l’:{\frac {Z’{C}}{Z{C}}}[e’]{\times }H{\pi }p $$ 因为 $p’$ 在 $l’$ 上，所以显然有： $$ p’l’=p’[e’]{\times }H{\pi }p=0 $$ 令$ \mathrm{F} =[e’]{\times} H{\pi}$，即得到： $$ {p’}^T\mathrm{F}p = 0 $$ ¶Reference 维基百科-基础矩阵]]></content>
+    <title><![CDATA[随机抽样一致算法]]></title>
+    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
+    <content type="text"><![CDATA[¶算法简介 ¶算法步骤 ¶Reference wikipedia：随机抽样一致算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv</category>
@@ -775,15 +763,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Machine Learning Algorithm Summary]]></title>
-    <url>%2F2017%2F08-14-ML-AlgorithmsSummary%2F</url>
-    <content type="text"><![CDATA[文章转载自think big data。 ¶Which are the best known machine learning algorithms? Infographic Which are the most important machine learning algorithms? Anyone who has been part of this domain must have faced or posed this question at some point of time. I too am asked this often. First things first – there are no winning algorithms. For different circumstances, different algorithms, even though they might be designed for similar outcome, result in differently oriented output. Depending upon what you want with your data analytics, an algorithm might be better suited to you than the others for that situation. Size of the data set also plays a key role in determining the model to apply. Also, iterations in existing algorithms, thereby increasing their relevance to myriad of applications, is also common. What is important to remember is that simpler algorithms aren’t bad or obsolete. So, my suggestion is instead of searching for the best algorithms, one should focus on gaining awareness about fundamentals of different algorithms and their applications. Most of us familiar with the subject would recall that in 2006, IEEE Conference on Data Mining identified the top 10 machine learning algorithms. That list is widely available over the internet, so we’ll not reproduce it here. What we’ll do instead is mention over a dozen algorithms, segregated by their application intent, that should be in the repertoire of every data scientist. For usefulness purposes, I am reproducing the list in an infographic format – that can easily go onto a wall! For suggestions and improvements – please add your comments below. ¶Reference think big data]]></content>
+    <title><![CDATA[计算机视觉中的 F 矩阵，E 矩阵与 H 矩阵]]></title>
+    <url>%2F2017%2F08-14-CV-Matrix-F-E-H%2F</url>
+    <content type="text"><![CDATA[¶F 矩阵 - 基础矩阵 (Fundamental Matrix) 在计算机视觉中，基础矩阵 $\mathrm {F}$ 是一个3×3的矩阵，表达了立体像对的像点之间的对应关系。在对极几何中，对于立体像对中的一对同名点，它们的齐次化图像坐标分别为 $p$ 与 $p’$，$\mathrm {F} p$ 表示一条必定经过 $p$ 的直线（极线）。这意味着立体像对的所有同名点对都满足： $$ p’\mathrm {F} p=0 $$ F 矩阵中蕴含了立体像对的两幅图像在拍摄时相互之间的空间几何关系（外参数）以及相机检校参数（内参数），包括旋转、位移、像主点坐标和焦距。因为 $\mathrm {F}$ 矩阵的秩为2，并且可以自由缩放（尺度化），所以只需7对同名点即可估算出 F 的值。 尽管本质矩阵也满足类似的关系式，但本质矩阵中并不蕴含相机检校参数。本质矩阵与基础矩阵之间的关系可由下式表达： $$ \mathrm {E} = \mathrm{K’^TFK} $$ 其中 $\mathrm{K}$ 和 $\mathrm{K’}$ 分别为两个相机的内参数矩阵。 ¶E 矩阵 - 本质矩阵 (Essential Matrix) 本质矩阵也满足类似的关系式， ¶H 矩阵 - 单应矩阵 (Homography) ¶推导 基础矩阵有许多种推导方式，下面介绍其中一种。 在双相机的拍摄场景中建立一个空间直角坐标系，称为世界坐标系（如下图中蓝色坐标系）。物点就是场景中物体表面上的点，比如说点 $P$ 在世界坐标系中的坐标为 $(X,Y,Z)^T$。 相机的光心从物理上讲就是相机镜头组的光学中心。以光心为原点，主光轴为Z轴建立空间直角坐标系，称为相机坐标系（如下图中绿色和红色坐标系）。像平面在相机坐标系中的方程即为 $z=1$，像点就是在物点在像平面上的投影，这个投影关系是透视投影。 用一句话来概括相机的拍摄模型，就是物点、像点、光心三点一线，此模型称为针孔相机模型。在此模型中，世界坐标系到左右相机坐标系的变换是刚性变换，即只包含旋转和平移，因此我们分别用增广矩阵 $[R;t]$ 和 $[R’;t’]$ 表示，其中 $R$ 和 $R’$ 是 $3 \times 3$ 的旋转矩阵， $t$ 和 $t’$ 为平移向量。令 $\tilde{P}$ 为 $P$ 的齐次化坐标，那么物点 $P$ 在左右相机坐标系下的坐标分别为 $$ P_{cam}(X_{C},Y_{C},Z_{C})^T=[R;t]\tilde {P} $$ 和 $$ P_{cam}’(X_{C’},Y_{C’},Z_{C’})^T = [R’;t’]{\tilde {P}} $$ 以一台相机为例，如图所示， $C$ 为相机光心，$Z$ 轴为主轴。物点在相机坐标系下的坐标 $\tilde{P}$ 和以相片左下角为原点的像点坐标 $p$ 有如下关系： $$ x = (\frac{f_xX_c}{Z_c} + x_0)^T $$ $$ y = (\frac{f_yY_c}{Z_c} + y_0)^T $$ 式中 $(x_{0},y_{0},f)$ 为像主点在相机坐标系下的坐标。 设两相机内参数矩阵同为： $$ K = \left( \begin{matrix} f_x &amp; 0 &amp; p_{c_x} \ 0 &amp; f_y &amp; p_{c_y} \ 0 &amp; 0 &amp; 1 \end{matrix} \right) $$ 那么物点与像点之间的关系为： $$ p={\frac {1}{Z_{C}}}KP_{cam}={\frac{1}{Z_{C}}}K[R;t]P $$ $$ p’={\frac {1}{Z_{C}}}KP’{cam}={\frac {1}{Z{C}}}K[R’;t’]P $$ 将 $P=[R;t]{+}P_{cam}=Z’_{C}K[R;t]{+}p$ 代入上式，并令 $H_{\pi }=K[R’;t’]K[R;t]^{+}$，得： $$ p’={\frac {Z’{C}}{Z{C}}}H_{\pi }p $$ 由于物点、像点、光心三点一线，那么物点、一对同名点和2个光心这5个点一定处于同一个平面上，我们将这个平面称为 $\pi$ 平面。 $\pi$ 平面和像平面的交线称为极线 $l’$。显然，左片上的每一个像点 $p$ 对应于右片上的一条极线 $l’$，且 $p’$ 一定在 $l’$ 上。两个相机光心的连线与右片像平面的交点称为极点，用 $e’$ 表示。 在右边像平面内，极线 $l’$ 的方程可以表示为 $Ax+By+C=0$。这个平面直线方程的一般式可以视为： $$ (A,B,C)^T \cdot (x,y,1)^T=0 $$ 因此，我们可以用一个三维向量 $(A,B,C)$ 来表示极线 $l’$，并且 $l’$ 的方程可以简单的由 $e’$ 坐标向量与 $p’$ 坐标向量做向量积得到，即 $l’:e’\times p’=[e’]{\times }p’$。其中 $$ [e’]{\times } = \left( \begin{matrix} 0 &amp; -1 &amp; y_0 \ 1 &amp; 0 &amp; -x_0 \ -y_0 &amp; x_0 &amp; 0 \end{matrix} \right) $$ 令 $[e’]x$ 表示向量积的矩阵形式，那么再将同名点之间的变换关系代入，得到极线的方程为： $$ l’:{\frac {Z’{C}}{Z{C}}}[e’]{\times }H{\pi }p $$ 因为 $p’$ 在 $l’$ 上，所以显然有： $$ p’l’=p’[e’]{\times }H{\pi }p=0 $$ 令$ \mathrm{F} =[e’]{\times} H{\pi}$，即得到： $$ {p’}^T\mathrm{F}p = 0 $$ ¶Reference 维基百科-基础矩阵]]></content>
       <categories>
-        <category>repost</category>
-        <category>ml</category>
+        <category>algorithm</category>
+        <category>cv</category>
       </categories>
       <tags>
-        <tag>ml</tag>
+        <tag>cv</tag>
       </tags>
   </entry>
   <entry>
@@ -799,11 +787,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[贝叶斯角度看 L1 & L2 正则化]]></title>
-    <url>%2F2017%2F08-13-ML-Regularization%2F</url>
-    <content type="text"><![CDATA[¶贝叶斯角度看 L1 &amp; L2 正则化 从贝叶斯的角度来看，正则化等价于对模型参数引入先验分布。其中, L1正则化对应于拉普拉斯分布， L2正则化对应于高斯分布。 ¶频率学派 VS 贝叶斯学派 频率学派(Frequentists)与贝叶斯学派(Bayesians)都基于样本数据做分析。 其不同点主要在于对于 $X\sim F(x;\theta)$，概率学派将样本看作随机变量，而将 $\theta$ 看作常数，而贝叶斯学派将样本和 $\theta$ 均看作随机变量。 概率学派的着眼点在样本空间，基本依托于大数定律和中心极限定理，其贵在于得到越多越好的样本，然后计算其频率来逼近该事件的真实概率。 而贝叶斯学派的着眼点在参数空间，更加重视参数 $\theta$ 的分布，表现在对事件有一定的先验知识了解，然后再用似然度去修正之前的知识了解，如果当前的观测值越符合我们的先验知识，那么似然度就越大，得到的后验概率也就越大，反之亦然。 贝叶斯概率论假设观察者对某事件处于某个知识状态中（例如：有一个袋子里面装了红球和黑球，已知这个袋子里面是5黑5红的概率是0.8，是10黑5红的概率是0.2），之后观察者开始新的观测或实验（有放回抽取100次，得到80次黑的，20次红的）。经过中间的独立重复试验，观察者获得了一些新的观测结果，这些新的观测将以含有不确定性的逻辑推断的方式影响观察者原有的信念（即观测者一开始认为袋子里是5黑5红的可能性更大，但是经过了上面的事实之后，修正了原有的信念，认为是10黑5红可能性更大）。 上面的例子用贝叶斯概率论的语言来描述，就是观察者持有某个前置信念（prior belief），通过观测获得统计证据（evidence），通过满足一定条件的逻辑一致推断得出的关于该陈述的「合理性」，从而得出后置信念（posterior belief）来最好的表征观测后的知识状态（state of knowledge）。 看似贝叶斯框架比较的完美，而且可以克服一些频率派困难（比如投骰子次数不多，那么计算的频率显然与真实的分布想去甚远，但是贝叶斯的先验知识可以缓和这种极端情况）。但是贝叶斯的先验知识没有具体、规则化的获得方法，每个人的先验知识都可能是不一样的，而不良的先验概率甚至会使得最终的估计偏离真实的值。对此，贝叶斯的先验知识最好是客观计算出来的，抑或者拿不准时候用弱信息甚至无信息的先验假设来尽可能避免这类问题。 ¶Linear Regression 最原始的 Linear Regression 模型如下 这就导出了我们原始的 least-squares 损失函数，但这是在我们对参数 w 没有加入任何先验分布的情况下。在数据维度很高的情况下，我们的模型参数很多，模型复杂度高，容易发生过拟合。比如我们常说的 “small n, large p problem”。（我们一般用 n 表示数据点的个数，用 p 表示变量的个数 ，即数据维度。当 的时候，不做任何其他假设或者限制的话，学习问题基本上是没法进行的。因为如果用上所有变量的话， p 越大，通常会导致模型越复杂，但是反过来 n 又很小，于是就会出现很严重的 overfitting 问题。 这个时候，我们可以对参数 w 引入先验分布，降低模型复杂度。 ¶Ridge Regression 我们对参数 $w$ 引入协方差为 $\alpha$ 的零均值高斯先验。 看我们得到的参数，在零附近是不是很密集，老实说 ridge regression 并不具有产生稀疏解的能力，也就是说参数并不会真出现很多零。假设我们的预测结果与两个特征相关，L2正则倾向于综合两者的影响，给影响大的特征赋予高的权重；而L1正则倾向于选择影响较大的参数，而舍弃掉影响较小的那个。实际应用中 L2正则表现往往会优于 L1正则，但 L1正则会大大降低我们的计算量。 Typically ridge or $l2$ penalties are much better for minimizing prediction error rather than ℓ1 penalties. The reason for this is that when two predictors are highly correlated, ℓ1 regularizer will simply pick one of the two predictors. In contrast, the ℓ2 regularizer will keep both of them and jointly shrink the corresponding coefficients a little bit. Thus, while the ℓ1 penalty can certainly reduce overfitting, you may also experience a loss in predictive power. 那现在我们知道了，对参数引入 高斯先验 等价于L2正则化。 ¶LASSO ¶Elastic Net ¶总结 正则化参数等价于对参数引入 先验分布，使得 模型复杂度 变小（缩小解空间），对于噪声以及 outliers 的鲁棒性增强（泛化能力）。整个最优化问题从贝叶斯观点来看是一种贝叶斯最大后验估计，其中 正则化项 对应后验估计中的 先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式。 ¶参考 知乎 Charles Xiao 知乎 bsdelf 统计学之边角料——频率派和贝叶斯派 贝叶斯角度看L1，L2正则化]]></content>
+    <title><![CDATA[Machine Learning Algorithm Summary]]></title>
+    <url>%2F2017%2F08-14-ML-AlgorithmsSummary%2F</url>
+    <content type="text"><![CDATA[文章转载自think big data。 ¶Which are the best known machine learning algorithms? Infographic Which are the most important machine learning algorithms? Anyone who has been part of this domain must have faced or posed this question at some point of time. I too am asked this often. First things first – there are no winning algorithms. For different circumstances, different algorithms, even though they might be designed for similar outcome, result in differently oriented output. Depending upon what you want with your data analytics, an algorithm might be better suited to you than the others for that situation. Size of the data set also plays a key role in determining the model to apply. Also, iterations in existing algorithms, thereby increasing their relevance to myriad of applications, is also common. What is important to remember is that simpler algorithms aren’t bad or obsolete. So, my suggestion is instead of searching for the best algorithms, one should focus on gaining awareness about fundamentals of different algorithms and their applications. Most of us familiar with the subject would recall that in 2006, IEEE Conference on Data Mining identified the top 10 machine learning algorithms. That list is widely available over the internet, so we’ll not reproduce it here. What we’ll do instead is mention over a dozen algorithms, segregated by their application intent, that should be in the repertoire of every data scientist. For usefulness purposes, I am reproducing the list in an infographic format – that can easily go onto a wall! For suggestions and improvements – please add your comments below. ¶Reference think big data]]></content>
       <categories>
-        <category>algorithm</category>
+        <category>repost</category>
         <category>ml</category>
       </categories>
       <tags>
@@ -820,6 +808,18 @@
       </categories>
       <tags>
         <tag>cv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[贝叶斯角度看 L1 & L2 正则化]]></title>
+    <url>%2F2017%2F08-13-ML-Regularization%2F</url>
+    <content type="text"><![CDATA[¶贝叶斯角度看 L1 &amp; L2 正则化 从贝叶斯的角度来看，正则化等价于对模型参数引入先验分布。其中, L1正则化对应于拉普拉斯分布， L2正则化对应于高斯分布。 ¶频率学派 VS 贝叶斯学派 频率学派(Frequentists)与贝叶斯学派(Bayesians)都基于样本数据做分析。 其不同点主要在于对于 $X\sim F(x;\theta)$，概率学派将样本看作随机变量，而将 $\theta$ 看作常数，而贝叶斯学派将样本和 $\theta$ 均看作随机变量。 概率学派的着眼点在样本空间，基本依托于大数定律和中心极限定理，其贵在于得到越多越好的样本，然后计算其频率来逼近该事件的真实概率。 而贝叶斯学派的着眼点在参数空间，更加重视参数 $\theta$ 的分布，表现在对事件有一定的先验知识了解，然后再用似然度去修正之前的知识了解，如果当前的观测值越符合我们的先验知识，那么似然度就越大，得到的后验概率也就越大，反之亦然。 贝叶斯概率论假设观察者对某事件处于某个知识状态中（例如：有一个袋子里面装了红球和黑球，已知这个袋子里面是5黑5红的概率是0.8，是10黑5红的概率是0.2），之后观察者开始新的观测或实验（有放回抽取100次，得到80次黑的，20次红的）。经过中间的独立重复试验，观察者获得了一些新的观测结果，这些新的观测将以含有不确定性的逻辑推断的方式影响观察者原有的信念（即观测者一开始认为袋子里是5黑5红的可能性更大，但是经过了上面的事实之后，修正了原有的信念，认为是10黑5红可能性更大）。 上面的例子用贝叶斯概率论的语言来描述，就是观察者持有某个前置信念（prior belief），通过观测获得统计证据（evidence），通过满足一定条件的逻辑一致推断得出的关于该陈述的「合理性」，从而得出后置信念（posterior belief）来最好的表征观测后的知识状态（state of knowledge）。 看似贝叶斯框架比较的完美，而且可以克服一些频率派困难（比如投骰子次数不多，那么计算的频率显然与真实的分布想去甚远，但是贝叶斯的先验知识可以缓和这种极端情况）。但是贝叶斯的先验知识没有具体、规则化的获得方法，每个人的先验知识都可能是不一样的，而不良的先验概率甚至会使得最终的估计偏离真实的值。对此，贝叶斯的先验知识最好是客观计算出来的，抑或者拿不准时候用弱信息甚至无信息的先验假设来尽可能避免这类问题。 ¶Linear Regression 最原始的 Linear Regression 模型如下 这就导出了我们原始的 least-squares 损失函数，但这是在我们对参数 w 没有加入任何先验分布的情况下。在数据维度很高的情况下，我们的模型参数很多，模型复杂度高，容易发生过拟合。比如我们常说的 “small n, large p problem”。（我们一般用 n 表示数据点的个数，用 p 表示变量的个数 ，即数据维度。当 的时候，不做任何其他假设或者限制的话，学习问题基本上是没法进行的。因为如果用上所有变量的话， p 越大，通常会导致模型越复杂，但是反过来 n 又很小，于是就会出现很严重的 overfitting 问题。 这个时候，我们可以对参数 w 引入先验分布，降低模型复杂度。 ¶Ridge Regression 我们对参数 $w$ 引入协方差为 $\alpha$ 的零均值高斯先验。 看我们得到的参数，在零附近是不是很密集，老实说 ridge regression 并不具有产生稀疏解的能力，也就是说参数并不会真出现很多零。假设我们的预测结果与两个特征相关，L2正则倾向于综合两者的影响，给影响大的特征赋予高的权重；而L1正则倾向于选择影响较大的参数，而舍弃掉影响较小的那个。实际应用中 L2正则表现往往会优于 L1正则，但 L1正则会大大降低我们的计算量。 Typically ridge or $l2$ penalties are much better for minimizing prediction error rather than ℓ1 penalties. The reason for this is that when two predictors are highly correlated, ℓ1 regularizer will simply pick one of the two predictors. In contrast, the ℓ2 regularizer will keep both of them and jointly shrink the corresponding coefficients a little bit. Thus, while the ℓ1 penalty can certainly reduce overfitting, you may also experience a loss in predictive power. 那现在我们知道了，对参数引入 高斯先验 等价于L2正则化。 ¶LASSO ¶Elastic Net ¶总结 正则化参数等价于对参数引入 先验分布，使得 模型复杂度 变小（缩小解空间），对于噪声以及 outliers 的鲁棒性增强（泛化能力）。整个最优化问题从贝叶斯观点来看是一种贝叶斯最大后验估计，其中 正则化项 对应后验估计中的 先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式。 ¶参考 知乎 Charles Xiao 知乎 bsdelf 统计学之边角料——频率派和贝叶斯派 贝叶斯角度看L1，L2正则化]]></content>
+      <categories>
+        <category>algorithm</category>
+        <category>ml</category>
+      </categories>
+      <tags>
+        <tag>ml</tag>
       </tags>
   </entry>
   <entry>
