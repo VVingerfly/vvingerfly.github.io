@@ -511,18 +511,18 @@
 <li>Modules (<code>&lt;module&gt;.cmake</code>).</li>
 </ul>
 <h3 id="directories"><a class="header-anchor" href="#directories">¶</a>Directories</h3>
-<p>当CMake处理一个项目的源代码树时，入口点是最上层源目录里的<code>CMakeLists.txt</code>文件，这个文件可能包含整个构建规范(build specification)，或者通过使用<code>add_subdirectory()</code>命令来添加需要构建的子目录，每个通过该命令添加的子目录中也必须含有一个<code>CMakeLists.txt</code>文件来作为该路径的入口点。对于<code>CMakeLists.txt</code>文件处理的每一个源目录都会在构建树(build tree)中生成一个对应的目录，来作为默认的工作和输出目录。</p>
+<p>当CMake处理一个项目的源代码树时，入口点是最上层源目录里的<code>CMakeLists.txt</code>文件，这个文件可能包含整个构建规范(build specification)，或者通过使用<code>add_subdirectory()</code>命令来添加需要构建的子目录，每个通过该命令添加的子目录中也必须含有一个<code>CMakeLists.txt</code>文件来作为该路径的入口点。对于<code>CMakeLists.txt</code>文件处理的每一个源目录都会在构建树(build tree)中生成一个对应的目录，来作为默认的工作和输出目录。</p>
 <h3 id="scripts"><a class="header-anchor" href="#scripts">¶</a>Scripts</h3>
-<p>一个单独的<code>&lt;script&gt;.cmake</code>源文件可以在<code>script</code>模式下通过使用<a href="https://cmake.org/cmake/help/v3.10/manual/cmake.1.html#manual:cmake(1)" target="_blank" rel="noopener">cmake(1)</a>命令行工具中的<code>-P</code>选项来被处理，<code>Script</code>模式只是简单地运行该源文件中用<code>CMake Language</code>写的命令，不会生成一个构建系统。它不允许包含有定义构建目标或行为的<code>CMake</code>命令。</p>
+<p>一个单独的<code>&lt;script&gt;.cmake</code>源文件可以在<code>script</code>模式下通过使用<a href="https://cmake.org/cmake/help/v3.10/manual/cmake.1.html#manual:cmake(1)" target="_blank" rel="noopener">cmake(1)</a>命令行工具中的<code>-P</code>选项来被处理，<code>Script</code>模式只是简单地运行该源文件中用<code>CMake Language</code>写的命令，不会生成一个构建系统。它不允许包含有定义构建目标或行为的<code>CMake</code>命令。</p>
 <h3 id="modules"><a class="header-anchor" href="#modules">¶</a>Modules</h3>
 <p>在<code>Directories</code>或者<code>Scripts</code>中的<code>CMake Language</code>代码可以在包含环境中使用<code>include()</code>命令来载入一个<code>&lt;script&gt;.cmake</code>源文件，可以通过查看<a href="https://cmake.org/cmake/help/v3.10/manual/cmake-modules.7.html#manual:cmake-modules(7)" target="_blank" rel="noopener">cmake-modules(7)</a>来了解<code>CMake</code>包含的所有模块。<br>
-项目源代码树可能也提供它们自己的模块，并在<code>CMAKE_MODULE_PATH</code>变量中指定它们的位置。</p>
+项目源代码树可能也提供它们自己的模块，并在<code>CMAKE_MODULE_PATH</code>变量中指定它们的位置。</p>
 <h2 id="syntax"><a class="header-anchor" href="#syntax">¶</a>Syntax</h2>
 <h3 id="encoding"><a class="header-anchor" href="#encoding">¶</a>Encoding</h3>
-<p>为了最大化在所有支持平台的可移植性，一个<code>CMake</code>语言的源文件由<code>7-bit ASCII</code>文本写成，换行可以被编码成<code>\n</code>或<code>\r\n</code>，但在读入输入文件时会被转化为<code>\n</code>。</p>
-<p>注意实现是<code>8-bit clean</code>，所以源文件在系统<code>API</code>支持<code>UTF-8</code>编码的平台上可能会使用<code>UTF-8</code>编码。此外，<code>CMake 3.2</code>及以上支持在<code>Windows</code>上使用<code>UTF-8</code>编码源文件（使用<code>UTF-16</code>调用系统<code>API</code>）。<code>CMake 3.0</code>及以上allow a leading UTF-8 Byte-Order Mark in source files。</p>
+<p>为了最大化在所有支持平台的可移植性，一个<code>CMake</code>语言的源文件由<code>7-bit ASCII</code>文本写成，换行可以被编码成<code>\n</code>或<code>\r\n</code>，但在读入输入文件时会被转化为<code>\n</code>。</p>
+<p>注意实现是<code>8-bit clean</code>，所以源文件在系统<code>API</code>支持<code>UTF-8</code>编码的平台上可能会使用<code>UTF-8</code>编码。此外，<code>CMake 3.2</code>及以上支持在<code>Windows</code>上使用<code>UTF-8</code>编码源文件（使用<code>UTF-16</code>调用系统<code>API</code>）。<code>CMake 3.0</code>及以上allow a leading UTF-8 Byte-Order Mark in source files。</p>
 <h3 id="source-files"><a class="header-anchor" href="#source-files">¶</a>Source Files</h3>
-<p>一个CMake语言的源文件由零个或更多的由换行和可选的空格分隔开的命令调用(Command Invocations)和注释(Comments)组成：</p>
+<p>一个CMake语言的源文件由零个或更多的由换行和可选的空格分隔开的命令调用(Command Invocations)和注释(Comments)组成：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file         ::=  file_element*</span><br><span class="line">file_element ::=  command_invocation line_ending |</span><br><span class="line">                  (bracket_comment|space)* line_ending</span><br><span class="line">line_ending  ::=  line_comment? newline</span><br><span class="line">space        ::=  &lt;match &apos;[ \t]+&apos;&gt;</span><br><span class="line">newline      ::=  &lt;match &apos;\n&apos;&gt;</span><br></pre></td></tr></table></figure>
 <p>Note that any source file line not inside Command Arguments or a Bracket Comment can end in a Line Comment.</p>
 <h3 id="command-invocations"><a class="header-anchor" href="#command-invocations">¶</a>Command Invocations</h3>
@@ -530,18 +530,19 @@
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">command_invocation  ::=  space* identifier space* '(' arguments ')'</span><br><span class="line">identifier          ::=  &lt;match '[A-Za-z_][A-Za-z0-<span class="number">9</span>_]*'&gt;</span><br><span class="line">arguments           ::=  argument? separated_arguments*</span><br><span class="line">separated_arguments ::=  separation+ argument? |</span><br><span class="line">                         separation* '(' arguments ')'</span><br><span class="line">separation          ::=  space | line_ending</span><br></pre></td></tr></table></figure>
 <p>例如：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(hello world.c)</span><br></pre></td></tr></table></figure>
-<p>命令的名字对大小写不敏感。参数中嵌套的圆括号必须对称，每个<code>(</code>或者<code>)</code>作为一个literal Unquoted Argument传递给命令调用。这可以在调用<code>if()</code>命令时包围条件使用。例如：<br>
-Command names are case-insensitive. Nested unquoted parentheses in the arguments must balance. Each ( or ) is given to the command invocation as a literal Unquoted Argument. This may be used in calls to the if() command to enclose conditions. For example:</p>
+<p>命令的名字对大小写不敏感。参数中嵌套的圆括号必须对称，每个<code>(</code>或者<code>)</code>作为一个字面上不带引号的参数(literal Unquoted Argument)传递给命令调用。这可以在调用<code>if()</code>命令时包围条件使用。例如：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">FALSE</span> <span class="keyword">AND</span> (<span class="keyword">FALSE</span> <span class="keyword">OR</span> <span class="keyword">TRUE</span>)) <span class="comment"># evaluates to FALSE</span></span><br></pre></td></tr></table></figure>
-<p>Note CMake versions prior to 3.0 require command name identifiers to be at least 2 characters.<br>
+<p>注意CMake版本在3.0之前的命令名至少要是2个字符。<br>
+CMake版本在2.8.12之前接受在<br>
+Note CMake versions prior to 3.0 require command name identifiers to be at least 2 characters.<br>
 CMake versions prior to 2.8.12 silently accept an Unquoted Argument or a Quoted Argument immediately following a Quoted Argument and not separated by any whitespace. For compatibility, CMake 2.8.12 and higher accept such code but produce a warning.</p>
 <h3 id="command-arguments"><a class="header-anchor" href="#command-arguments">¶</a>Command Arguments</h3>
 <p>命令调用中有三种形式的参数：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">argument ::=  bracket_argument | quoted_argument | unquoted_argument</span><br></pre></td></tr></table></figure>
 <h4 id="bracket-argument"><a class="header-anchor" href="#bracket-argument">¶</a>Bracket Argument</h4>
-<p>括号参数，受启发于Lua的长括号语法，将内容装入拥有同样长度的开始和结束括号：</p>
+<p>括号参数，受启发于Lua的长括号语法，将内容装入拥有同样长度的开始和结束括号：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bracket_argument ::=  bracket_open bracket_content bracket_close</span><br><span class="line">bracket_open     ::=  '[' '='* '['</span><br><span class="line">bracket_content  ::=  &lt;any text <span class="keyword">not</span> containing a bracket_close with</span><br><span class="line">                       the same number of '=' as the bracket_open&gt;</span><br><span class="line">bracket_close    ::=  ']' '='* ']'</span><br></pre></td></tr></table></figure>
-<p>开始括号首先是一个<code>[</code>，后面跟着0个或多个<code>=</code>，最后再跟着<code>]</code>，与此对应的结束括号也以<code>[</code>开头，后面跟着同样数量的<code>=</code>，然后再跟着<code>]</code>。括号不嵌套，<br>
+<p>开始括号首先是一个<code>[</code>，后面跟着0个或多个<code>=</code>，最后再跟着<code>]</code>，与此对应的结束括号也以<code>[</code>开头，后面跟着同样数量的<code>=</code>，然后再跟着<code>]</code>。括号不嵌套，<br>
 Brackets do not nest. A unique length may always be chosen for the opening and closing brackets to contain closing brackets of other lengths.</p>
 <p>Bracket argument content consists of all text between the opening and closing brackets, except that one newline immediately following the opening bracket, if any, is ignored. No evaluation of the enclosed content, such as Escape Sequences or Variable References, is performed. A bracket argument is always given to the command invocation as exactly one argument.</p>
 <p>例如：</p>
@@ -584,7 +585,7 @@ Unescaped double-quotes must balance, may not appear at the beginning of an unqu
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[This is a bracket comment.</span></span><br><span class="line">It runs until the close bracket.]]</span><br><span class="line"><span class="keyword">message</span>(<span class="string">"First Argument\n"</span> <span class="comment">#[[Bracket Comment]] "Second Argument")</span></span><br></pre></td></tr></table></figure>
 <p>注意<code>CMake 3.0</code>之前的版本不支持bracket comments，这时将<code>#</code>解释为一个Line Comment的开头。</p>
 <h4 id="line-comment"><a class="header-anchor" href="#line-comment">¶</a>Line Comment</h4>
-<p>如果<code>#</code>后面没有紧跟着一个Bracket Argument，则构成一个line comment，直到行尾结束：</p>
+<p>如果<code>#</code>后面没有紧跟着一个Bracket Argument，则构成一个line comment，直到行尾结束：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">line_comment ::=  '<span class="comment">#' &lt;any text not starting in a bracket_argument</span></span><br><span class="line">                       <span class="keyword">and</span> <span class="keyword">not</span> containing a newline&gt;</span><br></pre></td></tr></table></figure>
 <p>例如：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a line comment.</span></span><br><span class="line"><span class="keyword">message</span>(<span class="string">"First Argument\n"</span> <span class="comment"># This is a line comment :)</span></span><br><span class="line">        <span class="string">"Second Argument"</span>) <span class="comment"># This is a line comment.</span></span><br></pre></td></tr></table></figure>
@@ -592,16 +593,16 @@ Unescaped double-quotes must balance, may not appear at the beginning of an unqu
 <h3 id="conditional-blocks"><a class="header-anchor" href="#conditional-blocks">¶</a>Conditional Blocks</h3>
 <p><code>if()/elseif()/else()/endif()</code>命令使得代码块有条件地执行。</p>
 <h3 id="loops"><a class="header-anchor" href="#loops">¶</a>Loops</h3>
-<p><code>foreach()/endforeach()</code> and <code>while()/endwhile()</code>命令界定代码块循环执行。在每个这样的快中，<code>break()</code>命令可以终止循环，<code>continue()</code>命令可以让下一次迭代马上进行。</p>
+<p><code>foreach()/endforeach()</code> and <code>while()/endwhile()</code>命令界定代码块循环执行。在每个这样的快中，<code>break()</code>命令可以终止循环，<code>continue()</code>命令可以让下一次迭代马上进行。</p>
 <h3 id="command-definitions"><a class="header-anchor" href="#command-definitions">¶</a>Command Definitions</h3>
 <p><code>macro()/endmacro()</code>和<code>function()/endfunction()</code>命令界定代码块可以在后面作为命令被调用。</p>
 <h2 id="variables"><a class="header-anchor" href="#variables">¶</a>Variables</h2>
-<p>变量是<code>CMake</code>语言中存储的基本单元，它们的值永远是字符串类型，虽然有些命令会将字符串解释为其他类型的值。<code>set()</code>和<code>unset()</code>命令显示地设置或取消设置一个变量，但是其他命令同样也有修改变量的语义。变量名是大小写敏感的，几乎可以由任意文本组成，但是一般推荐使用只包含字母数字外加<code>_</code>和<code>-</code>的变量名。</p>
+<p>变量是<code>CMake</code>语言中存储的基本单元，它们的值永远是字符串类型，虽然有些命令会将字符串解释为其他类型的值。<code>set()</code>和<code>unset()</code>命令显示地设置或取消设置一个变量，但是其他命令同样也有修改变量的语义。<strong>变量名是大小写敏感</strong>的，几乎可以由任意文本组成，但是一般推荐使用只包含字母数字外加<code>_</code>和<code>-</code>的变量名。</p>
 <p>变量有动态的作用域，每个变量“set”或者“unset”在当前的作用域创建一个绑定：</p>
 <p>Variables have dynamic scope. Each variable “set” or “unset” creates a binding in the current scope:</p>
 <ul>
 <li>Function Scope<br>
-通过function()命令创建的Command Definitions生成一个命令，当<br>
+通过function()命令创建的Command Definitions生成一个命令，当被调用时，在新的变量绑定域内处理记录的命令，一个变量“set”或者“unset”在当前域内绑定，只对当前函数或其内部嵌套的调用可见，直到函数返回。<br>
 Command Definitions created by the function() command create commands that, when invoked, process the recorded commands in a new variable binding scope. A variable “set” or “unset” binds in this scope and is visible for the current function and any nested calls within it, but not after the function returns.</li>
 <li>Directory Scope<br>
 Each of the Directories in a source tree has its own variable bindings. Before processing the CMakeLists.txt file for a directory, CMake copies all variable bindings currently defined in the parent directory, if any, to initialize the new directory scope. CMake Scripts, when processed with cmake -P, bind variables in one “directory” scope.</li>
@@ -802,7 +803,7 @@ When evaluating Variable References, CMake first searches the function call stac
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">71</span>
+                    <span class="site-state-item-count">72</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
