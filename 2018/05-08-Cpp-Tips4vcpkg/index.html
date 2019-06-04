@@ -510,10 +510,10 @@
       
 
       
-        <h2 id="概述"><a class="header-anchor" href="#概述">null</a>概述</h2>
+        <h2 id="概述"><a class="header-anchor" href="#概述">¶</a>概述</h2>
 <p>vcpkg是微软开发的在Windows, Linux和MacOS平台管理C/C++库的开源工具。</p>
-<h2 id="快速开始"><a class="header-anchor" href="#快速开始">null</a>快速开始</h2>
-<h3 id="要求"><a class="header-anchor" href="#要求">null</a>要求</h3>
+<h2 id="快速开始"><a class="header-anchor" href="#快速开始">¶</a>快速开始</h2>
+<h3 id="要求"><a class="header-anchor" href="#要求">¶</a>要求</h3>
 <p>使用vcpkg需满足如下条件：</p>
 <ul>
 <li>Windows 10, 8.1, 7, Linux, or MacOS</li>
@@ -521,21 +521,21 @@
 <li>Git</li>
 <li>CMake 3.10.2 (optional)</li>
 </ul>
-<h3 id="安装vcpkg"><a class="header-anchor" href="#安装vcpkg">null</a>安装vcpkg</h3>
+<h3 id="安装vcpkg"><a class="header-anchor" href="#安装vcpkg">¶</a>安装vcpkg</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; git <span class="built_in">clone</span> https://github.com/Microsoft/vcpkg</span><br><span class="line">&gt; <span class="built_in">cd</span> vcpkg</span><br><span class="line"></span><br><span class="line">PS&gt; .\bootstrap-vcpkg.bat</span><br><span class="line">Ubuntu:~/$ ./bootstrap-vcpkg.sh</span><br></pre></td></tr></table></figure>
 <p>为了让计算机的所有用户都可以使用vcpkg，运行如下命令（首次运行需管理员权限）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS&gt; .\vcpkg integrate install</span><br><span class="line">Ubuntu:~/$ ./vcpkg integrate install</span><br></pre></td></tr></table></figure>
-<h3 id="安装库"><a class="header-anchor" href="#安装库">null</a>安装库</h3>
+<h3 id="安装库"><a class="header-anchor" href="#安装库">¶</a>安装库</h3>
 <p>通过如下命令便可以安装库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS&gt; .\vcpkg install sdl2 curl</span><br><span class="line">Ubuntu:~/$ ./vcpkg install sdl2 curl</span><br></pre></td></tr></table></figure>
 <p>对于<code>Windows</code>平台，<code>vcpkg</code>默认安装32位库，如果想要设置为默认安装64位库，在环境变量中加上<code>VCPKG_DEFAULT_TRIPLET=x64-windows</code>即可。</p>
 <p>如果你在安装库时下载速度非常慢甚至下载失败，可以拷贝下载链接自行下载好库的压缩包，然后放在<code>downloads</code>文件夹，这样<code>vcpkg</code>便直接使用下载好的库来编译安装。</p>
 <p>对于有些库，默认可能不是所有的依赖都安装，如ceres-solver，默认不支持<code>suitesparse,cxsparse</code>，此时可以通过命令<code>.\vcpkg install ceres[suitesparse,cxsparse]:x64-windows --recurse</code>重新安装，其中<code>--recurse</code>表示可以卸载之前的库。更多install参数可以通过命令<code>.\vcpkg help install</code>查看。</p>
 <p>再比如支持cuda的opencv版本，可以通过命令<code>.\vcpkg install opencv[cuda]:x64-windows</code>来安装。</p>
-<h3 id="卸载vcpkg"><a class="header-anchor" href="#卸载vcpkg">null</a>卸载vcpkg</h3>
+<h3 id="卸载vcpkg"><a class="header-anchor" href="#卸载vcpkg">¶</a>卸载vcpkg</h3>
 <p>直接删除vcpkg的文件夹即可。</p>
-<h2 id="使用库"><a class="header-anchor" href="#使用库">null</a>使用库</h2>
-<h3 id="cmake"><a class="header-anchor" href="#cmake">null</a>CMake</h3>
+<h2 id="使用库"><a class="header-anchor" href="#使用库">¶</a>使用库</h2>
+<h3 id="cmake"><a class="header-anchor" href="#cmake">¶</a>CMake</h3>
 <p>在CMake中使用通过vcpkg安装的库的最佳方式是通过工具链文件(toolchain file) <code>scripts/buildsystems/vcpkg.cmake</code>，让安装的库通过<code>find_package()</code>被发现。</p>
 <p>要使用这个文件，只需通过命令<code>-DCMAKE_TOOLCHAIN_FILE=[vcpkg root]/scripts/buildsystems/vcpkg.cmake</code>将其加入CMake命令行中即可。例如</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake (Linux/MacOS)</span><br><span class="line">cmake .. -DCMAKE_TOOLCHAIN_FILE=vcpkg\scripts\buildsystems\vcpkg.cmake (Windows)</span><br></pre></td></tr></table></figure>
@@ -544,11 +544,11 @@
 <p>还有一种方法，直接在<code>CMakeLists.txt</code>文件中指定<code>CMAKE_TOOLCHAIN_FILE</code>，即</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_TOOLCHAIN_FILE <span class="string">"D:\vcpkg\scripts\buildsystems\vcpkg.cmake"</span>)</span><br><span class="line"><span class="keyword">project</span>(PROJECT_NAME)</span><br></pre></td></tr></table></figure>
 <p>这里需要注意的是，<em><em>设置<code>CMAKE_TOOLCHAIN_FILE</code>要在<code>project()</code>命令</em>之前</em>**。另外多说一句，类似<code>CMAKE_TOOLCHAIN_FILE</code>, <code>CMAKE_SYSTEM_NAME</code>, <code>CMAKE_C_COMPILER</code>等这些变量都要在<code>project()</code>命令之前设定，不然<code>CMake</code>仍然会按照默认的设置来。</p>
-<h3 id="visualstudio"><a class="header-anchor" href="#visualstudio">null</a>VisualStudio</h3>
+<h3 id="visualstudio"><a class="header-anchor" href="#visualstudio">¶</a>VisualStudio</h3>
 <p>在VS中，所有已经安装的库都被VS项目自动包含（通过前面提到的<code>vcpkg integrate install</code>命令实现），无需配置便可直接使用。</p>
-<h3 id="clion"><a class="header-anchor" href="#clion">null</a>CLion</h3>
+<h3 id="clion"><a class="header-anchor" href="#clion">¶</a>CLion</h3>
 <p>在CLion中的配置如下File -&gt; Settings -&gt; Build, Execution, Deployment -&gt; CMake，在CMake Options中添加<code>-DCMAKE_TOOLCHAIN_FILE=[vcpkg root]/scripts/buildsystems/vcpkg.cmake</code></p>
-<h2 id="vcpkg命令"><a class="header-anchor" href="#vcpkg命令">null</a>vcpkg命令</h2>
+<h2 id="vcpkg命令"><a class="header-anchor" href="#vcpkg命令">¶</a>vcpkg命令</h2>
 <ul>
 <li><code>vcpkg help</code>： 帮助</li>
 <li><code>vcpkg search</code>： 搜索库</li>
@@ -565,7 +565,7 @@
 <li><code>vcpkg update</code></li>
 <li><code>vcpkg remove</code>：移除某个已经安装的库，如果需要移除依赖该库的其他库，添加<code>--recurse</code>命令</li>
 </ul>
-<h2 id="vcpkg文件夹构成"><a class="header-anchor" href="#vcpkg文件夹构成">null</a>vcpkg文件夹构成</h2>
+<h2 id="vcpkg文件夹构成"><a class="header-anchor" href="#vcpkg文件夹构成">¶</a>vcpkg文件夹构成</h2>
 <ul>
 <li><em>buildtrees</em> – contains subfolders of sources from which each library is built</li>
 <li><em>docs</em> – documentation and examples</li>
@@ -577,13 +577,13 @@
 <li><em>toolsrc</em> – C++ source code for vcpkg and related components</li>
 <li><em>triplets</em> – Contains the settings for each supported target platform (for example, x86-windows or x64-uwp)</li>
 </ul>
-<h2 id="更新vcpkg"><a class="header-anchor" href="#更新vcpkg">null</a>更新vcpkg</h2>
+<h2 id="更新vcpkg"><a class="header-anchor" href="#更新vcpkg">¶</a>更新vcpkg</h2>
 <p>在vcpkg根目录下的ports文件夹中可以看到当前版本包含的所有库，但由于vcpkg项目正在活跃开发中，有时候有些库在你当前的版本中并没有加入，这时可以考虑更新vcpkg。首先拉取vcpkg的远程仓库，更新本地仓库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master:temp  // 从远程的origin仓库的master分支下载到本地并新建一个分支temp</span><br><span class="line">git diff temp   // 比较本地的仓库和远程仓库的区别</span><br><span class="line">git merge temp  // 合并temp分支到master分支</span><br><span class="line">git branch -d temp  // 如果不想要temp分支了，可以删除此分支</span><br></pre></td></tr></table></figure>
 <p>然后重新编译生成vcpkg.exe工具</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS&gt; .\bootstrap-vcpkg.bat</span><br><span class="line">Linux:~/$ ./bootstrap-vcpkg.sh</span><br></pre></td></tr></table></figure>
 <p>然后可以通过命令<code>.\vcpkg update</code> <code>.\vcpkg upgrade</code>更新已经安装好的库。再通过<code>install</code>命令安装新的库。</p>
-<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
 <ul>
 <li><a href="https://github.com/Microsoft/vcpkg" target="_blank" rel="noopener">vcpkg-github</a></li>
 <li><a href="https://docs.microsoft.com/en-us/cpp/vcpkg#simple-yet-flexible" target="_blank" rel="noopener">vcpkg-docs</a></li>
@@ -981,7 +981,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">null概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速开始"><span class="nav-number">2.</span> <span class="nav-text">null快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#要求"><span class="nav-number">2.1.</span> <span class="nav-text">null要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装vcpkg"><span class="nav-number">2.2.</span> <span class="nav-text">null安装vcpkg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装库"><span class="nav-number">2.3.</span> <span class="nav-text">null安装库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载vcpkg"><span class="nav-number">2.4.</span> <span class="nav-text">null卸载vcpkg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用库"><span class="nav-number">3.</span> <span class="nav-text">null使用库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake"><span class="nav-number">3.1.</span> <span class="nav-text">nullCMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visualstudio"><span class="nav-number">3.2.</span> <span class="nav-text">nullVisualStudio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clion"><span class="nav-number">3.3.</span> <span class="nav-text">nullCLion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcpkg命令"><span class="nav-number">4.</span> <span class="nav-text">nullvcpkg命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcpkg文件夹构成"><span class="nav-number">5.</span> <span class="nav-text">nullvcpkg文件夹构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新vcpkg"><span class="nav-number">6.</span> <span class="nav-text">null更新vcpkg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">null参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">¶概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速开始"><span class="nav-number">2.</span> <span class="nav-text">¶快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#要求"><span class="nav-number">2.1.</span> <span class="nav-text">¶要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装vcpkg"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装vcpkg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装库"><span class="nav-number">2.3.</span> <span class="nav-text">¶安装库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载vcpkg"><span class="nav-number">2.4.</span> <span class="nav-text">¶卸载vcpkg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用库"><span class="nav-number">3.</span> <span class="nav-text">¶使用库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake"><span class="nav-number">3.1.</span> <span class="nav-text">¶CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visualstudio"><span class="nav-number">3.2.</span> <span class="nav-text">¶VisualStudio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clion"><span class="nav-number">3.3.</span> <span class="nav-text">¶CLion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcpkg命令"><span class="nav-number">4.</span> <span class="nav-text">¶vcpkg命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcpkg文件夹构成"><span class="nav-number">5.</span> <span class="nav-text">¶vcpkg文件夹构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新vcpkg"><span class="nav-number">6.</span> <span class="nav-text">¶更新vcpkg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
             
 
           </div>

@@ -520,19 +520,19 @@
       
 
       
-        <h2 id="static-library-a"><a class="header-anchor" href="#static-library-a">null</a>Static Library(.a)</h2>
+        <h2 id="static-library-a"><a class="header-anchor" href="#static-library-a">¶</a>Static Library(.a)</h2>
 <p>Static libraries allow an application to load code into its address space at compile time.This results in a larger size on disk and slower launch times. Because the library’s code is added directly to the linked target’s binary, it means that to update any code in the library, the linked target would also have to be rebuilt.</p>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-04-10-Mac-StaticAndDynamicLibrary/static_lib.png" alt="static_lib"></p>
-<h2 id="dynamic-library-dylib"><a class="header-anchor" href="#dynamic-library-dylib">null</a>Dynamic Library(.dylib)</h2>
+<h2 id="dynamic-library-dylib"><a class="header-anchor" href="#dynamic-library-dylib">¶</a>Dynamic Library(.dylib)</h2>
 <p>Dynamic libraries allow an application to load code into its address space when it’s actually needed at run time. Because the code isn’t statically linked into the executable binary, there are some benefits from loading at runtime. Mainly, the libraries can be updated with new features or bug-fixes without having to recompile and relink executable. In addition, being loaded at runtime means that individual code libraries can have their own initializers and clean up after their own tasks before being unloaded from memory</p>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-04-10-Mac-StaticAndDynamicLibrary/dynamic_lib.png" alt="dynamic_lib"></p>
-<h2 id="link-library-with-cmake"><a class="header-anchor" href="#link-library-with-cmake">null</a>Link Library with CMake</h2>
+<h2 id="link-library-with-cmake"><a class="header-anchor" href="#link-library-with-cmake">¶</a>Link Library with CMake</h2>
 <p><strong><em>CMake favours passing the full path to link libraries</em></strong></p>
 <p>Assuming libfoo.a is in <code>${CMAKE_SOURCE_DIR}</code>, to link the library using:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(main main.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(main <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/libfoo.a)</span><br></pre></td></tr></table></figure>
 <p>The same for dynamic library:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(main main.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(main</span><br><span class="line">	/usr/local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshTools.<span class="number">6.3</span>.dylib</span><br><span class="line">	/usr/local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshCore.<span class="number">6.3</span>.dylib)</span><br></pre></td></tr></table></figure>
-<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
 <ul>
 <li><a href="https://stackoverflow.com/questions/40841670/what-is-the-difference-between-dylib-and-a-lib-in-ios" target="_blank" rel="noopener">What is the difference between .dylib and .a lib in ios?<br>
 </a></li>
@@ -930,7 +930,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#static-library-a"><span class="nav-number">1.</span> <span class="nav-text">nullStatic Library(.a)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-library-dylib"><span class="nav-number">2.</span> <span class="nav-text">nullDynamic Library(.dylib)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-library-with-cmake"><span class="nav-number">3.</span> <span class="nav-text">nullLink Library with CMake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#static-library-a"><span class="nav-number">1.</span> <span class="nav-text">¶Static Library(.a)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-library-dylib"><span class="nav-number">2.</span> <span class="nav-text">¶Dynamic Library(.dylib)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-library-with-cmake"><span class="nav-number">3.</span> <span class="nav-text">¶Link Library with CMake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
             
 
           </div>

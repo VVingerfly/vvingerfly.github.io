@@ -503,13 +503,13 @@
       
 
       
-        <h2 id="写在前面"><a class="header-anchor" href="#写在前面">null</a>写在前面</h2>
+        <h2 id="写在前面"><a class="header-anchor" href="#写在前面">¶</a>写在前面</h2>
 <p>首先，不要使用<code>Homebrew</code>安装，我用<code>brew install dlib</code>安装后，运行例子提示错误</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: <span class="string">"DLIB_NO_GUI_SUPPORT is defined so you can't use the GUI code. Turn DLIB_NO_GUI_SUPPORT off if you want to use it."</span></span><br><span class="line">error: <span class="string">"Also make sure you have libx11-dev installed on your system"</span></span><br></pre></td></tr></table></figure>
 <p>查询相关资料说是需要安装<code>XQuartz</code>，可我已经通过<code>brew cask install xquartz</code>安装了，而且也有人说安装后还是不行，仍然报错，最后发现作者说<strong>不要通过<code>Homebrew</code>安装</strong>，因为<code>Homebrew</code>中所有的<code>dlib</code>版本默认都设置为不使用<code>X11</code>，下面是作者在<a href="https://github.com/davisking/dlib/issues/872" target="_blank" rel="noopener">GitHub-Issues</a>回答的原话：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Don&apos;t use homebrew.  Whatever copy of dlib is in homebrew is configured to not use X11.</span><br></pre></td></tr></table></figure>
 <p>所以需要按照官网提供的<a href="http://dlib.net/compile.html" target="_blank" rel="noopener">教程</a>进行安装。</p>
-<h2 id="编译"><a class="header-anchor" href="#编译">null</a>编译</h2>
+<h2 id="编译"><a class="header-anchor" href="#编译">¶</a>编译</h2>
 <p>卸载通过<code>Homebrew</code>安装的<code>dlib</code>，命令如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew uninstall dlib</span><br></pre></td></tr></table></figure>
 <p>因为我已经安装了<code>XQuartz</code>，如果没有安装，还需要通过<a href>官网安装包</a>或者<code>brew cast</code>进行安装。</p>
@@ -520,10 +520,10 @@
 <p>结果如下图所示<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-04-06-Mac-ConfigureDlib/face_landmark_detection_68_res.png" alt="face_landmark_detection_68_res"></p>
 <p>官网提供的模型只能定位<code>68</code>个关键点，不过你可以通过作者给的<a href="http://dlib.net/train_shape_predictor_ex.cpp.html" target="_blank" rel="noopener">例子</a>自己训练新的模型。</p>
-<h2 id="测试"><a class="header-anchor" href="#测试">null</a>测试</h2>
+<h2 id="测试"><a class="header-anchor" href="#测试">¶</a>测试</h2>
 <p>当然，你也可以在你自己的项目中使用<code>dlib</code>，<code>CMakeLists.txt</code>如下</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(hello)</span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_subdirectory</span>(/Users/liwei/myLibs/dlib/dlib ./dlib_build)</span><br><span class="line"><span class="keyword">aux_source_directory</span>(./src SRC_LIST)</span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> dlib::dlib)</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
 <ul>
 <li><a href="http://dlib.net/compile.html" target="_blank" rel="noopener">DLib C++ Library</a></li>
 <li><a href="https://blog.csdn.net/qq_29573053/article/details/77773012" target="_blank" rel="noopener">cmake项目引入dlib方法</a></li>
@@ -922,7 +922,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">null写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">2.</span> <span class="nav-text">null编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">null测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">null参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">¶写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">2.</span> <span class="nav-text">¶编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">¶测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
             
 
           </div>

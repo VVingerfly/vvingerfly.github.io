@@ -524,7 +524,7 @@
       
 
       
-        <h2 id="技术比较"><a class="header-anchor" href="#技术比较">null</a>技术比较</h2>
+        <h2 id="技术比较"><a class="header-anchor" href="#技术比较">¶</a>技术比较</h2>
 <p>Kinect v1的深度传感器采用了一种称为“光编码”（Light Coding）的技术（源自以色列的PrimeSense Inc.的技术，该公司2013年被苹果收购）。该方法读取投影的红外图案(Pattern)，并从图案的变形中获取深度信息。因此，深度传感器分为投射红外图案的IR投影仪（左）和读取红外图案的IR相机（右）。此外，在深度传感器中间安装彩色摄像机。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-03-28-CG-KinectComparison/kinect1.gif?imageView2/2/w/640/q/75" alt="Kinect v1"></p>
 <p>Kinect v2的深度传感器采用称为“飞行时间”（Time of Flight, ToF）的方法（貌似来自微软收购的一家公司(3DV Systems，Canesta)），该方法从反射和返回反射红外线的时间获得深度信息。从外部看不到的深度传感器配备了红外摄像头（左侧）和投射脉冲调制红外线的投影机（右侧）。彩色摄像头在旁边一侧。<br>
@@ -533,7 +533,7 @@
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-03-28-CG-KinectComparison/kinect_tech.gif?imageMogr2/thumbnail/640x9999%3C/blur/1x0/quality/75" alt="Kinect Tech"></p>
 <p>Kinect v1<br>
 红外激光(infrared laser)发射一束光柱，然后通过衍射光栅机制分成多份光束，投影到物体的光斑被红外照相机(infrared camera)捕捉，并与已知的参考光斑比较，投影光斑和观察到的光斑用来计算深度信息。</p>
-<h2 id="规格比较"><a class="header-anchor" href="#规格比较">null</a>规格比较</h2>
+<h2 id="规格比较"><a class="header-anchor" href="#规格比较">¶</a>规格比较</h2>
 <table>
 <thead>
 <tr>
@@ -610,7 +610,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="彩色图"><a class="header-anchor" href="#彩色图">null</a>彩色图</h3>
+<h3 id="彩色图"><a class="header-anchor" href="#彩色图">¶</a>彩色图</h3>
 <blockquote>
 <p>Kinect v1</p>
 <ul>
@@ -636,7 +636,7 @@
 <p>显而易见，Color Map是最占带宽的，其实可以通过一些其他格式，比如I420或MJPG来减少数据量，然后通过CPU或GPU来进行解压和回放。</p>
 </li>
 </ul>
-<h3 id="深度图"><a class="header-anchor" href="#深度图">null</a>深度图</h3>
+<h3 id="深度图"><a class="header-anchor" href="#深度图">¶</a>深度图</h3>
 <p>Kinect v2预览版的深度传感器的分辨率也提高到512×424，而Kinect v1是可以取640×480分辨率的深度数据，乍一看规格好像下降了，其实Kinect v1的深度传感器的物理分辨率是320x240，Up Scaling到640x480而已（注：猜测是Runtime处理的）。另外，深度传感器的方式也是从Light Coding变更为Time of Flight(TOF)。</p>
 <blockquote>
 <p>Kinect v1</p>
@@ -661,7 +661,7 @@
 <li>JPG只能存储8位，且属于有损压缩。</li>
 <li>PNG最大支持单通道16位，且PNG是一种无损压缩格式。</li>
 </ul>
-<h3 id="人体关节"><a class="header-anchor" href="#人体关节">null</a>人体关节</h3>
+<h3 id="人体关节"><a class="header-anchor" href="#人体关节">¶</a>人体关节</h3>
 <p>Kinect v1中可用的关节每人有20个，但Kinect v2有25个关节，如图所示有增加了</p>
 <ul>
 <li>颈部(NECK)</li>
@@ -671,9 +671,9 @@
 </ul>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-03-28-CG-KinectComparison/kinect1_body.gif" alt="Kinect v1 body"></p>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-03-28-CG-KinectComparison/kinect2_body.gif" alt="Kinect v2 body"></p>
-<h2 id="数据采集流程比较"><a class="header-anchor" href="#数据采集流程比较">null</a>数据采集流程比较</h2>
+<h2 id="数据采集流程比较"><a class="header-anchor" href="#数据采集流程比较">¶</a>数据采集流程比较</h2>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-03-28-CG-KinectComparison/kinect_program.gif" alt="Kinect Program"></p>
-<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
 <ul>
 <li><a href="https://www.slideshare.net/SugiuraTsukasa/kinect-v2-introduction-and-tutorial" target="_blank" rel="noopener">Kinect v2 Introduction and Tutorial</a></li>
 <li><a href="https://blog.csdn.net/jiaojialulu/article/details/52857435" target="_blank" rel="noopener">目前市面上的RGBD相机对比</a></li>
@@ -1076,7 +1076,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术比较"><span class="nav-number">1.</span> <span class="nav-text">null技术比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规格比较"><span class="nav-number">2.</span> <span class="nav-text">null规格比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#彩色图"><span class="nav-number">2.1.</span> <span class="nav-text">null彩色图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度图"><span class="nav-number">2.2.</span> <span class="nav-text">null深度图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人体关节"><span class="nav-number">2.3.</span> <span class="nav-text">null人体关节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据采集流程比较"><span class="nav-number">3.</span> <span class="nav-text">null数据采集流程比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">null参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术比较"><span class="nav-number">1.</span> <span class="nav-text">¶技术比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规格比较"><span class="nav-number">2.</span> <span class="nav-text">¶规格比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#彩色图"><span class="nav-number">2.1.</span> <span class="nav-text">¶彩色图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度图"><span class="nav-number">2.2.</span> <span class="nav-text">¶深度图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人体关节"><span class="nav-number">2.3.</span> <span class="nav-text">¶人体关节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据采集流程比较"><span class="nav-number">3.</span> <span class="nav-text">¶数据采集流程比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
             
 
           </div>

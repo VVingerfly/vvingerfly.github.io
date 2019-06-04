@@ -501,7 +501,7 @@
       
 
       
-        <h2 id="利用宏控制打印"><a class="header-anchor" href="#利用宏控制打印">null</a>利用宏控制打印</h2>
+        <h2 id="利用宏控制打印"><a class="header-anchor" href="#利用宏控制打印">¶</a>利用宏控制打印</h2>
 <p>在程序调试时，我们经常需要输出一些调试信息，当调试完毕后，就不再需要使用了。那怎么快速的在调试状态和发布状态切换呢？通常我们使用预编译加宏定义来处理这个问题，例如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line">    调试代码</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>如果我们使用printf来显示一些调试信息，那么每个地方都加上<code>#ifdef</code>和<code>#endif</code>就很麻烦了。我们可以定义一个<code>DbgPrintf</code>的函 数来专门处理这些事情，只在<code>DbgPrintf</code>函数内放上<code>#ifdef</code>和<code>#endif</code>就行了。但是这样代码在运行时，还是有调用一次函数的，浪费了时间。 那么可不可以利用宏定义，实现完全没有编译代码产生的宏呢？<br>
@@ -514,10 +514,10 @@
 <li>续行符后面的<code>/</code>一定要顶格写，否则就不是<code>//</code>了。</li>
 <li>另外，这个宏只能单独一行使用，因为它将该行后面的代码都注释掉了。</li>
 </ol>
-<h2 id="打印信息的同时输出位置"><a class="header-anchor" href="#打印信息的同时输出位置">null</a>打印信息的同时输出位置</h2>
+<h2 id="打印信息的同时输出位置"><a class="header-anchor" href="#打印信息的同时输出位置">¶</a>打印信息的同时输出位置</h2>
 <p>通过<code>logI</code>输出一些程序运行信息，可以借助<code>logInfo</code>控制是否打印，对于警告和错误，分别通过<code>logW</code>和<code>logE</code>输出。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> logInfo</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> logInfo</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> logI (printf(<span class="meta-string">"--info-- in [%d@%s] "</span>,__LINE__, __FUNCTION__), printf)  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> logI /\</span></span><br><span class="line">/logI</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> logW (printf(<span class="meta-string">"--warn-- in [%d@%s] "</span>,__LINE__, __FUNCTION__), printf)  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> logE (printf(<span class="meta-string">"--error- in [%d@%s] "</span>,__LINE__, __FUNCTION__), printf)</span></span><br></pre></td></tr></table></figure>
-<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
 <ul>
 <li><a href="http://www.cnblogs.com/no7dw/archive/2012/10/09/2716737.html" target="_blank" rel="noopener">利用宏控制打印</a></li>
 </ul>
@@ -912,7 +912,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用宏控制打印"><span class="nav-number">1.</span> <span class="nav-text">null利用宏控制打印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印信息的同时输出位置"><span class="nav-number">2.</span> <span class="nav-text">null打印信息的同时输出位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用宏控制打印"><span class="nav-number">1.</span> <span class="nav-text">¶利用宏控制打印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印信息的同时输出位置"><span class="nav-number">2.</span> <span class="nav-text">¶打印信息的同时输出位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
             
 
           </div>

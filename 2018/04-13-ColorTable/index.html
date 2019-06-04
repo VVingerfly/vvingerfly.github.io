@@ -517,7 +517,7 @@
       
 
       
-        <h2 id="html颜色表"><a class="header-anchor" href="#html颜色表">null</a>HTML颜色表</h2>
+        <h2 id="html颜色表"><a class="header-anchor" href="#html颜色表">¶</a>HTML颜色表</h2>
 <table>
 <thead>
 <tr>
@@ -1244,9 +1244,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="生成代码"><a class="header-anchor" href="#生成代码">null</a>生成代码</h2>
+<h2 id="生成代码"><a class="header-anchor" href="#生成代码">¶</a>生成代码</h2>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line">fin = open(<span class="string">'color.txt'</span>, <span class="string">'r'</span>)</span><br><span class="line">inLines = fin.readlines()  <span class="comment">#按行读出文件内容</span></span><br><span class="line">fin.close()</span><br><span class="line">outTxt = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> inLines:</span><br><span class="line">    temp1 = line.strip(<span class="string">'\n'</span>)      <span class="comment">#去掉每行最后的换行符'\n'</span></span><br><span class="line">    temp2 = temp1.split(<span class="string">'\t'</span>)     <span class="comment">#以'\t'为标志，将每行分割成列表</span></span><br><span class="line">    <span class="comment"># print(temp2[0])</span></span><br><span class="line">    outLine =           <span class="string">'&lt;span style="color:'</span> + temp2[<span class="number">0</span>] + <span class="string">'"&gt;'</span> + temp2[<span class="number">0</span>] + <span class="string">'&lt;/span&gt; | '</span></span><br><span class="line">    outLine = outLine + <span class="string">'&lt;span style="color:'</span> + temp2[<span class="number">0</span>] + <span class="string">'"&gt;'</span> + temp2[<span class="number">1</span>] + <span class="string">'&lt;/span&gt; | '</span></span><br><span class="line">    outLine = outLine + <span class="string">'&lt;span style="background-color:'</span> + temp2[<span class="number">0</span>] + <span class="string">'"&gt;'</span> + temp2[<span class="number">2</span>] + <span class="string">'&lt;/span&gt;\n'</span></span><br><span class="line">    outTxt = outTxt + outLine</span><br><span class="line"></span><br><span class="line">fout = open(<span class="string">'color-1.txt'</span>, <span class="string">'w'</span>)</span><br><span class="line">fout.write(outTxt)</span><br><span class="line">fout.close()</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
 <ul>
 <li><a href="https://blog.csdn.net/testcs_dn/article/details/45719357/" target="_blank" rel="noopener"> CSDN-markdown编辑器语法——字体、字号与颜色</a></li>
 <li><a href="https://zhidao.baidu.com/question/1690382694635348108.html" target="_blank" rel="noopener">python读取txt文件到列表中</a></li>
@@ -1349,8 +1349,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04-14-Cpp-PointerWithinFunctions/" rel="prev" title="C++指针作为函数参数">
-                C++指针作为函数参数 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04-14-Cpp-PointerAsFunctionParameters/" rel="prev" title="C++函数中使用指针">
+                C++函数中使用指针 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1642,7 +1642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#html颜色表"><span class="nav-number">1.</span> <span class="nav-text">nullHTML颜色表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成代码"><span class="nav-number">2.</span> <span class="nav-text">null生成代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">null参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#html颜色表"><span class="nav-number">1.</span> <span class="nav-text">¶HTML颜色表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成代码"><span class="nav-number">2.</span> <span class="nav-text">¶生成代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
             
 
           </div>
