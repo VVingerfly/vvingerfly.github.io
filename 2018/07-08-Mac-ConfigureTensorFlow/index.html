@@ -522,7 +522,7 @@
       
 
       
-        <h2 id="安装python"><a class="header-anchor" href="#安装python">¶</a>安装Python</h2>
+        <h2 id="安装python"><a class="header-anchor" href="#安装python">null</a>安装Python</h2>
 <p><code>python3</code>是通过<code>Homebrew</code>安装的，默认安装的是<code>3.7.0</code>版本，但<code>TensorFlow</code>目前只能在<code>3.4</code>，<code>3.5</code>，<code>3.6</code>上安装，因此首先需要安装<code>3.6</code>版本的<code>python</code>。</p>
 <p>首先运行命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew unlink python3</span><br></pre></td></tr></table></figure>
@@ -534,7 +534,7 @@
 <p>发现得到</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Python 3.6.5</span><br></pre></td></tr></table></figure>
 <p>则安装成功，<code>/usr/local/Cellar/python</code>中有<code>3.6.5_1</code>和<code>3.7.0</code>两个文件夹。</p>
-<h2 id="安装virtualenv"><a class="header-anchor" href="#安装virtualenv">¶</a>安装Virtualenv</h2>
+<h2 id="安装virtualenv"><a class="header-anchor" href="#安装virtualenv">null</a>安装Virtualenv</h2>
 <p><code>TensorFlow</code>的官方教程推荐使用<code>Virtualenv</code>的方式安装<code>TensorFlow</code>。<br>
 <code>Virtualenv</code>是一个与其他<code>Python</code>开发相互隔离的虚拟<code>Python</code>环境，它无法干扰同一计算机上的其他<code>Python</code>程序，也不会受其影响。要开始使用<code>TensorFlow</code>，只需要“激活”虚拟环境。总而言之，<code>Virtualenv</code>提供一种安全可靠的机制来安装和运行<code>TensorFlow</code>。</p>
 <p><code>Virtualenvwrapper</code>则是对<code>Virtualenv</code>提供了简易的命令行封装，可以更方便地管理虚拟环境。</p>
@@ -549,8 +549,8 @@
 <p>把<code>export</code>命令和<code>source</code>命令加入到<code>~/.bash_profile</code>文件中，每次打开终端就无需初始化了。</p>
 <p>一些常用的命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">workon                显示所有的环境名称</span><br><span class="line">workon 环境名          进入/切换到该环境</span><br><span class="line">deactivate            返回到系统环境</span><br><span class="line">mkvirtualenv 环境名    新建环境</span><br><span class="line">rmvirtualenv          移除环境</span><br></pre></td></tr></table></figure>
-<h2 id="安装tensorflow"><a class="header-anchor" href="#安装tensorflow">¶</a>安装TensorFlow</h2>
-<h3 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h3>
+<h2 id="安装tensorflow"><a class="header-anchor" href="#安装tensorflow">null</a>安装TensorFlow</h2>
+<h3 id="安装"><a class="header-anchor" href="#安装">null</a>安装</h3>
 <p>接下来安装TensorFlow，参考<a href="https://www.tensorflow.org/install/install_mac#the_url_of_the_tensorflow_python_package" target="_blank" rel="noopener">官方安装教程</a>。<br>
 首先输入下面的命令创建<code>Virtualenv</code>环境：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv --system-site-packages -p python3 ~/myLibs/pyenvs/tensorflow</span><br></pre></td></tr></table></figure>
@@ -572,7 +572,7 @@
 <p>用完<code>TensorFlow</code>后，可以通过发出以下命令来停用此环境：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(tensorflow)$ deactivate</span><br></pre></td></tr></table></figure>
 <p>提示符将恢复为默认提示符。</p>
-<h3 id="测试"><a class="header-anchor" href="#测试">¶</a>测试</h3>
+<h3 id="测试"><a class="header-anchor" href="#测试">null</a>测试</h3>
 <p>下面再运行一个简短的<code>TensorFlow</code>程序来测试其是否正确安装。<br>
 首先激活<br>
 从<code>shell</code>中调用<code>Python</code>，如下所示：</p>
@@ -582,16 +582,16 @@
 <p>如果系统输出以下内容，则说明<code>TensorFlow</code>已加被正确安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, TensorFlow!</span><br></pre></td></tr></table></figure>
 <p>如果发生错误，你就需要继续折腾了。</p>
-<h3 id="用pycharm测试"><a class="header-anchor" href="#用pycharm测试">¶</a>用PyCharm测试</h3>
+<h3 id="用pycharm测试"><a class="header-anchor" href="#用pycharm测试">null</a>用PyCharm测试</h3>
 <p>新建PyCharm项目，一般需要做一番配置才可运行TensorFlow项目。</p>
 <p>打开Preference，按照如下步骤操作即可。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-07-08-Mac-ConfigureTensorFlow/pycharm1.png" alt="pycharm1"><br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-07-08-Mac-ConfigureTensorFlow/pycharm2.png" alt="pycharm2"><br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-07-08-Mac-ConfigureTensorFlow/pycharm3.png" alt="pycharm3"><br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2018-07-08-Mac-ConfigureTensorFlow/pycharm4.png" alt="pycharm4"></p>
-<h3 id="卸载"><a class="header-anchor" href="#卸载">¶</a>卸载</h3>
+<h3 id="卸载"><a class="header-anchor" href="#卸载">null</a>卸载</h3>
 <p>如果需要卸载<code>TensorFlow</code>，只需移除之前创建的<code>~/myLibs/pyenvs/tensorflow</code>文件夹即可。</p>
-<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
 <ul>
 <li><a href="https://www.tensorflow.org/install/install_mac#the_url_of_the_tensorflow_python_package" target="_blank" rel="noopener">在 macOS 上安装 TensorFlow</a></li>
 <li><a href="https://www.jianshu.com/p/5786ef7b2ef5" target="_blank" rel="noopener">Mac下安装Python虚拟环境Virtualenv</a></li>
@@ -989,7 +989,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python"><span class="nav-number">1.</span> <span class="nav-text">¶安装Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装virtualenv"><span class="nav-number">2.</span> <span class="nav-text">¶安装Virtualenv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装tensorflow"><span class="nav-number">3.</span> <span class="nav-text">¶安装TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">¶安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.2.</span> <span class="nav-text">¶测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用pycharm测试"><span class="nav-number">3.3.</span> <span class="nav-text">¶用PyCharm测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载"><span class="nav-number">3.4.</span> <span class="nav-text">¶卸载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python"><span class="nav-number">1.</span> <span class="nav-text">null安装Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装virtualenv"><span class="nav-number">2.</span> <span class="nav-text">null安装Virtualenv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装tensorflow"><span class="nav-number">3.</span> <span class="nav-text">null安装TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">null安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.2.</span> <span class="nav-text">null测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用pycharm测试"><span class="nav-number">3.3.</span> <span class="nav-text">null用PyCharm测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载"><span class="nav-number">3.4.</span> <span class="nav-text">null卸载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">null参考</span></a></li></ol></div>
             
 
           </div>

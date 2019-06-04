@@ -525,13 +525,13 @@
 </li>
 </ul>
 <p>实验代码请参见<a href="https://github.com/feixia586/zhihu_material/tree/master/weight_initialization" target="_blank" rel="noopener">feixia586</a></p>
-<h2 id="背景"><a class="header-anchor" href="#背景">¶</a>背景</h2>
+<h2 id="背景"><a class="header-anchor" href="#背景">null</a>背景</h2>
 <p>深度学习模型训练的过程本质是对weight（即参数 W）进行更新，这需要每个参数有相应的初始值。有人可能会说：“参数初始化有什么难点？直接将所有weight初始化为0或者初始化为随机数！” 对一些简单的机器学习模型，或当optimization function是convex function时，这些简单的方法确实有效。然而对于深度学习而言，非线性函数被疯狂叠加，产生如本文题图所示的non-convex function，如何选择参数初始值便成为一个值得探讨的问题 — 其本质是初始参数的选择应使得objective function便于被优化。事实上，在学术界这也是一个被actively研究的领域。</p>
 <p>TLDR里已经涵盖了本文的核心要点，下面在正文中，我们来深入了解一下前因后果。</p>
-<h2 id="初始化为0的可行性？"><a class="header-anchor" href="#初始化为0的可行性？">¶</a>初始化为0的可行性？</h2>
+<h2 id="初始化为0的可行性？"><a class="header-anchor" href="#初始化为0的可行性？">null</a>初始化为0的可行性？</h2>
 <p>答案是不可行。 这是一道送分题 哈哈！为什么将所有W初始化为0是错误的呢？是因为如果所有的参数都是0，那么所有神经元的输出都将是相同的，那在back propagation的时候同一层内所有神经元的行为也是相同的 — gradient相同，weight update也相同。这显然是一个不可接受的结果。</p>
-<h2 id="可行的几种初始化方式"><a class="header-anchor" href="#可行的几种初始化方式">¶</a>可行的几种初始化方式</h2>
-<h3 id="pre-training"><a class="header-anchor" href="#pre-training">¶</a>pre-training</h3>
+<h2 id="可行的几种初始化方式"><a class="header-anchor" href="#可行的几种初始化方式">null</a>可行的几种初始化方式</h2>
+<h3 id="pre-training"><a class="header-anchor" href="#pre-training">null</a>pre-training</h3>
 <p>pre-training是早期训练神经网络的有效初始化方法，一个便于理解的例子是先使用greedy layerwise auto-encoder做unsupervised pre-training，然后再做fine-tuning。具体过程可以参见UFLDL的一个tutorial，因为这不是本文重点，就在这里简略的说一下：</p>
 <ol>
 <li>
@@ -542,7 +542,7 @@
 </li>
 </ol>
 <p>随着数据量的增加以及activation function (参见我的另一篇文章) 的发展，pre-training的概念已经渐渐发生变化。目前，从零开始训练神经网络时我们也很少采用auto-encoder进行pre-training，而是直奔主题做模型训练。不想从零开始训练神经网络时，我们往往选择一个已经训练好的在任务A上的模型（称为pre-trained model），将其放在任务B上做模型调整（称为fine-tuning）。</p>
-<h3 id="random-initialization"><a class="header-anchor" href="#random-initialization">¶</a>random initialization</h3>
+<h3 id="random-initialization"><a class="header-anchor" href="#random-initialization">null</a>random initialization</h3>
 <p>随机初始化是很多人目前经常使用的方法，然而这是有弊端的，一旦随机分布选择不当，就会导致网络优化陷入困境。下面举几个例子。<br>
 核心代码见下方</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">data = tf.constant(np.random.randn(<span class="number">2000</span>, <span class="number">800</span>))</span><br><span class="line">layer_sizes = [<span class="number">800</span> - <span class="number">50</span> * i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">10</span>)]</span><br><span class="line">num_layers = len(layer_sizes)</span><br><span class="line"></span><br><span class="line">fcs = []  <span class="comment"># To store fully connected layers' output</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_layers - <span class="number">1</span>):</span><br><span class="line">    X = data <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">else</span> fcs[i - <span class="number">1</span>]</span><br><span class="line">    node_in = layer_sizes[i]</span><br><span class="line">    node_out = layer_sizes[i + <span class="number">1</span>]</span><br><span class="line">    W = tf.Variable(np.random.randn(node_in, node_out)) * <span class="number">0.01</span> </span><br><span class="line">    fc = tf.matmul(X, W)</span><br><span class="line">    fc = tf.nn.tanh(fc)</span><br><span class="line">    fcs.append(fc)</span><br></pre></td></tr></table></figure>
@@ -554,7 +554,7 @@
 <p>均值仍然为0，标准差现在变为1，下图是每一层输出值分布的直方图：<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/rand2.png" alt="rand2"><br>
 几乎所有的值集中在-1或1附近，神经元saturated了！注意到tanh在-1和1附近的gradient都接近0，这同样导致了gradient太小，参数难以被更新。</p>
-<h3 id="xavier-initialization"><a class="header-anchor" href="#xavier-initialization">¶</a>Xavier initialization</h3>
+<h3 id="xavier-initialization"><a class="header-anchor" href="#xavier-initialization">null</a>Xavier initialization</h3>
 <p>Xavier initialization可以解决上面的问题！其初始化方式也并不复杂。Xavier初始化的基本思想是保持输入和输出的方差一致，这样就避免了所有输出值都趋向于0。注意，为了问题的简便，Xavier初始化的推导过程是基于线性函数的，但是它在一些非线性神经元中也很有效。让我们试一下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W = tf.Variable(np.random.randn(node_in, node_out)) / np.sqrt(node_in)</span><br></pre></td></tr></table></figure>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/Xavier_tanh.png" alt="Xavier_tanh"></p>
@@ -562,12 +562,12 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">W = tf.Variable(np.random.randn(node_in, node_out)) / np.sqrt(node_in)</span><br><span class="line">......</span><br><span class="line">fc = tf.nn.relu(fc)</span><br></pre></td></tr></table></figure>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/Xavier_relu.png" alt="Xavier_relu"></p>
 <p>前面看起来还不错，后面的趋势却是越来越接近0。幸运的是，He initialization可以用来解决ReLU初始化的问题。</p>
-<h3 id="he-initialization"><a class="header-anchor" href="#he-initialization">¶</a>He initialization</h3>
+<h3 id="he-initialization"><a class="header-anchor" href="#he-initialization">null</a>He initialization</h3>
 <p>He initialization的思想是：在ReLU网络中，假定每一层有一半的神经元被激活，另一半为0，所以，要保持variance不变，只需要在Xavier的基础上再除以2：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">W = tf.Variable(np.random.randn(node_in,node_out)) / np.sqrt(node_in/<span class="number">2</span>)</span><br><span class="line">......</span><br><span class="line">fc = tf.nn.relu(fc)</span><br></pre></td></tr></table></figure>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/He_relu.png" alt="He_relu"></p>
 <p>看起来效果非常好，推荐在ReLU网络中使用！</p>
-<h2 id="batch-normalization-layer"><a class="header-anchor" href="#batch-normalization-layer">¶</a>Batch Normalization Layer</h2>
+<h2 id="batch-normalization-layer"><a class="header-anchor" href="#batch-normalization-layer">null</a>Batch Normalization Layer</h2>
 <p>Batch Normalization是一种巧妙而粗暴的方法来削弱bad initialization的影响，其基本思想是：If you want it, just make it!</p>
 <p>我们想要的是在非线性activation之前，输出值应该有比较好的分布（例如高斯分布），以便于back propagation时计算gradient，更新weight。Batch Normalization将输出值强行做一次Gaussian Normalization和线性变换：<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/batch_norm_alg.png" width="400" height></p>
@@ -579,7 +579,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">W = tf.Variable(np.random.randn(node_in, node_out)) * <span class="number">0.01</span></span><br><span class="line">......</span><br><span class="line">fc = tf.contrib.layers.batch_norm(fc, center=<span class="keyword">True</span>, scale=<span class="keyword">True</span>, is_training=<span class="keyword">True</span>)</span><br><span class="line">fc = tf.nn.relu(fc)</span><br></pre></td></tr></table></figure>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-18-ML-WeightInitialization/rand_batch_norm.png" alt="rand_batch_norm"></p>
 <p>很容易看到，Batch Normalization的效果非常好，推荐使用！</p>
-<h2 id="参考资料"><a class="header-anchor" href="#参考资料">¶</a>参考资料</h2>
+<h2 id="参考资料"><a class="header-anchor" href="#参考资料">null</a>参考资料</h2>
 <p>Xavier initialization是由Xavier Glorot et al.在2010年提出，He initialization是由Kaiming He et al.在2015年提出，Batch Normalization是由Sergey Ioffe et al.在2015年提出。</p>
 <p>另有知乎网友在评论中提到了一些其他相关工作：<a href="https://arxiv.org/abs/1511.06422%EF%BC%8C" target="_blank" rel="noopener">https://arxiv.org/abs/1511.06422，</a> <a href="https://arxiv.org/pdf/1702.08591.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1702.08591.pdf</a></p>
 <ol>
@@ -588,7 +588,7 @@
 <li>Sergey Ioffe et al., Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</li>
 <li>Standord CS231n</li>
 </ol>
-<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/25110150" target="_blank" rel="noopener">聊一聊深度学习的weight initialization</a></li>
 <li><a href="https://github.com/feixia586/zhihu_material/tree/master/weight_initialization" target="_blank" rel="noopener">GitHub-feixia586/zhihu_material</a></li>
@@ -984,7 +984,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">¶背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化为0的可行性？"><span class="nav-number">2.</span> <span class="nav-text">¶初始化为0的可行性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可行的几种初始化方式"><span class="nav-number">3.</span> <span class="nav-text">¶可行的几种初始化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pre-training"><span class="nav-number">3.1.</span> <span class="nav-text">¶pre-training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random-initialization"><span class="nav-number">3.2.</span> <span class="nav-text">¶random initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xavier-initialization"><span class="nav-number">3.3.</span> <span class="nav-text">¶Xavier initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#he-initialization"><span class="nav-number">3.4.</span> <span class="nav-text">¶He initialization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#batch-normalization-layer"><span class="nav-number">4.</span> <span class="nav-text">¶Batch Normalization Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">¶参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">null背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化为0的可行性？"><span class="nav-number">2.</span> <span class="nav-text">null初始化为0的可行性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可行的几种初始化方式"><span class="nav-number">3.</span> <span class="nav-text">null可行的几种初始化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pre-training"><span class="nav-number">3.1.</span> <span class="nav-text">nullpre-training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random-initialization"><span class="nav-number">3.2.</span> <span class="nav-text">nullrandom initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xavier-initialization"><span class="nav-number">3.3.</span> <span class="nav-text">nullXavier initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#he-initialization"><span class="nav-number">3.4.</span> <span class="nav-text">nullHe initialization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#batch-normalization-layer"><span class="nav-number">4.</span> <span class="nav-text">nullBatch Normalization Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">null参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
             
 
           </div>

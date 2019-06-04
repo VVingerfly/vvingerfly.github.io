@@ -501,10 +501,10 @@
       
 
       
-        <h2 id="径向基函数简介"><a class="header-anchor" href="#径向基函数简介">¶</a>径向基函数简介</h2>
+        <h2 id="径向基函数简介"><a class="header-anchor" href="#径向基函数简介">null</a>径向基函数简介</h2>
 <p>径向基(Radial Basis Function, RBF)函数是一个取值仅仅依赖于离原点距离的实值函数，也就是$\phi(x) = \phi(||x||)$,或者还可以是到任意一点$c$的距离，$c$点即为中心点，也就是$\phi(x,c) = \phi(||x-c||)$。<br>
 任意一个满足$\phi(x) = \phi(||x||)$特性的函数$\phi$都叫做径向量函数，标准的一般使用欧氏距离，尽管其他距离函数也是可以的。</p>
-<h2 id="常用rbf函数"><a class="header-anchor" href="#常用rbf函数">¶</a>常用RBF函数</h2>
+<h2 id="常用rbf函数"><a class="header-anchor" href="#常用rbf函数">null</a>常用RBF函数</h2>
 <p>常用径向基函数包括（$r=||x-x_i||$）：</p>
 <ul>
 <li>
@@ -547,13 +547,13 @@ $$</p>
 <p>$$<br>
 \phi ®=r^{2}\ln®<br>
 $$</p>
-<h2 id="函数逼近"><a class="header-anchor" href="#函数逼近">¶</a>函数逼近</h2>
+<h2 id="函数逼近"><a class="header-anchor" href="#函数逼近">null</a>函数逼近</h2>
 <p>RBF函数一般用来逼近其他复杂的函数，逼近函数$y(\mathbf x)$用$N$个RBF的加权和来表示，每个RBF有不同的中心$\mathbf x_i$，其一般形式如下：<br>
 $$<br>
 y(\mathbf x) = \sum_{i=1}^N w_i \phi( || \mathbf x - \mathbf x_i || )<br>
 $$</p>
 <p>理论上来说，只要$N$足够大，$y(\mathbf x)$能够以任意的精度逼近在某个区间的任意连续函数。</p>
-<h2 id="rbf网络"><a class="header-anchor" href="#rbf网络">¶</a>RBF网络</h2>
+<h2 id="rbf网络"><a class="header-anchor" href="#rbf网络">null</a>RBF网络</h2>
 <p>函数<br>
 $$<br>
 y(\mathbf x) = \sum_{i=1}^N w_i \phi( || \mathbf x - \mathbf x_i || )<br>
@@ -561,7 +561,7 @@ $$</p>
 <p>还可以通过一个简单的单层人工神经网络来表达，即RBF网络，径向基函数作为网络的激活函数。</p>
 <p>因为$y(\mathbf x)$相对于$w_i$是可微的，所有这些权重可以通过神经网络中标准的迭代法来学习得到。</p>
 <p>通过这种方式使用径向基函数在收敛后可以在拟合集中得到一个合理的结果，但是在拟合集外面表现会很差，除非添加一个垂直于径向基函数的多项式项。</p>
-<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Radial_basis_function" target="_blank" rel="noopener">WIKIPEDIA-Radial basis function</a></li>
 <li><a href="http://www.cnblogs.com/yangxi/archive/2013/05/30/3107921.html" target="_blank" rel="noopener">径向基函数(RBF)</a></li>
@@ -957,7 +957,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#径向基函数简介"><span class="nav-number">1.</span> <span class="nav-text">¶径向基函数简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用rbf函数"><span class="nav-number">2.</span> <span class="nav-text">¶常用RBF函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数逼近"><span class="nav-number">3.</span> <span class="nav-text">¶函数逼近</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rbf网络"><span class="nav-number">4.</span> <span class="nav-text">¶RBF网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#径向基函数简介"><span class="nav-number">1.</span> <span class="nav-text">null径向基函数简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用rbf函数"><span class="nav-number">2.</span> <span class="nav-text">null常用RBF函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数逼近"><span class="nav-number">3.</span> <span class="nav-text">null函数逼近</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rbf网络"><span class="nav-number">4.</span> <span class="nav-text">nullRBF网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
             
 
           </div>
