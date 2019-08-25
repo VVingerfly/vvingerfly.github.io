@@ -100,7 +100,7 @@
 <meta name="keywords" content="coding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码的多平台支持">
-<meta property="og:url" content="https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="让你的代码能够跨平台编译运行">
 <meta property="og:locale" content="default">
@@ -114,7 +114,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/">
 
 
 
@@ -377,7 +377,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -510,17 +510,17 @@
       
 
       
-        <h2 id="c"><a class="header-anchor" href="#c">¶</a>c++</h2>
+        <h2 id="c"><a class="header-anchor" href="#c">null</a>c++</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _WIN32</span></span><br><span class="line">   <span class="comment">//define something for Windows (32-bit and 64-bit, this part is common)</span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">ifdef</span> _WIN64</span></span><br><span class="line">      <span class="comment">//define something for Windows (64-bit only)</span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">      <span class="comment">//define something for Windows (32-bit only)</span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> __APPLE__</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"TargetConditionals.h"</span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">if</span> TARGET_IPHONE_SIMULATOR</span></span><br><span class="line">         <span class="comment">// iOS Simulator</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">elif</span> TARGET_OS_IPHONE</span></span><br><span class="line">        <span class="comment">// iOS device</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">elif</span> TARGET_OS_MAC</span></span><br><span class="line">        <span class="comment">// Other kinds of Mac OS</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="meta">#   <span class="meta-keyword">error</span> <span class="meta-string">"Unknown Apple platform"</span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> __linux__</span></span><br><span class="line">    <span class="comment">// linux</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> __unix__ <span class="comment">// all unices not caught above</span></span></span><br><span class="line">    <span class="comment">// Unix</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(_POSIX_VERSION)</span></span><br><span class="line">    <span class="comment">// POSIX</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">error</span> <span class="meta-string">"Unknown compiler"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="python"><a class="header-anchor" href="#python">¶</a>python</h2>
+<h2 id="python"><a class="header-anchor" href="#python">null</a>python</h2>
 <p>判断系统信息的代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> platform</span><br><span class="line">print(platform.system())</span><br><span class="line">print(platform.release())</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> platform <span class="keyword">as</span> _platform</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> _platform == <span class="string">"linux"</span> <span class="keyword">or</span> _platform == <span class="string">"linux2"</span>:</span><br><span class="line">    <span class="comment"># linux</span></span><br><span class="line"><span class="keyword">elif</span> _platform == <span class="string">"darwin"</span>:</span><br><span class="line">    <span class="comment"># MAC OS X</span></span><br><span class="line"><span class="keyword">elif</span> _platform == <span class="string">"win32"</span>:</span><br><span class="line">    <span class="comment"># Windows</span></span><br><span class="line"><span class="keyword">elif</span> _platform == <span class="string">"win64"</span>:</span><br><span class="line">    <span class="comment"># Windows 64-bit</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment"># others</span></span><br></pre></td></tr></table></figure>
-<h2 id="cmake"><a class="header-anchor" href="#cmake">¶</a>cmake</h2>
+<h2 id="cmake"><a class="header-anchor" href="#cmake">null</a>cmake</h2>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(WIN32)</span><br><span class="line">    <span class="keyword">aux_source_directory</span>(os/win SOURCES)</span><br><span class="line"><span class="keyword">elseif</span>(APPLE)</span><br><span class="line">    <span class="keyword">aux_source_directory</span>(os/mac SOURCES)</span><br><span class="line"><span class="keyword">else</span>(UNIX)</span><br><span class="line">    <span class="keyword">aux_source_directory</span>(os/linux SOURCES)</span><br><span class="line"><span class="keyword">endif</span>(WIN32)</span><br></pre></td></tr></table></figure>
-<h2 id="qmake"><a class="header-anchor" href="#qmake">¶</a>qmake</h2>
+<h2 id="qmake"><a class="header-anchor" href="#qmake">null</a>qmake</h2>
 <figure class="highlight qt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">macx</span> &#123;</span><br><span class="line"># mac only</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">unix</span>:!<span class="title">macx</span>&#123;</span><br><span class="line"># linux only</span><br><span class="line">&#125;</span><br><span class="line"><span class="title">win32</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
 <ul>
 <li><a href="https://stackoverflow.com/questions/5919996/how-to-detect-reliably-mac-os-x-ios-linux-windows-in-c-preprocessor?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa" target="_blank" rel="noopener">How to detect reliably Mac OS X, iOS, Linux, Windows in C preprocessor?</a></li>
 <li><a href="https://segmentfault.com/a/1190000000499401" target="_blank" rel="noopener">编译系统对跨平台代码的支持</a></li>
@@ -589,7 +589,7 @@
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/" title="代码的多平台支持">https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/</a>
+    <a href="https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/" title="代码的多平台支持">https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -918,7 +918,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c"><span class="nav-number">1.</span> <span class="nav-text">¶c++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python"><span class="nav-number">2.</span> <span class="nav-text">¶python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake"><span class="nav-number">3.</span> <span class="nav-text">¶cmake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qmake"><span class="nav-number">4.</span> <span class="nav-text">¶qmake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c"><span class="nav-number">1.</span> <span class="nav-text">nullc++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python"><span class="nav-number">2.</span> <span class="nav-text">nullpython</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake"><span class="nav-number">3.</span> <span class="nav-text">nullcmake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qmake"><span class="nav-number">4.</span> <span class="nav-text">nullqmake</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
             
 
           </div>
@@ -1110,7 +1110,7 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2018/05-03-Cpp-CrossPlatform/";
+    this.page.url = "https://VVingerfly.github.io/2018/05-03-Cpp-CrossPlatform/";
     this.page.identifier = "2018/05-03-Cpp-CrossPlatform/";
     this.page.title = '代码的多平台支持';
     };

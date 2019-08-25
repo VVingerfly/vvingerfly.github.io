@@ -100,7 +100,7 @@
 <meta name="keywords" content="ml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="贝叶斯角度看 L1 &amp; L2 正则化">
-<meta property="og:url" content="https://wei587me.github.io/2017/08-13-ML-Regularization/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2017/08-13-ML-Regularization/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="从贝叶斯的角度来看，正则化等价于对模型参数引入先验分布。其中, L1正则化对应于拉普拉斯分布，L2正则化对应于高斯分布。">
 <meta property="og:locale" content="default">
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2017/08-13-ML-Regularization/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2017/08-13-ML-Regularization/">
 
 
 
@@ -384,7 +384,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2017/08-13-ML-Regularization/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2017/08-13-ML-Regularization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -508,13 +508,13 @@
       
 
       
-        <h2 id="贝叶斯角度看-l1-l2-正则化"><a class="header-anchor" href="#贝叶斯角度看-l1-l2-正则化">¶</a>贝叶斯角度看 L1 &amp; L2 正则化</h2>
+        <h2 id="贝叶斯角度看-l1-l2-正则化"><a class="header-anchor" href="#贝叶斯角度看-l1-l2-正则化">null</a>贝叶斯角度看 L1 &amp; L2 正则化</h2>
 <p>从贝叶斯的角度来看，正则化等价于对模型参数引入先验分布。其中,</p>
 <ul>
 <li>L1正则化对应于拉普拉斯分布，</li>
 <li>L2正则化对应于高斯分布。</li>
 </ul>
-<h2 id="频率学派-vs-贝叶斯学派"><a class="header-anchor" href="#频率学派-vs-贝叶斯学派">¶</a>频率学派 VS 贝叶斯学派</h2>
+<h2 id="频率学派-vs-贝叶斯学派"><a class="header-anchor" href="#频率学派-vs-贝叶斯学派">null</a>频率学派 VS 贝叶斯学派</h2>
 <p>频率学派(Frequentists)与贝叶斯学派(Bayesians)都基于样本数据做分析。<br>
 其不同点主要在于对于 $X\sim F(x;\theta)$，概率学派将样本看作随机变量，而将 $\theta$ 看作常数，而贝叶斯学派将样本和 $\theta$ 均看作随机变量。<br>
 概率学派的着眼点在样本空间，基本依托于大数定律和中心极限定理，其贵在于得到越多越好的样本，然后计算其频率来逼近该事件的真实概率。<br>
@@ -522,26 +522,26 @@
 <p>贝叶斯概率论假设观察者对某事件处于某个知识状态中（例如：有一个袋子里面装了红球和黑球，已知这个袋子里面是5黑5红的概率是0.8，是10黑5红的概率是0.2），之后观察者开始新的观测或实验（有放回抽取100次，得到80次黑的，20次红的）。经过中间的独立重复试验，观察者获得了一些新的观测结果，这些新的观测将以含有不确定性的逻辑推断的方式影响观察者原有的信念（即观测者一开始认为袋子里是5黑5红的可能性更大，但是经过了上面的事实之后，修正了原有的信念，认为是10黑5红可能性更大）。<br>
 上面的例子用贝叶斯概率论的语言来描述，就是观察者持有某个前置信念（prior belief），通过观测获得统计证据（evidence），通过满足一定条件的逻辑一致推断得出的关于该陈述的「合理性」，从而得出后置信念（posterior belief）来最好的表征观测后的知识状态（state of knowledge）。</p>
 <p>看似贝叶斯框架比较的完美，而且可以克服一些频率派困难（比如投骰子次数不多，那么计算的频率显然与真实的分布想去甚远，但是贝叶斯的先验知识可以缓和这种极端情况）。但是贝叶斯的先验知识没有具体、规则化的获得方法，每个人的先验知识都可能是不一样的，而不良的先验概率甚至会使得最终的估计偏离真实的值。对此，贝叶斯的先验知识最好是客观计算出来的，抑或者拿不准时候用弱信息甚至无信息的先验假设来尽可能避免这类问题。</p>
-<h2 id="linear-regression"><a class="header-anchor" href="#linear-regression">¶</a>Linear Regression</h2>
+<h2 id="linear-regression"><a class="header-anchor" href="#linear-regression">null</a>Linear Regression</h2>
 <p>最原始的 Linear Regression 模型如下<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/1-regression.png" width="480" height alt><br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/2-regression-mle.png" width="480" height alt><br>
 这就导出了我们原始的 least-squares 损失函数，但这是在我们对参数 w 没有加入任何先验分布的情况下。在数据维度很高的情况下，我们的模型参数很多，模型复杂度高，容易发生过拟合。比如我们常说的 “small n, large p problem”。（我们一般用 n 表示数据点的个数，用 p 表示变量的个数 ，即数据维度。当  的时候，不做任何其他假设或者限制的话，学习问题基本上是没法进行的。因为如果用上所有变量的话， p 越大，通常会导致模型越复杂，但是反过来 n 又很小，于是就会出现很严重的 overfitting 问题。</p>
 <p>这个时候，我们可以对参数 w 引入先验分布，降低模型复杂度。</p>
-<h2 id="ridge-regression"><a class="header-anchor" href="#ridge-regression">¶</a>Ridge Regression</h2>
+<h2 id="ridge-regression"><a class="header-anchor" href="#ridge-regression">null</a>Ridge Regression</h2>
 <p>我们对参数 $w$ 引入协方差为 $\alpha$ 的零均值高斯先验。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/3-ridge-regression.png" width="480" height alt></p>
 <p>看我们得到的参数，在零附近是不是很密集，老实说 ridge regression 并不具有产生稀疏解的能力，也就是说参数并不会真出现很多零。假设我们的预测结果与两个特征相关，L2正则倾向于综合两者的影响，给影响大的特征赋予高的权重；而L1正则倾向于选择影响较大的参数，而舍弃掉影响较小的那个。实际应用中 L2正则表现往往会优于 L1正则，但 L1正则会大大降低我们的计算量。</p>
 <p>Typically ridge or $l2$ penalties are <strong>much better</strong> for minimizing prediction error rather than ℓ1 penalties. The reason for this is that when two predictors are highly correlated, ℓ1 regularizer will simply pick one of the two predictors. In contrast, the ℓ2 regularizer will keep both of them and jointly shrink the corresponding coefficients a little bit. Thus, while the ℓ1 penalty can certainly reduce overfitting, you may also experience a loss in predictive power.</p>
 <p>那现在我们知道了，对参数引入 高斯先验 等价于L2正则化。</p>
-<h2 id="lasso"><a class="header-anchor" href="#lasso">¶</a>LASSO</h2>
+<h2 id="lasso"><a class="header-anchor" href="#lasso">null</a>LASSO</h2>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/4-lasso.png" width="480" height alt>
-<h2 id="elastic-net"><a class="header-anchor" href="#elastic-net">¶</a>Elastic Net</h2>
+<h2 id="elastic-net"><a class="header-anchor" href="#elastic-net">null</a>Elastic Net</h2>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/5-elastic-net.png" width="480" height alt>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-Regularization/5-elastic-net-2.png" width="480" height alt>
-<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<h2 id="总结"><a class="header-anchor" href="#总结">null</a>总结</h2>
 <p>正则化参数等价于对参数引入 先验分布，使得 模型复杂度 变小（缩小解空间），对于噪声以及 outliers 的鲁棒性增强（泛化能力）。整个最优化问题从贝叶斯观点来看是一种贝叶斯最大后验估计，其中 正则化项 对应后验估计中的 先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式。</p>
-<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
 <ul>
 <li><a href="https://www.zhihu.com/question/23536142/answer/90135994" target="_blank" rel="noopener">知乎 Charles Xiao</a></li>
 <li><a href="https://www.zhihu.com/question/20447622" target="_blank" rel="noopener">知乎 bsdelf</a></li>
@@ -610,7 +610,7 @@
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2017/08-13-ML-Regularization/" title="贝叶斯角度看 L1 & L2 正则化">https://wei587me.github.io/2017/08-13-ML-Regularization/</a>
+    <a href="https://VVingerfly.github.io/2017/08-13-ML-Regularization/" title="贝叶斯角度看 L1 & L2 正则化">https://VVingerfly.github.io/2017/08-13-ML-Regularization/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -636,8 +636,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01-10-Qt-RedesignMeshviewerFrame/" rel="next" title="MeshViewer框架搭建">
-                <i class="fa fa-chevron-left"></i> MeshViewer框架搭建
+              <a href="/2017/08-13-CV-ImageTransformation/" rel="next" title="图像的变换">
+                <i class="fa fa-chevron-left"></i> 图像的变换
               </a>
             
           </div>
@@ -646,8 +646,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08-13-CV-ImageTransformation/" rel="prev" title="图像的变换">
-                图像的变换 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08-14-ML-AlgorithmsSummary/" rel="prev" title="Machine Learning Algorithm Summary">
+                Machine Learning Algorithm Summary <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -939,7 +939,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯角度看-l1-l2-正则化"><span class="nav-number">1.</span> <span class="nav-text">¶贝叶斯角度看 L1 &amp; L2 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#频率学派-vs-贝叶斯学派"><span class="nav-number">2.</span> <span class="nav-text">¶频率学派 VS 贝叶斯学派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-regression"><span class="nav-number">3.</span> <span class="nav-text">¶Linear Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ridge-regression"><span class="nav-number">4.</span> <span class="nav-text">¶Ridge Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lasso"><span class="nav-number">5.</span> <span class="nav-text">¶LASSO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elastic-net"><span class="nav-number">6.</span> <span class="nav-text">¶Elastic Net</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">¶总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯角度看-l1-l2-正则化"><span class="nav-number">1.</span> <span class="nav-text">null贝叶斯角度看 L1 &amp; L2 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#频率学派-vs-贝叶斯学派"><span class="nav-number">2.</span> <span class="nav-text">null频率学派 VS 贝叶斯学派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-regression"><span class="nav-number">3.</span> <span class="nav-text">nullLinear Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ridge-regression"><span class="nav-number">4.</span> <span class="nav-text">nullRidge Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lasso"><span class="nav-number">5.</span> <span class="nav-text">nullLASSO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elastic-net"><span class="nav-number">6.</span> <span class="nav-text">nullElastic Net</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">null总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">null参考</span></a></li></ol></div>
             
 
           </div>
@@ -1131,7 +1131,7 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2017/08-13-ML-Regularization/";
+    this.page.url = "https://VVingerfly.github.io/2017/08-13-ML-Regularization/";
     this.page.identifier = "2017/08-13-ML-Regularization/";
     this.page.title = '贝叶斯角度看 L1 & L2 正则化';
     };

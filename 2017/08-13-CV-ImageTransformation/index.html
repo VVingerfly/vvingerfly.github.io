@@ -100,7 +100,7 @@
 <meta name="keywords" content="cv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图像的变换">
-<meta property="og:url" content="https://wei587me.github.io/2017/08-13-CV-ImageTransformation/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="介绍图像的变换，包括等距变换，相似变换，仿射变换和投影变换。">
 <meta property="og:locale" content="default">
@@ -117,7 +117,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2017/08-13-CV-ImageTransformation/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/">
 
 
 
@@ -380,7 +380,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2017/08-13-CV-ImageTransformation/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -504,7 +504,7 @@
       
 
       
-        <h2 id="等距变换"><a class="header-anchor" href="#等距变换">¶</a>等距变换</h2>
+        <h2 id="等距变换"><a class="header-anchor" href="#等距变换">null</a>等距变换</h2>
 <p>等距变换 (Isometric Transformation) 保持欧氏距离不变。<br>
 等距变换就是对图像的旋转和平移。</p>
 <ul>
@@ -530,7 +530,7 @@ $$<br>
 <li>不变量：长度，角度，面积</li>
 <li>自由度：3个自由度（1个旋转角+2个平移），至少需要2组点共4个方程求解。</li>
 </ul>
-<h2 id="相似变换"><a class="header-anchor" href="#相似变换">¶</a>相似变换</h2>
+<h2 id="相似变换"><a class="header-anchor" href="#相似变换">null</a>相似变换</h2>
 <p>相似变换（Similarity Transformation）是在等距变换的基础上加上一个缩放。<br>
 等距变换就是对图像的旋转+平移+缩放。</p>
 <ul>
@@ -556,7 +556,7 @@ $$</p>
 <li>不变量：角度，长度的比例，面积的比例，平行线关系</li>
 <li>自由度：4个自由度（1个旋转角+2个平移+1个缩放尺度），至少需要2组点4个方程求解.</li>
 </ul>
-<h2 id="仿射变换"><a class="header-anchor" href="#仿射变换">¶</a>仿射变换</h2>
+<h2 id="仿射变换"><a class="header-anchor" href="#仿射变换">null</a>仿射变换</h2>
 <p>仿射变换（Affine Transformation）<br>
 仿射变换就是对图像的旋转+平移+缩放+切变（shear），相比前两种变换图像的形状发生了改变，但是原图中的平行线仍然保持平行。</p>
 <ul>
@@ -588,7 +588,7 @@ $$</p>
 <li>不变量：平行线关系，平行线长度的比例，面积的比例</li>
 <li>自由度：6个自由度（2个旋转角+2个平移+2个缩放因子），至少需要3组点6个方程求解.</li>
 </ul>
-<h2 id="投影变换"><a class="header-anchor" href="#投影变换">¶</a>投影变换</h2>
+<h2 id="投影变换"><a class="header-anchor" href="#投影变换">null</a>投影变换</h2>
 <p>投影变换（Projective Transformation）又叫2D homographies，是把点从一个平面映射到另一个平面，如世界坐标系下的平面到相机的成像平面。<br>
 投影变换就是对图像的旋转+平移+缩放+切变+射影，相比前三种变换图像的形变更为自由，原图中的平行线经过变换之后已经不在平行，而可能相交于一点，射影变换就是把理想点（平行直线在无穷远处相交）变换到图像上。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-ImageTransformation/projective.png" width="400" height alt></p>
@@ -638,7 +638,7 @@ v_1x_1+v_2x_2<br>
 \right)<br>
 $$</p>
 <p>所以对于仿射变换，$v=0$，所有的理想点仍然被映射到理想点，对于投影变换，$v\neq 0$，一些理想点被映射到无穷远处。</p>
-<h2 id="参考"><a class="header-anchor" href="#参考">¶</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
 <ul>
 <li><a href="http://blog.csdn.net/u014096352/article/details/53526747" target="_blank" rel="noopener">图像的等距变换，相似变换，仿射变换，射影变换及其matlab实现</a></li>
 <li><a href="https://www8.cs.umu.se/kurser/5DV055/VT08/" target="_blank" rel="noopener">Geometrical Image Analysis, Spring 08</a></li>
@@ -706,7 +706,7 @@ $$</p>
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2017/08-13-CV-ImageTransformation/" title="图像的变换">https://wei587me.github.io/2017/08-13-CV-ImageTransformation/</a>
+    <a href="https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/" title="图像的变换">https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -732,8 +732,8 @@ $$</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08-13-ML-Regularization/" rel="next" title="贝叶斯角度看 L1 & L2 正则化">
-                <i class="fa fa-chevron-left"></i> 贝叶斯角度看 L1 & L2 正则化
+              <a href="/2017/01-10-Qt-RedesignMeshviewerFrame/" rel="next" title="MeshViewer框架搭建">
+                <i class="fa fa-chevron-left"></i> MeshViewer框架搭建
               </a>
             
           </div>
@@ -742,8 +742,8 @@ $$</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08-14-ML-AlgorithmsSummary/" rel="prev" title="Machine Learning Algorithm Summary">
-                Machine Learning Algorithm Summary <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08-13-ML-Regularization/" rel="prev" title="贝叶斯角度看 L1 & L2 正则化">
+                贝叶斯角度看 L1 & L2 正则化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1035,7 +1035,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#等距变换"><span class="nav-number">1.</span> <span class="nav-text">¶等距变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相似变换"><span class="nav-number">2.</span> <span class="nav-text">¶相似变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射变换"><span class="nav-number">3.</span> <span class="nav-text">¶仿射变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#投影变换"><span class="nav-number">4.</span> <span class="nav-text">¶投影变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">¶参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#等距变换"><span class="nav-number">1.</span> <span class="nav-text">null等距变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相似变换"><span class="nav-number">2.</span> <span class="nav-text">null相似变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射变换"><span class="nav-number">3.</span> <span class="nav-text">null仿射变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#投影变换"><span class="nav-number">4.</span> <span class="nav-text">null投影变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">null参考</span></a></li></ol></div>
             
 
           </div>
@@ -1227,7 +1227,7 @@ $$</p>
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2017/08-13-CV-ImageTransformation/";
+    this.page.url = "https://VVingerfly.github.io/2017/08-13-CV-ImageTransformation/";
     this.page.identifier = "2017/08-13-CV-ImageTransformation/";
     this.page.title = '图像的变换';
     };

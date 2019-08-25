@@ -100,7 +100,7 @@
 <meta name="keywords" content="cg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ICP算法">
-<meta property="og:url" content="https://wei587me.github.io/2017/08-29-Alg-ICP/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2017/08-29-Alg-ICP/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="迭代最近点算法算法(Iterative Closest Point, ICP)简介">
 <meta property="og:locale" content="default">
@@ -114,7 +114,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2017/08-29-Alg-ICP/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2017/08-29-Alg-ICP/">
 
 
 
@@ -377,7 +377,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2017/08-29-Alg-ICP/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2017/08-29-Alg-ICP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -519,7 +519,7 @@
       
         <p>ICP（Iterative Closest Point），即迭代最近点算法，是经典的数据配准算法。其特征在于，通过求取源点云和目标点云之间的对应点对，基于对应点对构造旋转平移矩阵，并利用所求矩阵，将源点云变换到目标点云的坐标系下，估计变换后源点云与目标点云的误差函数，若误差函数值大于阀值，则迭代进行上述运算直到满足给定的误差要求.</p>
 <p>ICP算法采用最小二乘估计计算变换矩阵，原理简单且具有较好的精度，但是由于采用了迭代计算，导致算法计算速度较慢，而且采用ICP进行配准计算时，其对配准点云的初始位置有一定要求，若所选初始位置不合理，则会导致算法陷入局部最优。</p>
-<h2 id="align-3d-data"><a class="header-anchor" href="#align-3d-data">¶</a>Align 3D Data</h2>
+<h2 id="align-3d-data"><a class="header-anchor" href="#align-3d-data">null</a>Align 3D Data</h2>
 <p>如果空间中两组点云之间的对应关系已经明确，则很容易求得两者之间的刚性变换，即旋转和平移共6个参数，但这种对应关系一般很难事先知道。<br>
 ICP算法假设两组点云之间的对应关系由最近点确定，一步步将源点云$P$匹配到目标点云$Q$。</p>
 <p>ICP算法主要包含对应点确定和变换计算更新，简要流程如下</p>
@@ -530,7 +530,7 @@ ICP算法假设两组点云之间的对应关系由最近点确定，一步步�
 <li>构建距离误差函数$E$</li>
 <li>极小化误差函数，如果对应点距离小于给定阈值设置，则算法结束；否则根据计算的旋转平移更新源点云，继续上述步骤。</li>
 </ol>
-<h2 id="basic-icp"><a class="header-anchor" href="#basic-icp">¶</a>Basic ICP</h2>
+<h2 id="basic-icp"><a class="header-anchor" href="#basic-icp">null</a>Basic ICP</h2>
 <p>传统的ICP算法主要有两种度量函数，即point-to-point和point-to-plane距离，一般来说，point-to-plane距离能够加快收敛速度，也更加常用。</p>
 <ul>
 <li>
@@ -546,7 +546,7 @@ E_{plane} = \sum_{i}\left[\left(\mathrm{R} p_{i}+t-q_{i}\right) \cdot n_{q_i}\ri
 $$</p>
 </li>
 </ul>
-<h2 id="colored-icp"><a class="header-anchor" href="#colored-icp">¶</a>Colored ICP</h2>
+<h2 id="colored-icp"><a class="header-anchor" href="#colored-icp">null</a>Colored ICP</h2>
 <p>Colored ICP算法*[Park2017]*针对有颜色的点云，在原始point-to-plane能量项的基础上，增加了一个对应点对之间的颜色约束，能够有更好的配准结果。其目标函数如下<br>
 $$<br>
 E_{color} = (1-\delta) E_{C}+\delta E_{G}<br>
@@ -560,13 +560,13 @@ $$<br>
 E_{C}=\sum_{i}\left(\boldsymbol{C}<em>{q_i}(\Pi(R p_i + t))-\boldsymbol{C}(p_i)\right)^{2}<br>
 $$<br>
 其中$\Pi$将3D点投影到切平面，$\boldsymbol{C}</em>{q_i}$是提前计算好的定义在$q_{i}$的切平面上的连续函数。</p>
-<h2 id="symmetrized-icp"><a class="header-anchor" href="#symmetrized-icp">¶</a>Symmetrized ICP</h2>
+<h2 id="symmetrized-icp"><a class="header-anchor" href="#symmetrized-icp">null</a>Symmetrized ICP</h2>
 <p>Symmetrized ICP算法极小化到点到由$n_p$和$n_q$决定的平面的距离平方和，同时优化拆分的旋转 :<br>
 $$<br>
 E_{two-plane}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cdot\left(\mathrm{R} n_{p_i}\right)\right]^{2} +<br>
 \left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cdot\left(\mathrm{R}^{-1} n_{q_i}\right)\right]^{2}<br>
 $$</p>
-<h2 id="symmetric-icp"><a class="header-anchor" href="#symmetric-icp">¶</a>Symmetric ICP</h2>
+<h2 id="symmetric-icp"><a class="header-anchor" href="#symmetric-icp">null</a>Symmetric ICP</h2>
 <p>Symmetric ICP*[Rusinkiewicz2019]*是ICP算法的另一种改进。其核心是在原有点到面距离$<br>
 (p-q) \cdot n_{q}$上做了一个微小的改动即$(p-q) \cdot\left(n_{p}+n_{q}\right)$，在几乎不增加计算量的基础上，能够有更快更可靠的收敛。其目标函数有两种，第一种是法向旋转版本(Rotated-Normals)的对称ICP目标函数：<br>
 $$<br>
@@ -577,13 +577,13 @@ $$<br>
 E_{symm}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cdot\left(n_{p_i}+n_{q_i}\right)\right]^{2}<br>
 $$<br>
 将旋转拆分为两个相同的部分在进行目标函数线性化估计时会带来一些好处，因为在线性化时假设旋转角度很小，优化拆分的旋转即角度的一半使得近似误差更小。</p>
-<h2 id="solve"><a class="header-anchor" href="#solve">¶</a>Solve</h2>
+<h2 id="solve"><a class="header-anchor" href="#solve">null</a>Solve</h2>
 <p>ICP算法在极小化能量时通常都需要求解一个非线性最小二乘问题，但可以线性化，假设$\theta \approx 0$，则$\sin(\theta) \approx 0$，$\cos(\theta) \approx 1$，忽略二次项，可以得到一个线性的最小二乘问题，再用Gauss-Newton或者Levenberg-Marquardt算法求解。</p>
-<h2 id="algorithm"><a class="header-anchor" href="#algorithm">¶</a>Algorithm</h2>
-<h2 id="go-icp"><a class="header-anchor" href="#go-icp">¶</a>Go-ICP</h2>
+<h2 id="algorithm"><a class="header-anchor" href="#algorithm">null</a>Algorithm</h2>
+<h2 id="go-icp"><a class="header-anchor" href="#go-icp">null</a>Go-ICP</h2>
 <p>Go-ICP即Globally optimal ICP，提出了在L2误差度量下欧式空间中匹配两组点云的全局最优算法。</p>
-<h3 id="sparse-icp"><a class="header-anchor" href="#sparse-icp">¶</a>Sparse ICP</h3>
-<h2 id="code"><a class="header-anchor" href="#code">¶</a>Code</h2>
+<h3 id="sparse-icp"><a class="header-anchor" href="#sparse-icp">null</a>Sparse ICP</h3>
+<h2 id="code"><a class="header-anchor" href="#code">null</a>Code</h2>
 <ul>
 <li>ICP: <a href="https://github.com/symao/libicp" target="_blank" rel="noopener">libicp</a>  <a href="https://github.com/Gregjksmith/Iterative-Closest-Point" target="_blank" rel="noopener">Iterative-Closest-Point</a>  <a href="https://github.com/yangjiaolong/Go-ICP" target="_blank" rel="noopener">Go-ICP</a></li>
 <li>Sparse ICP: <a href="https://github.com/OpenGP/sparseicp" target="_blank" rel="noopener">sparseicp</a> <a href="https://github.com/palanglois/icpSparse" target="_blank" rel="noopener">icpSparse</a></li>
@@ -601,7 +601,7 @@ $$<br>
 </ul>
 </li>
 </ul>
-<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
 <ul>
 <li>
 <p><a href="http://resources.mpi-inf.mpg.de/deformableShapeMatching/EG2012_Tutorial/slides/1.2%20ICP_+_TPS_%28NM%29.pdf" target="_blank" rel="noopener">Dynamic Geometry Processing</a></p>
@@ -678,7 +678,7 @@ $$<br>
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2017/08-29-Alg-ICP/" title="ICP算法">https://wei587me.github.io/2017/08-29-Alg-ICP/</a>
+    <a href="https://VVingerfly.github.io/2017/08-29-Alg-ICP/" title="ICP算法">https://VVingerfly.github.io/2017/08-29-Alg-ICP/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -1007,7 +1007,7 @@ $$<br>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#align-3d-data"><span class="nav-number">1.</span> <span class="nav-text">¶Align 3D Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-icp"><span class="nav-number">2.</span> <span class="nav-text">¶Basic ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#colored-icp"><span class="nav-number">3.</span> <span class="nav-text">¶Colored ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#symmetrized-icp"><span class="nav-number">4.</span> <span class="nav-text">¶Symmetrized ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#symmetric-icp"><span class="nav-number">5.</span> <span class="nav-text">¶Symmetric ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solve"><span class="nav-number">6.</span> <span class="nav-text">¶Solve</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#algorithm"><span class="nav-number">7.</span> <span class="nav-text">¶Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-icp"><span class="nav-number">8.</span> <span class="nav-text">¶Go-ICP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sparse-icp"><span class="nav-number">8.1.</span> <span class="nav-text">¶Sparse ICP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">9.</span> <span class="nav-text">¶Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">10.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#align-3d-data"><span class="nav-number">1.</span> <span class="nav-text">nullAlign 3D Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-icp"><span class="nav-number">2.</span> <span class="nav-text">nullBasic ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#colored-icp"><span class="nav-number">3.</span> <span class="nav-text">nullColored ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#symmetrized-icp"><span class="nav-number">4.</span> <span class="nav-text">nullSymmetrized ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#symmetric-icp"><span class="nav-number">5.</span> <span class="nav-text">nullSymmetric ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solve"><span class="nav-number">6.</span> <span class="nav-text">nullSolve</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#algorithm"><span class="nav-number">7.</span> <span class="nav-text">nullAlgorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-icp"><span class="nav-number">8.</span> <span class="nav-text">nullGo-ICP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sparse-icp"><span class="nav-number">8.1.</span> <span class="nav-text">nullSparse ICP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">9.</span> <span class="nav-text">nullCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">10.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
             
 
           </div>
@@ -1199,7 +1199,7 @@ $$<br>
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2017/08-29-Alg-ICP/";
+    this.page.url = "https://VVingerfly.github.io/2017/08-29-Alg-ICP/";
     this.page.identifier = "2017/08-29-Alg-ICP/";
     this.page.title = 'ICP算法';
     };

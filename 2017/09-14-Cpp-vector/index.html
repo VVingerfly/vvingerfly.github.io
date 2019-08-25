@@ -100,7 +100,7 @@
 <meta name="keywords" content="cpp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ STL vector">
-<meta property="og:url" content="https://wei587me.github.io/2017/09-14-Cpp-vector/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2017/09-14-Cpp-vector/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="C++ STL vector的对象增长和内存回收机制">
 <meta property="og:locale" content="default">
@@ -114,7 +114,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2017/09-14-Cpp-vector/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2017/09-14-Cpp-vector/">
 
 
 
@@ -377,7 +377,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2017/09-14-Cpp-vector/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2017/09-14-Cpp-vector/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -501,7 +501,7 @@
       
 
       
-        <h2 id="c-stl-vector简介"><a class="header-anchor" href="#c-stl-vector简介">¶</a>C++ STL <code>vector</code>简介</h2>
+        <h2 id="c-stl-vector简介"><a class="header-anchor" href="#c-stl-vector简介">null</a>C++ STL <code>vector</code>简介</h2>
 <p><code>vector</code>是一个<strong>类模板</strong>，模板本身不是类或函数（类模板和函数模板），相反可以将模板看作编译器生成类或函数的一份说明。编译器根据模板创建类或函数的过程称为<strong>实例化</strong>(instantiation)，当使用模板时，需要指出编译器把类或函数实例化成何种类型。</p>
 <p>C++能允许大多数类型的对象作为<code>vector</code>的元素，但是因为引用不是对象，所以不存在包含引用的<code>vector</code>。</p>
 <p><code>vector</code>常见成员函数</p>
@@ -511,7 +511,7 @@
 <li><code>resize(n)</code> 强迫容器改变到包含<code>n</code>个元素的状态</li>
 <li><code>reserve(n)</code> 强迫容器把它的容量变为至少<code>n</code>，前提是<code>n</code>不小于当前的大小</li>
 </ul>
-<h2 id="vector对象增长机制"><a class="header-anchor" href="#vector对象增长机制">¶</a><code>vector</code>对象增长机制</h2>
+<h2 id="vector对象增长机制"><a class="header-anchor" href="#vector对象增长机制">null</a><code>vector</code>对象增长机制</h2>
 <p>为了支持快速随机访问，<code>vector</code>将元素连续存储，如果没有空间容纳新元素，而不得不获取新的内存空间时，<code>vector</code>和<code>string</code>的实现通常会分配比新的空间需求更大的内存空间，然后将已有元素从旧位置移动到新空间中，然后添加新元素，析构掉旧内存中的对象并释放旧存储空间。<br>
 <code>vector</code>和<code>string</code>提供了一些成员函数允许我们与它的实现中内存分配部分互动。</p>
 <ul>
@@ -527,7 +527,7 @@
 </ul>
 <p>只有当需要的内存空间超过当前容量时，<code>reserve</code>调用才会改变<code>vector</code>的容量。如果需求大于当前容量，<code>reserve</code>至少分配与需求一样大的内存空间（可能更大）。如果小于等于当前容量，<code>reserve</code>什么也不做。</p>
 <p>在新标准库中，可以调用<code>shrink_to_fit</code>来要求<code>vector</code>, <code>string</code>和<code>deque</code>退回不需要的内存空间。但是，具体的实现可以选择忽略此请求，即==调用<code>shrink_to_fit</code>也并不保证一定退回内存空间==。</p>
-<h2 id="vector内存回收机制"><a class="header-anchor" href="#vector内存回收机制">¶</a><code>vector</code>内存回收机制</h2>
+<h2 id="vector内存回收机制"><a class="header-anchor" href="#vector内存回收机制">null</a><code>vector</code>内存回收机制</h2>
 <p>由于<code>vector</code>的内存占用空间只增不减，比如你首先分配了10,000个字节，然后erase掉后面9,999个，留下一个有效元素，但是内存占用仍为10,000个。所有内存空间是在<code>vector</code>析构时候才能被系统回收。<code>empty</code>用来检测容器是否为空的，<code>clear</code>可以清空所有元素。但是即使<code>clear</code>，<code>vector</code>所占用的内存空间依然如故，无法保证内存的回收。</p>
 <p>如果需要空间动态缩小，可以考虑使用deque。如果非vector不可，可以用swap()来帮助你释放内存。具体方法如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums; </span><br><span class="line">nums.push_back(<span class="number">1</span>);</span><br><span class="line">nums.push_back(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;().swap(nums); <span class="comment">//或者nums.swap(vector&lt;int&gt; ())</span></span><br></pre></td></tr></table></figure>
@@ -536,7 +536,7 @@
 <p><code>swap()</code>是交换函数，使<code>vector</code>离开其自身的作用域，从而强制释放<code>vector</code>所占的内存空间，总而言之，释放<code>vector</code>内存最简单的方法是<code>vector&lt;int&gt;().swap(nums)</code>。但是如果<code>nums</code>是一个类的成员，不能把<code>vector&lt;int&gt;().swap(nums)</code>写进类的析构函数中，否则会导致double free or corruption (fasttop)的错误，原因可能是重复释放内存。</p>
 <p>如果<code>vector</code>中存放的是指针，那么当<code>vector</code>销毁时，这些指针指向的对象不会被销毁，那么内存就不会被释放。如下面这种情况，<code>vector</code>中的元素时由<code>new</code>操作动态申请出来的对象指针：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>*&gt; vip;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">        vip.push_back(<span class="keyword">new</span> <span class="keyword">int</span>);</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>*&gt;::iterator i = vip.begin(); i != vip.end(); ++i)</span><br><span class="line">        <span class="keyword">delete</span> *i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="reference"><a class="header-anchor" href="#reference">¶</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
 <ul>
 <li><a href>C++ Primer - Chapter 3.3 &amp; 9.4</a></li>
 <li><a href>Effective STL - Item 17</a></li>
@@ -603,7 +603,7 @@
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2017/09-14-Cpp-vector/" title="C++ STL vector">https://wei587me.github.io/2017/09-14-Cpp-vector/</a>
+    <a href="https://VVingerfly.github.io/2017/09-14-Cpp-vector/" title="C++ STL vector">https://VVingerfly.github.io/2017/09-14-Cpp-vector/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -932,7 +932,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-stl-vector简介"><span class="nav-number">1.</span> <span class="nav-text">¶C++ STL vector简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector对象增长机制"><span class="nav-number">2.</span> <span class="nav-text">¶vector对象增长机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector内存回收机制"><span class="nav-number">3.</span> <span class="nav-text">¶vector内存回收机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">¶Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-stl-vector简介"><span class="nav-number">1.</span> <span class="nav-text">nullC++ STL vector简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector对象增长机制"><span class="nav-number">2.</span> <span class="nav-text">nullvector对象增长机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector内存回收机制"><span class="nav-number">3.</span> <span class="nav-text">nullvector内存回收机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
             
 
           </div>
@@ -1124,7 +1124,7 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2017/09-14-Cpp-vector/";
+    this.page.url = "https://VVingerfly.github.io/2017/09-14-Cpp-vector/";
     this.page.identifier = "2017/09-14-Cpp-vector/";
     this.page.title = 'C++ STL vector';
     };

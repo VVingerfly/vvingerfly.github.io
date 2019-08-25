@@ -100,7 +100,7 @@
 <meta name="keywords" content="qt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MeshViewer框架搭建">
-<meta property="og:url" content="https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/index.html">
+<meta property="og:url" content="https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/index.html">
 <meta property="og:site_name" content="Wei&#39;s Blog">
 <meta property="og:description" content="用VS+Qt搭建MeshViewer框架">
 <meta property="og:locale" content="default">
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/">
+  <link rel="canonical" href="https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/">
 
 
 
@@ -389,7 +389,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei LI">
@@ -529,13 +529,13 @@
       
 
       
-        <h2 id="在-vs-中新建-qt-项目"><a class="header-anchor" href="#在-vs-中新建-qt-项目">¶</a>在 VS 中新建 Qt 项目</h2>
+        <h2 id="在-vs-中新建-qt-项目"><a class="header-anchor" href="#在-vs-中新建-qt-项目">null</a>在 VS 中新建 Qt 项目</h2>
 <p>这个就不废话了。</p>
-<h2 id="添加菜单栏"><a class="header-anchor" href="#添加菜单栏">¶</a>添加菜单栏</h2>
+<h2 id="添加菜单栏"><a class="header-anchor" href="#添加菜单栏">null</a>添加菜单栏</h2>
 <p>这个很简单，在 VS 中双击 mainwindow.ui，直接在 Qt Designer 中添加就行。<br>
 这里就添加一个 File 菜单，下面再添加两个 Action,分别为 Open 和 Save。其他的类似。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_menu.jpg" alt="Kinect v1"></p>
-<h2 id="添加工具栏"><a class="header-anchor" href="#添加工具栏">¶</a>添加工具栏</h2>
+<h2 id="添加工具栏"><a class="header-anchor" href="#添加工具栏">null</a>添加工具栏</h2>
 <p>在右侧底部的“<strong>动作编辑器</strong>”中，选中一个 Action，拖放到窗口的工具栏上即可。<br>
 在“动作编辑器”中还能设置快捷方式。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_toolbar.jpg?imageView2/2/w/640/q/75" alt="Kinect v1"></p>
@@ -543,7 +543,7 @@
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_resource.jpg" alt></p>
 <p>在“动作编辑器”中双击 Action，如 Open，可以添加应用图标，进行其他一些设置。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_icon.jpg" alt></p>
-<h2 id="添加-render-group-box"><a class="header-anchor" href="#添加-render-group-box">¶</a>添加 Render Group Box</h2>
+<h2 id="添加-render-group-box"><a class="header-anchor" href="#添加-render-group-box">null</a>添加 Render Group Box</h2>
 <p>首先在 Qt Designer 中拖入几个 Check Box，将对象名作相应修改，如 Point，Edge, Face 等。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic2_add_checkBox_render_1.jpg" alt></p>
 <p>然后选中这三个 Check Box，右击，从“布局”中选中“<strong>垂直布局</strong>”。<br>
@@ -559,7 +559,7 @@
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic7_add_GroupBox_3.jpg" alt></p>
 <p>然后在 MainWindow 的构造函数中添加一些代码，具体如下。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MainWindow::MainWindow(QWidget *parent)</span><br><span class="line">	: QMainWindow(parent)</span><br><span class="line">&#123;</span><br><span class="line">	ui.setupUi(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">	renderingwidget_ = <span class="keyword">new</span> RenderingWidget(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">	QVBoxLayout *layout_left = <span class="keyword">new</span> QVBoxLayout;</span><br><span class="line">	layout_left-&gt;addWidget(ui.groupBox_render);</span><br><span class="line">	layout_left-&gt;addStretch(<span class="number">4</span>);</span><br><span class="line">	QHBoxLayout *layout_main = <span class="keyword">new</span> QHBoxLayout;</span><br><span class="line">	layout_main-&gt;addLayout(layout_left);</span><br><span class="line">	layout_main-&gt;addWidget(renderingwidget_);</span><br><span class="line">	layout_main-&gt;setStretch(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">this</span>-&gt;centralWidget()-&gt;setLayout(layout_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="预览效果"><a class="header-anchor" href="#预览效果">¶</a>预览效果</h2>
+<h2 id="预览效果"><a class="header-anchor" href="#预览效果">null</a>预览效果</h2>
 <p>这是目前的预览效果。<br>
 <img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic8_res.jpg" alt></p>
 
@@ -624,7 +624,7 @@
   <li class="post-copyright-link">
     <strong>本文链接: </strong>
     
-    <a href="https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/" title="MeshViewer框架搭建">https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/</a>
+    <a href="https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/" title="MeshViewer框架搭建">https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -660,8 +660,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08-13-ML-Regularization/" rel="prev" title="贝叶斯角度看 L1 & L2 正则化">
-                贝叶斯角度看 L1 & L2 正则化 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08-13-CV-ImageTransformation/" rel="prev" title="图像的变换">
+                图像的变换 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -953,7 +953,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-vs-中新建-qt-项目"><span class="nav-number">1.</span> <span class="nav-text">¶在 VS 中新建 Qt 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加菜单栏"><span class="nav-number">2.</span> <span class="nav-text">¶添加菜单栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加工具栏"><span class="nav-number">3.</span> <span class="nav-text">¶添加工具栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-render-group-box"><span class="nav-number">4.</span> <span class="nav-text">¶添加 Render Group Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览效果"><span class="nav-number">5.</span> <span class="nav-text">¶预览效果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-vs-中新建-qt-项目"><span class="nav-number">1.</span> <span class="nav-text">null在 VS 中新建 Qt 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加菜单栏"><span class="nav-number">2.</span> <span class="nav-text">null添加菜单栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加工具栏"><span class="nav-number">3.</span> <span class="nav-text">null添加工具栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-render-group-box"><span class="nav-number">4.</span> <span class="nav-text">null添加 Render Group Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览效果"><span class="nav-number">5.</span> <span class="nav-text">null预览效果</span></a></li></ol></div>
             
 
           </div>
@@ -1145,7 +1145,7 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "https://wei587me.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/";
+    this.page.url = "https://VVingerfly.github.io/2017/01-10-Qt-RedesignMeshviewerFrame/";
     this.page.identifier = "2017/01-10-Qt-RedesignMeshviewerFrame/";
     this.page.title = 'MeshViewer框架搭建';
     };
