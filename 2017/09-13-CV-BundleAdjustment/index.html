@@ -504,9 +504,9 @@
       
 
       
-        <h2 id="bundle-adjustment简述"><a class="header-anchor" href="#bundle-adjustment简述">null</a>Bundle Adjustment简述</h2>
+        <h2 id="bundle-adjustment简述"><a class="header-anchor" href="#bundle-adjustment简述"></a>Bundle Adjustment简述</h2>
 <p>在SFM (structure from motion)的计算中BA (Bundle Adjustment)作为最后一步优化具有很重要的作用，在近几年兴起的基于图的SLAM (simultaneous localization and mapping)算法里面使用了图优化替代了原来的滤波器，这里所谓的图优化其实也是指BA。其实很多经典的文献对于BA都有深深浅浅的介绍，如果想对BA的全过程做一个全面的更深层次的了解，推荐阅读 Bundle Adjustment —A Modern Synthesis.</p>
-<h2 id="什么是ba"><a class="header-anchor" href="#什么是ba">null</a>什么是BA</h2>
+<h2 id="什么是ba"><a class="header-anchor" href="#什么是ba"></a>什么是BA</h2>
 <p>Bundle Adjustment中文译为光束法平差，还有其他一些翻译如束调整、捆集调整或者捆绑调整等等。</p>
 <p>所谓bundle，来源于bundle of light，其本意就是指的光束，这些光束指的是三维空间中的点投影到像平面上的光束，而重投影误差正是利用这些光束来构建的，因此称为光束法强调光束也正是描述其优化模型是如何建立的。</p>
 <p>用一句话来描述BA那就是，BA的本质是一个优化模型，其目的是<strong>最小化重投影误差</strong>。重投影也就是指的第二次投影，<br>
@@ -531,7 +531,7 @@ $$</p>
 <li>$Q(a_i,b_j)$:点i在图像j上的predicted projection</li>
 <li>$d(x,y)$:向量$x,y$的欧式距离</li>
 </ul>
-<h2 id="reference"><a class="header-anchor" href="#reference">null</a>Reference</h2>
+<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
 <ul>
 <li><a href="http://blog.csdn.net/abcjennifer/article/details/7588865" target="_blank" rel="noopener"> Bundle Adjustment - 基于feature的3D场景重建算法</a></li>
 <li><a href="http://blog.csdn.net/OptSolution/article/details/64442962" target="_blank" rel="noopener">Bundle Adjustment 简述</a></li>
@@ -927,7 +927,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#bundle-adjustment简述"><span class="nav-number">1.</span> <span class="nav-text">nullBundle Adjustment简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是ba"><span class="nav-number">2.</span> <span class="nav-text">null什么是BA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">nullReference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#bundle-adjustment简述"><span class="nav-number">1.</span> <span class="nav-text">Bundle Adjustment简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是ba"><span class="nav-number">2.</span> <span class="nav-text">什么是BA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

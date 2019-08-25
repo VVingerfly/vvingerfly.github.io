@@ -517,7 +517,7 @@
       
 
       
-        <h2 id="三维矩阵变换"><a class="header-anchor" href="#三维矩阵变换">null</a>三维矩阵变换</h2>
+        <h2 id="三维矩阵变换"><a class="header-anchor" href="#三维矩阵变换"></a>三维矩阵变换</h2>
 <p>你可以使用一个4×4的矩阵将任何点变换到另一个点。下面的例子中，我们用一个矩阵对点$(x, y, z)$进行变化，产生了一个新的点$(x’, y’, z’)$：</p>
 <p>$$<br>
 \begin{bmatrix}<br>
@@ -534,7 +534,7 @@ M_{41} &amp; M_{42} &amp; M_{43}  &amp; M_{44}<br>
 \end{bmatrix}<br>
 $$</p>
 <p>最常用的变换包括：平移（translation），旋转（rotation）和缩放（scaling）。你可以将这些变换合并起来，组成一个矩阵，同时进行几种变换。</p>
-<h3 id="平移"><a class="header-anchor" href="#平移">null</a>平移</h3>
+<h3 id="平移"><a class="header-anchor" href="#平移"></a>平移</h3>
 <p>将一个点$(x, y, z)$平移到另一个点$(x’, y’, z’)$：</p>
 <p>$$<br>
 \begin{bmatrix}<br>
@@ -550,7 +550,7 @@ x &amp; y &amp; z &amp; 1<br>
 T_x &amp; T_y &amp; T_z  &amp; 1<br>
 \end{bmatrix}<br>
 $$</p>
-<h3 id="旋转"><a class="header-anchor" href="#旋转">null</a>旋转</h3>
+<h3 id="旋转"><a class="header-anchor" href="#旋转"></a>旋转</h3>
 <p>将一个点$(x, y, z)$沿$x-$轴进行旋转，得到了一个新的点$(x’, y’, z’)$：</p>
 <p>$$<br>
 \begin{bmatrix}<br>
@@ -596,7 +596,7 @@ x &amp; y &amp; z &amp; 1<br>
 0 &amp; 0 &amp; 0  &amp; 1<br>
 \end{bmatrix}<br>
 $$</p>
-<h3 id="缩放"><a class="header-anchor" href="#缩放">null</a>缩放</h3>
+<h3 id="缩放"><a class="header-anchor" href="#缩放"></a>缩放</h3>
 <p>$$<br>
 \begin{bmatrix}<br>
 x’ &amp; y’ &amp; z’ &amp; 1<br>
@@ -611,9 +611,9 @@ s_x &amp; 0 &amp; 0 &amp; 0 \<br>
 0 &amp; 0 &amp; 0  &amp; 1<br>
 \end{bmatrix}<br>
 $$</p>
-<h3 id="矩阵旋转"><a class="header-anchor" href="#矩阵旋转">null</a>矩阵旋转</h3>
-<h3 id="欧拉角旋转"><a class="header-anchor" href="#欧拉角旋转">null</a>欧拉角旋转</h3>
-<h4 id="偏航角：yaw"><a class="header-anchor" href="#偏航角：yaw">null</a>偏航角：yaw</h4>
+<h3 id="矩阵旋转"><a class="header-anchor" href="#矩阵旋转"></a>矩阵旋转</h3>
+<h3 id="欧拉角旋转"><a class="header-anchor" href="#欧拉角旋转"></a>欧拉角旋转</h3>
+<h4 id="偏航角：yaw"><a class="header-anchor" href="#偏航角：yaw"></a>偏航角：yaw</h4>
 <p>偏航角<code>yaw</code>是绕$z$轴逆时针旋转$\alpha$，对应的旋转矩阵是<br>
 $$<br>
 R_z(\alpha)=<br>
@@ -623,7 +623,7 @@ R_z(\alpha)=<br>
 0 &amp; 0 &amp; 1<br>
 \end{bmatrix}<br>
 $$</p>
-<h4 id="俯仰角-pitch"><a class="header-anchor" href="#俯仰角-pitch">null</a>俯仰角:  pitch</h4>
+<h4 id="俯仰角-pitch"><a class="header-anchor" href="#俯仰角-pitch"></a>俯仰角:  pitch</h4>
 <p>俯仰角<code>pitch</code>是绕$y$轴逆时针旋转$\beta$，对应的旋转矩阵是<br>
 $$<br>
 R_y(\beta)=<br>
@@ -633,7 +633,7 @@ R_y(\beta)=<br>
 -\sin\theta &amp; 0 &amp; \cos\theta<br>
 \end{bmatrix}<br>
 $$</p>
-<h4 id="滚转角-roll"><a class="header-anchor" href="#滚转角-roll">null</a>滚转角: roll</h4>
+<h4 id="滚转角-roll"><a class="header-anchor" href="#滚转角-roll"></a>滚转角: roll</h4>
 <p>滚转角<code>roll</code>是绕$x$轴逆时针旋转$\gamma$，对应的旋转矩阵是<br>
 $$<br>
 R_x(\gamma)=<br>
@@ -643,13 +643,13 @@ R_x(\gamma)=<br>
 0 &amp; -\sin\theta &amp; \cos\theta<br>
 \end{bmatrix}<br>
 $$</p>
-<h4 id="刚体变换"><a class="header-anchor" href="#刚体变换">null</a>刚体变换</h4>
+<h4 id="刚体变换"><a class="header-anchor" href="#刚体变换"></a>刚体变换</h4>
 <p>这三个旋转矩阵合起来便可以表达一个刚体变换[[3]][Yaw, pitch, and roll rotations]<br>
 $$<br>
 R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)<br>
 $$</p>
-<h3 id="四元数旋转"><a class="header-anchor" href="#四元数旋转">null</a>四元数旋转</h3>
-<h2 id="四元数-欧拉角-旋转矩阵的优点和缺点"><a class="header-anchor" href="#四元数-欧拉角-旋转矩阵的优点和缺点">null</a>四元数、欧拉角、旋转矩阵的优点和缺点</h2>
+<h3 id="四元数旋转"><a class="header-anchor" href="#四元数旋转"></a>四元数旋转</h3>
+<h2 id="四元数-欧拉角-旋转矩阵的优点和缺点"><a class="header-anchor" href="#四元数-欧拉角-旋转矩阵的优点和缺点"></a>四元数、欧拉角、旋转矩阵的优点和缺点</h2>
 <ul>
 <li><strong>矩阵旋转</strong>
 <ul>
@@ -701,7 +701,7 @@ $$</p>
 </ul>
 </li>
 </ul>
-<h2 id="参考"><a class="header-anchor" href="#参考">null</a>参考</h2>
+<h2 id="参考"><a class="header-anchor" href="#参考"></a>参考</h2>
 <ol>
 <li><a href="http://17de.com/library/d3d_6im/d3dim6_5.htm#2.%20%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2" target="_blank" rel="noopener">矩阵与变换</a></li>
 <li><a href="https://blog.csdn.net/csdn_chai/article/details/78028344" target="_blank" rel="noopener">图形学复习要点</a></li>
@@ -1099,7 +1099,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三维矩阵变换"><span class="nav-number">1.</span> <span class="nav-text">null三维矩阵变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.1.</span> <span class="nav-text">null平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.2.</span> <span class="nav-text">null旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">null缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵旋转"><span class="nav-number">1.4.</span> <span class="nav-text">null矩阵旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角旋转"><span class="nav-number">1.5.</span> <span class="nav-text">null欧拉角旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#偏航角：yaw"><span class="nav-number">1.5.1.</span> <span class="nav-text">null偏航角：yaw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#俯仰角-pitch"><span class="nav-number">1.5.2.</span> <span class="nav-text">null俯仰角:  pitch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滚转角-roll"><span class="nav-number">1.5.3.</span> <span class="nav-text">null滚转角: roll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#刚体变换"><span class="nav-number">1.5.4.</span> <span class="nav-text">null刚体变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四元数旋转"><span class="nav-number">1.6.</span> <span class="nav-text">null四元数旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四元数-欧拉角-旋转矩阵的优点和缺点"><span class="nav-number">2.</span> <span class="nav-text">null四元数、欧拉角、旋转矩阵的优点和缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">null参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三维矩阵变换"><span class="nav-number">1.</span> <span class="nav-text">三维矩阵变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.1.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.2.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵旋转"><span class="nav-number">1.4.</span> <span class="nav-text">矩阵旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角旋转"><span class="nav-number">1.5.</span> <span class="nav-text">欧拉角旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#偏航角：yaw"><span class="nav-number">1.5.1.</span> <span class="nav-text">偏航角：yaw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#俯仰角-pitch"><span class="nav-number">1.5.2.</span> <span class="nav-text">俯仰角:  pitch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滚转角-roll"><span class="nav-number">1.5.3.</span> <span class="nav-text">滚转角: roll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#刚体变换"><span class="nav-number">1.5.4.</span> <span class="nav-text">刚体变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四元数旋转"><span class="nav-number">1.6.</span> <span class="nav-text">四元数旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四元数-欧拉角-旋转矩阵的优点和缺点"><span class="nav-number">2.</span> <span class="nav-text">四元数、欧拉角、旋转矩阵的优点和缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
