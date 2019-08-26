@@ -492,17 +492,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[macOS配置OpenMesh]]></title>
-    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
-    <content type="text"><![CDATA[安装OpenMesh库 使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 用Qt Creator测试OpenMesh Creator的安装这里不再赘述，新建控制台项目，如test。 在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 在Cmake中使用OpenMesh 在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
-      <categories>
-        <category>tutorials</category>
-      </categories>
-      <tags>
-        <tag>openmesh</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Tips for Homebrew]]></title>
     <url>%2F2018%2F03-07-Mac-Tips4Homebrew%2F</url>
     <content type="text"><![CDATA[更新Homebrew 要获取最新的包的列表，首先得更新Homebrew自己，这可以用brew update办到。 1brew update 安装包 安装包的命令如下： 1brew install $FORMULA # 安装指定的包 可以在Homebrew Formulas搜索你需要安装的包。比如你要安装OpenMesh库，在该网页中输入OpenMesh点击搜索，会得到一个搜索结果，点击进去，可以看到安装命令如下： 1brew install open-mesh 但通过brew install安装某些包提示找不到，可能已经废弃了，如ann，通过下面命令可以安装，参考这里. 1brew install brewsci/science/ann 12brew unlink opencvbrew link --force opencv@3 卸载包 1brew uninstall $FORMULA # 卸载指定的包 注意：卸载一个包不会同时卸载其依赖的包。 更新包 通过下面命令可以查看所有可更新的包 1brew outdated 然后就可以用brew upgrade去更新了。Homebrew会安装新版本的包，但旧版本仍然会保留。 12brew upgrade # 更新所有的包brew upgrade $FORMULA # 更新指定的包 清理旧版本 一般情况下，新版本安装了，旧版本就不需要了。可以用brew cleanup清理旧版本和缓存文件。Homebrew只会清除比当前安装的包更老的版本，所以不用担心有些包没更新但被删了。 123brew cleanup # 清理所有包的旧版本brew cleanup $FORMULA # 清理指定包的旧版本brew cleanup -n # 查看可清理的旧版本包，不执行实际操作 锁定包 如果经常更新的话，brew update一次更新所有的包是非常方便的。但有时候会担心自动升级把一些不希望更新的包更新了，这时可用brew pin去锁定这个包，然后brew update就会略过它了。 12brew pin $FORMULA # 锁定某个包brew unpin $FORMULA # 取消锁定 查看包信息 brew info可以查看包的相关信息，包括包依赖和相应的命令。 12brew info $FORMULA # 显示某个包的信息brew info # 显示安装了包数量，文件数量，和总占用空间 brew deps可以显示包的依赖关系，可以用来查看已安装的包的依赖，然后判断哪些包是可以安全删除的。 1brew deps --installed --tree # 查看已安装的包的依赖，树形显示 如输出的python依赖如下： 1234567python├── gdbm├── openssl├── readline├── sqlite│ └── readline└── xz 查看包列表 1brew list # 列出所有安装的包 brew list命令还有一些可选参数[--unbrewed][--versions [--multiple]] [--pinned][formulae] 如果给定[formulae]参数，将列出该包的所安装的文件，如果加上--verbose参数，将进一步列出该包所有子文件夹中的文件。 如果给定--unbrewed，list all files in the Homebrew prefix not installed by Homebrew. 如果给定--versions，显示所有包或者某个包([formulae]参数指定)的版本号，如果进一步给定–multiple参数，将只显示多版本安装的包。 如果给定--pinned参数，将现实所有或者某个包被pin的包。 安装其他仓库的包 一般情况下我们安装的都是主仓库(Homebrew’s master repository)中的包，但有些包可能在其他仓库，如brewsci/science和homebrew/core。这时可以通过brew tap命令做到，比如： 1brew tap brewsci/science 然后你就可以直接用brew install安装brewsci/science中的包： 1brew install $FORMULA 参考 你应该定期更新Homebrew Keeping Your Homebrew Up to Date Homebrew-OpenMesh]]></content>
@@ -512,6 +501,17 @@
       <tags>
         <tag>macOS</tag>
         <tag>homebrew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[macOS配置OpenMesh]]></title>
+    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
+    <content type="text"><![CDATA[安装OpenMesh库 使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 用Qt Creator测试OpenMesh Creator的安装这里不再赘述，新建控制台项目，如test。 在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 在Cmake中使用OpenMesh 在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
+      <categories>
+        <category>tutorials</category>
+      </categories>
+      <tags>
+        <tag>openmesh</tag>
       </tags>
   </entry>
   <entry>
@@ -747,9 +747,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[随机抽样一致算法]]></title>
-    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
-    <content type="text"><![CDATA[算法简介 算法步骤 Reference wikipedia：随机抽样一致算法]]></content>
+    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
+    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
+    <content type="text"><![CDATA[算法简介 尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别， 差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv/cg</category>
@@ -759,9 +759,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
-    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
-    <content type="text"><![CDATA[算法简介 尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别， 差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
+    <title><![CDATA[随机抽样一致算法]]></title>
+    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
+    <content type="text"><![CDATA[算法简介 算法步骤 Reference wikipedia：随机抽样一致算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv/cg</category>
