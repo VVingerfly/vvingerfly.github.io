@@ -513,102 +513,81 @@
 <li>preferably, handles ‘holes’ in the polygon</li>
 </ul>
 <p>Here are each of the options i found.</p>
-<h2 id="opengl"><a class="header-anchor" href="#opengl"></a>OpenGL</h2>
-<ul>
+<h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><ul>
 <li>contains functionality (in the glu library) which is capable of tessellation</li>
 <li>problem: requires a complicated system of registering 6 callback functions</li>
 <li>problem: not easy to use, no example code in Red Book</li>
 <li>problem: has large external dependency (OpenGL, with a valid context)</li>
-<li>Extracting the gluTessellate functionality from the <a href="http://oss.sgi.com/projects/ogl-sample/" target="_blank" rel="noopener">SGI OpenGL® Sample Implementation</a>
-<ul>
+<li>Extracting the gluTessellate functionality from the <a href="http://oss.sgi.com/projects/ogl-sample/" target="_blank" rel="noopener">SGI OpenGL® Sample Implementation</a><ul>
 <li>one developer has done this, and says “It was very easy”, which seems rather surprising!</li>
 </ul>
 </li>
-<li>Valéry Moya wrote in July 2009:
-<ul>
-<li>&quot;I wrote my own glu tesselator. Grabbing the tessellation from the callbacks isn’t all that hard and doesn’t require too much code to get working.  (In fact, I got it working with just 2 of the callbacks registered:  GLU_TESS_BEGIN and GLU_TESS_VERTEX.)   In my trial, I was able to get tessellations from lists verts that make up the contour of the polygon I wanted to tessellate (with no overlapping edged, but allowing holes defined as counterclockwise list of verts).  The “hard” part is that you need to handle getting the triangulated verts as triangles, triangle fans and triangle strip order but this not as bad as it sounds to keep track of. &quot;</li>
+<li>Valéry Moya wrote in July 2009:<ul>
+<li>“I wrote my own glu tesselator. Grabbing the tessellation from the callbacks isn’t all that hard and doesn’t require too much code to get working.  (In fact, I got it working with just 2 of the callbacks registered:  GLU_TESS_BEGIN and GLU_TESS_VERTEX.)   In my trial, I was able to get tessellations from lists verts that make up the contour of the polygon I wanted to tessellate (with no overlapping edged, but allowing holes defined as counterclockwise list of verts).  The “hard” part is that you need to handle getting the triangulated verts as triangles, triangle fans and triangle strip order but this not as bad as it sounds to keep track of. “</li>
 <li>Val’s code: <a href="http://vterrain.org/Implementation/Libs/glu_tesselation.c" target="_blank" rel="noopener">glu_tesselation.c</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="fast-polygon-triangulation-based-on-seidel-s-algorithm-1995"><a class="header-anchor" href="#fast-polygon-triangulation-based-on-seidel-s-algorithm-1995"></a><a href="http://www.cs.unc.edu/~dm/CODE/GEM/chapter.html" target="_blank" rel="noopener">Fast Polygon Triangulation based on Seidel’s Algorithm</a> (1995)</h2>
-<ul>
+<h2 id="Fast-Polygon-Triangulation-based-on-Seidel’s-Algorithm-1995"><a href="#Fast-Polygon-Triangulation-based-on-Seidel’s-Algorithm-1995" class="headerlink" title="Fast Polygon Triangulation based on Seidel’s Algorithm (1995)"></a><a href="http://www.cs.unc.edu/~dm/CODE/GEM/chapter.html" target="_blank" rel="noopener">Fast Polygon Triangulation based on Seidel’s Algorithm</a> (1995)</h2><ul>
 <li>has C code available</li>
-<li>problem: small Unix dependency (&lt;sys/time.h&gt;), calls nonstandard stdlib function “log2”</li>
+<li>problem: small Unix dependency (<sys time.h>), calls nonstandard stdlib function “log2”</sys></li>
 <li>problem: in the function add_segment(), a variable is used without being initialized - i.e. it’s questionable code</li>
-<li>problem? the README written in 1995 says “for non-commercial use only”
-<ul>
+<li>problem? the README written in 1995 says “for non-commercial use only”<ul>
 <li>the author Atul Narkhede, who went from CMU to SGI, refers to the code on a more current website as specifically “Public Domain”, so the latest status is apparently non-restrictive</li>
 </ul>
 </li>
 <li>2008, received an email from another guy trying the code, and he found the code was too buggy</li>
 </ul>
-<h2 id="efficient-polygon-triangulation-by-john-w-ratcliff-on-flipcode"><a class="header-anchor" href="#efficient-polygon-triangulation-by-john-w-ratcliff-on-flipcode"></a><a href="http://www.flipcode.com/archives/Efficient_Polygon_Triangulation.shtml" target="_blank" rel="noopener">Efficient Polygon Triangulation</a>, by John W. Ratcliff on flipcode</h2>
-<ul>
+<h2 id="Efficient-Polygon-Triangulation-by-John-W-Ratcliff-on-flipcode"><a href="#Efficient-Polygon-Triangulation-by-John-W-Ratcliff-on-flipcode" class="headerlink" title="Efficient Polygon Triangulation, by John W. Ratcliff on flipcode"></a><a href="http://www.flipcode.com/archives/Efficient_Polygon_Triangulation.shtml" target="_blank" rel="noopener">Efficient Polygon Triangulation</a>, by John W. Ratcliff on flipcode</h2><ul>
 <li>C++ code, very small and easy to use!</li>
 <li>Uses STL, but this dependency was easy to remove</li>
 <li>Tested it on my own data, it worked very well.  Add it to <a href="http://vterrain.org/Doc/vtdata.html" target="_blank" rel="noopener">vtdata</a>.</li>
 <li>Only one problem: doesn’t handle holes (and doesn’t claim to)</li>
 </ul>
-<h2 id="gpc"><a class="header-anchor" href="#gpc"></a><a href="http://www.cs.man.ac.uk/~amurta/software/" target="_blank" rel="noopener">GPC</a></h2>
-<ul>
+<h2 id="GPC"><a href="#GPC" class="headerlink" title="GPC"></a><a href="http://www.cs.man.ac.uk/~amurta/software/" target="_blank" rel="noopener">GPC</a></h2><ul>
 <li>does clipping and boolean operations in addition to triangulation</li>
 <li>problem: reportedly “uses a simple trapezoidal decomposition that introduces lots of t-junctions”</li>
 <li>problem: prohibitive license restricts usage</li>
 </ul>
-<h2 id="triangle-by-jonathan-shewchuk"><a class="header-anchor" href="#triangle-by-jonathan-shewchuk"></a><a href="http://www.cs.cmu.edu/~quake/triangle.html" target="_blank" rel="noopener">“Triangle”</a> by <a href="http://www.cs.berkeley.edu/~jrs" target="_blank" rel="noopener">Jonathan Shewchuk</a></h2>
-<ul>
+<h2 id="“Triangle”-by-Jonathan-Shewchuk"><a href="#“Triangle”-by-Jonathan-Shewchuk" class="headerlink" title="“Triangle” by Jonathan Shewchuk"></a><a href="http://www.cs.cmu.edu/~quake/triangle.html" target="_blank" rel="noopener">“Triangle”</a> by <a href="http://www.cs.berkeley.edu/~jrs" target="_blank" rel="noopener">Jonathan Shewchuk</a></h2><ul>
 <li>Can produce Delaunay triangulations, which apparently have desirable traits for some purposes, but are a bit overkill for the general case.  For our simpler case it can produce “Constrained Delaunay”, which means no extraneous triangles.</li>
 <li>Supports holes!</li>
 <li>Source is free and portable, only one source file (triangle.c) which makes it easy to integrate with.</li>
 <li>One small drawback: You can’t just tell it which segments are the edges of your hole.  Instead, you must supply some point that lies within the hole.  Triangle triangulate the hole, then does some kind of “flood fill” to empty it.  It’s inefficient, but what’s worse is it requires the caller to compute a point-in-polygon for the hole.  This is a non-trivial algorithm for an arbitrary complex polygon.</li>
-<li>In 2008.01, i adapted the Triangle code with a wrapper to call it from vtlib.  It works quite well, for a very large number of polygons.  However, there are some (rare) cases of degenerate geometry where it will crash.  In particular:
-<ul>
+<li>In 2008.01, i adapted the Triangle code with a wrapper to call it from vtlib.  It works quite well, for a very large number of polygons.  However, there are some (rare) cases of degenerate geometry where it will crash.  In particular:<ul>
 <li>It does not like duplicate vertices or duplicate edges.  ‘Duplicate’ in this case is relative to numeric precision: For a building 10-100 meters in size, two vertices within 8cm of each other, defining a very short edge, can cause Triangle to crash.</li>
 <li>It does not like it when a hole (inner ring) in the polygon has a vertex in the same location as one in the outer ring (crash).</li>
 </ul>
 </li>
 </ul>
-<h2 id="terragear"><a class="header-anchor" href="#terragear"></a><a href="http://wiki.flightgear.org/index.php/TerraGear" target="_blank" rel="noopener">TerraGear</a></h2>
-<ul>
+<h2 id="TerraGear"><a href="#TerraGear" class="headerlink" title="TerraGear"></a><a href="http://wiki.flightgear.org/index.php/TerraGear" target="_blank" rel="noopener">TerraGear</a></h2><ul>
 <li>a Free library which contains a cleaned-up version of the Narkhede implementation of the Seidel algorithm (above)?  No.  Perhaps it did back in 2001, but as of 2007, it contains code to call “Triangle”.  It is actually useful as good example code of how to call Triangle.</li>
 </ul>
-<h2 id="panda3d"><a class="header-anchor" href="#panda3d"></a><a href="http://www.panda3d.org/" target="_blank" rel="noopener">Panda3d</a></h2>
-<ul>
+<h2 id="Panda3d"><a href="#Panda3d" class="headerlink" title="Panda3d"></a><a href="http://www.panda3d.org/" target="_blank" rel="noopener">Panda3d</a></h2><ul>
 <li>A huge, free software stack used by Disney’s VR group, which includes triangulation adapted from “Narkhede A. and Manocha D., Fast polygon triangulation algorithm based on Seidel’s Algorithm”</li>
 <li>The triangulation is buried deep in the C++ part of its code, underneath a massive mess of python, tcl, cross-platform abstraction, and custom build tools used to build custom build tools!</li>
 <li>On 2008.01.30, i lifted the ‘Triangulate’ module out of Panda, made it standalone, and ran the provided test (test_tri.cxx).  It crashed, with a negative array index.</li>
 <li>I also spent 3 hours trying to build Panda itself (with most dependencies including Python disabled.)  No luck, it is just too complex.</li>
 <li>There were some implications that the Panda version of Narkhede-Manocha might be cleaned up or fixed.  However, since it crashes (for me) on a simple test outside of Panda, this is not encouraging.</li>
-<li>From: Sébastien Berthet [<a href="mailto:sbrt@yahoo.fr" target="_blank" rel="noopener">mailto:sbrt@yahoo.fr</a>] <br><br>
-Sent: Friday, February 01, 2008 12:56 AM <br><br>
-I assume that you used the last version on CVS (commited 3 weeks ago), right ?   <br><br>
-<a href="http://panda3d.cvs.sourceforge.net/panda3d/panda/src/mathutil/triangulator.cxx?revision=1.5&amp;view=markup" target="_blank" rel="noopener">http://panda3d.cvs.sourceforge.net/panda3d/panda/src/mathutil/triangulator.cxx?revision=1.5&amp;view=markup</a>  <br><br>
-The thread on the forum mentions a few fixes…<br></li>
+<li>From: Sébastien Berthet [mailto:sbrt@yahoo.fr] <br><br>Sent: Friday, February 01, 2008 12:56 AM <br><br>I assume that you used the last version on CVS (commited 3 weeks ago), right ?   <br><br><a href="http://panda3d.cvs.sourceforge.net/panda3d/panda/src/mathutil/triangulator.cxx?revision=1.5&amp;view=markup" target="_blank" rel="noopener">http://panda3d.cvs.sourceforge.net/panda3d/panda/src/mathutil/triangulator.cxx?revision=1.5&amp;view=markup</a>  <br><br>The thread on the forum mentions a few fixes…<br></li>
 </ul>
-<h2 id="poly2tri-liang-kittelman-2005"><a class="header-anchor" href="#poly2tri-liang-kittelman-2005"></a><a href="http://sites-final.uclouvain.be/mema/Poly2Tri/poly2tri.html" target="_blank" rel="noopener">Poly2Tri</a> (Liang / Kittelman, 2005)</h2>
-<ul>
+<h2 id="Poly2Tri-Liang-Kittelman-2005"><a href="#Poly2Tri-Liang-Kittelman-2005" class="headerlink" title="Poly2Tri (Liang / Kittelman, 2005)"></a><a href="http://sites-final.uclouvain.be/mema/Poly2Tri/poly2tri.html" target="_blank" rel="noopener">Poly2Tri</a> (Liang / Kittelman, 2005)</h2><ul>
 <li>“Subdivision using monotone polygons and a sweep line algorithm, O(n log n) time and O(n) storage”</li>
 <li>Supports holes, makes a lot of very skinny triangles.</li>
 <li>It compares the speed of Poly2Tri vs. some other triangulation implementations, and it claims to be faster, although the triangles produced are very skinny slivers.</li>
 <li>Another open source implementation is available at <em>PolygonTriangulator.cxx</em> (google it), by Thomas Kittelmann, which says it is adapted from the implementation by Wu Liang (2005), which appears to be part of a project called “Atlas LXR”</li>
 </ul>
-<h2 id="poly2tri-mason-green-2009"><a class="header-anchor" href="#poly2tri-mason-green-2009"></a><a href="http://code.google.com/p/poly2tri/" target="_blank" rel="noopener">poly2tri</a> (Mason Green?, 2009-)</h2>
-<ul>
+<h2 id="poly2tri-Mason-Green-2009"><a href="#poly2tri-Mason-Green-2009" class="headerlink" title="poly2tri (Mason Green?, 2009-)"></a><a href="http://code.google.com/p/poly2tri/" target="_blank" rel="noopener">poly2tri</a> (Mason Green?, 2009-)</h2><ul>
 <li>Says it is “Based on the paper Sweep-line algorithm for constrained Delaunay triangulation by V. Domiter and and B. Zalik”</li>
 <li>Handles holes.</li>
 <li>BSD license.  Lives on google-code.</li>
 <li>I evaluated it on 2011-07-19.  It managed to tessellate some input which Shewchuk’s Triangle couldn’t not.  However, it still crashed on some input, like the polygon to the right.  Notice how, once again, one of the polygon’s holes (inner rings) exactly touches the outer ring.  The algorithm seems to regard this as degenerate (and does not even detect it to avoid crashing) but it is unfortunately a commonly encountered shape.</li>
 </ul>
-<h2 id="jts"><a class="header-anchor" href="#jts"></a><a href="http://www.vividsolutions.com/jts/jtshome.htm" target="_blank" rel="noopener">JTS</a></h2>
-<ul>
+<h2 id="JTS"><a href="#JTS" class="headerlink" title="JTS"></a><a href="http://www.vividsolutions.com/jts/jtshome.htm" target="_blank" rel="noopener">JTS</a></h2><ul>
 <li>The Java Topology Suite (JTS) as of 2011 will apparently do reasonable quality triangulation and support holes, see <a href="http://lin-ear-th-inking.blogspot.com/2011/04/polygon-triangulation-via-ear-clipping.html" target="_blank" rel="noopener">Polygon Triangulation via Ear-Clipping with Delaunay Refinement</a>.  JTS is a very large package (as is its C++ sibling, <a href="http://trac.osgeo.org/geos/" target="_blank" rel="noopener">GEOS</a>) but if you are already using it, then this might be an option.</li>
 </ul>
-<h2 id="others"><a class="header-anchor" href="#others"></a>Others</h2>
-<p>Triangulating a Simple Polygon in Linear Time (Chazelle 1991)<br>
-M. Held (2001): “FIST: Fast Industrial-Strength Triangulation of Polygons”. FIST is not open source nor allows unrestricted use.</p>
-<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
-<ul>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p>Triangulating a Simple Polygon in Linear Time (Chazelle 1991)<br>M. Held (2001): “FIST: Fast Industrial-Strength Triangulation of Polygons”. FIST is not open source nor allows unrestricted use.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="http://vterrain.org/Implementation/Libs/triangulate.html" target="_blank" rel="noopener">Triangulation of Simple Polygons</a></li>
 </ul>
 
@@ -1002,7 +981,7 @@ M. Held (2001): “FIST: Fast Industrial-Strength Triangulation of Polygons”. 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#opengl"><span class="nav-number">1.</span> <span class="nav-text">OpenGL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-polygon-triangulation-based-on-seidel-s-algorithm-1995"><span class="nav-number">2.</span> <span class="nav-text">Fast Polygon Triangulation based on Seidel’s Algorithm (1995)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficient-polygon-triangulation-by-john-w-ratcliff-on-flipcode"><span class="nav-number">3.</span> <span class="nav-text">Efficient Polygon Triangulation, by John W. Ratcliff on flipcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpc"><span class="nav-number">4.</span> <span class="nav-text">GPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#triangle-by-jonathan-shewchuk"><span class="nav-number">5.</span> <span class="nav-text">“Triangle” by Jonathan Shewchuk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#terragear"><span class="nav-number">6.</span> <span class="nav-text">TerraGear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#panda3d"><span class="nav-number">7.</span> <span class="nav-text">Panda3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#poly2tri-liang-kittelman-2005"><span class="nav-number">8.</span> <span class="nav-text">Poly2Tri (Liang / Kittelman, 2005)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#poly2tri-mason-green-2009"><span class="nav-number">9.</span> <span class="nav-text">poly2tri (Mason Green?, 2009-)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jts"><span class="nav-number">10.</span> <span class="nav-text">JTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">11.</span> <span class="nav-text">Others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">12.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenGL"><span class="nav-number">1.</span> <span class="nav-text">OpenGL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-Polygon-Triangulation-based-on-Seidel’s-Algorithm-1995"><span class="nav-number">2.</span> <span class="nav-text">Fast Polygon Triangulation based on Seidel’s Algorithm (1995)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Efficient-Polygon-Triangulation-by-John-W-Ratcliff-on-flipcode"><span class="nav-number">3.</span> <span class="nav-text">Efficient Polygon Triangulation, by John W. Ratcliff on flipcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPC"><span class="nav-number">4.</span> <span class="nav-text">GPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“Triangle”-by-Jonathan-Shewchuk"><span class="nav-number">5.</span> <span class="nav-text">“Triangle” by Jonathan Shewchuk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TerraGear"><span class="nav-number">6.</span> <span class="nav-text">TerraGear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Panda3d"><span class="nav-number">7.</span> <span class="nav-text">Panda3d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poly2Tri-Liang-Kittelman-2005"><span class="nav-number">8.</span> <span class="nav-text">Poly2Tri (Liang / Kittelman, 2005)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#poly2tri-Mason-Green-2009"><span class="nav-number">9.</span> <span class="nav-text">poly2tri (Mason Green?, 2009-)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JTS"><span class="nav-number">10.</span> <span class="nav-text">JTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">11.</span> <span class="nav-text">Others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">12.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
