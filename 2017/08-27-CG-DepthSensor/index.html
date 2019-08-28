@@ -505,16 +505,21 @@
       
 
       
-        <h2 id="Microsoft-Kinect"><a href="#Microsoft-Kinect" class="headerlink" title="Microsoft Kinect"></a>Microsoft Kinect</h2><p>Kinece二代的技术来自于PrimeSense，微软收购了这家以色列公司。<br>Windows Kinect Sensor 包含</p>
+        <h2 id="microsoft-kinect"><a class="header-anchor" href="#microsoft-kinect"></a>Microsoft Kinect</h2>
+<p>Kinece二代的技术来自于PrimeSense，微软收购了这家以色列公司。<br>
+Windows Kinect Sensor 包含</p>
 <ul>
-<li>RGB相机<br>  An RGB camera that stores three channel data in a 1280x960 resolution. This makes capturing a color image possible.</li>
-<li>IR红外发射器和深度传感器<br>  An infrared (IR) emitter and an IR depth sensor. The emitter emits infrared light beams and the depth sensor reads the IR beams reflected back to the sensor. The reflected beams are converted into depth information measuring the distance between an object and the sensor. This makes capturing a depth image possible.</li>
-<li>麦克风阵列<br>  A multi-array microphone, which contains four microphones for capturing sound. Because there are four microphones, it is possible to record audio as well as find the location of the sound source and the direction of the audio wave.</li>
-<li>3轴加速计<br>  A 3-axis accelerometer configured for a 2G range, where G is the acceleration due to gravity. It is possible to use the accelerometer to determine the current orientation of the Kinect.</li>
+<li>RGB相机<br>
+An RGB camera that stores three channel data in a 1280x960 resolution. This makes capturing a color image possible.</li>
+<li>IR红外发射器和深度传感器<br>
+An infrared (IR) emitter and an IR depth sensor. The emitter emits infrared light beams and the depth sensor reads the IR beams reflected back to the sensor. The reflected beams are converted into depth information measuring the distance between an object and the sensor. This makes capturing a depth image possible.</li>
+<li>麦克风阵列<br>
+A multi-array microphone, which contains four microphones for capturing sound. Because there are four microphones, it is possible to record audio as well as find the location of the sound source and the direction of the audio wave.</li>
+<li>3轴加速计<br>
+A 3-axis accelerometer configured for a 2G range, where G is the acceleration due to gravity. It is possible to use the accelerometer to determine the current orientation of the Kinect.</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/kinect.png" width="480" height alt="Kinect"></p>
-<p>Kinect    Array Specifications</p>
-<div class="table-container">
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/kinect.png" width="480" height alt="Kinect">
+<p>Kinect	Array Specifications</p>
 <table>
 <thead>
 <tr>
@@ -529,7 +534,7 @@
 </tr>
 <tr>
 <td style="text-align:left">Vertical tilt</td>
-<td style="text-align:left">range    ±27°</td>
+<td style="text-align:left">range	±27°</td>
 </tr>
 <tr>
 <td style="text-align:left">Frame rate (depth and color stream)</td>
@@ -549,11 +554,16 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>The resolution of the depth stream is dependent on the frame rate, and is specified by the <a href="https://msdn.microsoft.com/en-us/library/microsoft.kinect.depthimageformat.aspx" target="_blank" rel="noopener">DepthImageFormat Enumeration</a> enumeration. Similarly, the resolution of the color stream is specified by the <a href="https://msdn.microsoft.com/en-us/library/microsoft.kinect.colorimageformat.aspx" target="_blank" rel="noopener">ColorImageFormat Enumeration</a> enumeration.</p>
 <p>See the <a href="https://msdn.microsoft.com/en-us/library/hh973078.aspx#Depth_Ranges" target="_blank" rel="noopener">depth space range</a> section to see the depth data ranges as well as values for out-of-range data.</p>
-<h2 id="Intel-RealSense"><a href="#Intel-RealSense" class="headerlink" title="Intel RealSense"></a>Intel RealSense</h2><h3 id="Intel-RealSense-Camera-R200"><a href="#Intel-RealSense-Camera-R200" class="headerlink" title="Intel RealSense Camera R200"></a>Intel RealSense Camera R200</h3><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/realsence_r200_labels.jpg" width="480" height alt="RealSense"><br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/realsence_r200_specs.jpg" width="480" height alt="KInect"><br>Operating Range (Min-Max)<br>0.5m - 3.5m</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<h2 id="intel-realsense"><a class="header-anchor" href="#intel-realsense"></a>Intel RealSense</h2>
+<h3 id="intel-realsense-camera-r200"><a class="header-anchor" href="#intel-realsense-camera-r200"></a>Intel RealSense Camera R200</h3>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/realsence_r200_labels.jpg" width="480" height alt="RealSense">
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-27-CG-DepthSensor/realsence_r200_specs.jpg" width="480" height alt="KInect">
+Operating Range (Min-Max)
+0.5m - 3.5m
+<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
+<ul>
 <li><a href="https://msdn.microsoft.com/en-us/library/jj131033.aspx" target="_blank" rel="noopener">Kinect for Windows Sensor Components and Specifications</a></li>
 <li><a href="https://www.intel.com/content/www/us/en/support/emerging-technologies/intel-realsense-technology/000016214.html" target="_blank" rel="noopener">Specifications for the Intel RealSense Camera R200</a></li>
 </ul>
@@ -948,7 +958,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Microsoft-Kinect"><span class="nav-number">1.</span> <span class="nav-text">Microsoft Kinect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intel-RealSense"><span class="nav-number">2.</span> <span class="nav-text">Intel RealSense</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intel-RealSense-Camera-R200"><span class="nav-number">2.1.</span> <span class="nav-text">Intel RealSense Camera R200</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#microsoft-kinect"><span class="nav-number">1.</span> <span class="nav-text">Microsoft Kinect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intel-realsense"><span class="nav-number">2.</span> <span class="nav-text">Intel RealSense</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intel-realsense-camera-r200"><span class="nav-number">2.1.</span> <span class="nav-text">Intel RealSense Camera R200</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

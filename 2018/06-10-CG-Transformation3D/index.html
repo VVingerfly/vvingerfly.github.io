@@ -517,127 +517,165 @@
       
 
       
-        <h2 id="三维矩阵变换"><a href="#三维矩阵变换" class="headerlink" title="三维矩阵变换"></a>三维矩阵变换</h2><p>你可以使用一个4×4的矩阵将任何点变换到另一个点。下面的例子中，我们用一个矩阵对点$(x, y, z)$进行变化，产生了一个新的点$(x’, y’, z’)$：</p>
-<script type="math/tex; mode=display">
-\begin{matrix}
-x' & y' & z' & 1
-\end{matrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-M_{11} & M_{12} & M_{13} & M_{14} \\ 
-M_{21} & M_{22} & M_{23}  & M_{24} \\ 
-M_{31} & M_{32} & M_{33}  & M_{34} \\ 
-M_{41} & M_{42} & M_{43}  & M_{44}
-\end{bmatrix}</script><p>最常用的变换包括：平移（translation），旋转（rotation）和缩放（scaling）。你可以将这些变换合并起来，组成一个矩阵，同时进行几种变换。</p>
-<h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><p>将一个点$(x, y, z)$平移到另一个点$(x’, y’, z’)$：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-x' & y' & z' & 1
-\end{bmatrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\ 
-0 & 1 & 0 & 0 \\ 
-0 & 0 & 1 & 0 \\ 
-T_x & T_y & T_z  & 1
-\end{bmatrix}</script><h3 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h3><p>将一个点$(x, y, z)$沿$x-$轴进行旋转，得到了一个新的点$(x’, y’, z’)$：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-x' & y' & z' & 1
-\end{bmatrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\ 
-0 & \cos\theta & \sin\theta & 0 \\ 
-0 & -\sin\theta & \cos\theta & 0 \\ 
-0 & 0 & 0  & 1
-\end{bmatrix}</script><p>沿$y-$轴进行旋转：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-x' & y' & z' & 1
-\end{bmatrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-\cos\theta & 0 & \sin\theta & 0 \\ 
-0 & 1 & 0 & 0 \\ 
--\sin\theta & 0 & \cos\theta & 0 \\ 
-0 & 0 & 0  & 1
-\end{bmatrix}</script><p>沿$z-$轴进行旋转：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-x' & y' & z' & 1
-\end{bmatrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-\cos\theta & \sin\theta & 0 & 0 \\ 
--\sin\theta & \cos\theta & 0 & 0 \\ 
-0 & 0 & 1 & 0 \\ 
-0 & 0 & 0  & 1
-\end{bmatrix}</script><h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><script type="math/tex; mode=display">
-\begin{bmatrix}
-x' & y' & z' & 1
-\end{bmatrix}=
-\begin{bmatrix}
-x & y & z & 1
-\end{bmatrix}
-\begin{bmatrix}
-s_x & 0 & 0 & 0 \\ 
-0 & s_y & 0 & 0 \\ 
-0 & 0 & s_z & 0 \\ 
-0 & 0 & 0  & 1
-\end{bmatrix}</script><h3 id="矩阵旋转"><a href="#矩阵旋转" class="headerlink" title="矩阵旋转"></a>矩阵旋转</h3><h3 id="欧拉角旋转"><a href="#欧拉角旋转" class="headerlink" title="欧拉角旋转"></a>欧拉角旋转</h3><h4 id="偏航角：yaw"><a href="#偏航角：yaw" class="headerlink" title="偏航角：yaw"></a>偏航角：yaw</h4><p>偏航角<code>yaw</code>是绕$z$轴逆时针旋转$\alpha$，对应的旋转矩阵是</p>
-<script type="math/tex; mode=display">
-R_z(\alpha)=
-\begin{bmatrix}
-\cos\theta & \sin\theta & 0\\ 
--\sin\theta & \cos\theta & 0 \\ 
-0 & 0 & 1
-\end{bmatrix}</script><h4 id="俯仰角-pitch"><a href="#俯仰角-pitch" class="headerlink" title="俯仰角:  pitch"></a>俯仰角:  pitch</h4><p>俯仰角<code>pitch</code>是绕$y$轴逆时针旋转$\beta$，对应的旋转矩阵是</p>
-<script type="math/tex; mode=display">
-R_y(\beta)=
-\begin{bmatrix}
-\cos\theta & 0 & \sin\theta \\ 
-0 & 1 & 0 \\ 
--\sin\theta & 0 & \cos\theta
-\end{bmatrix}</script><h4 id="滚转角-roll"><a href="#滚转角-roll" class="headerlink" title="滚转角: roll"></a>滚转角: roll</h4><p>滚转角<code>roll</code>是绕$x$轴逆时针旋转$\gamma$，对应的旋转矩阵是</p>
-<script type="math/tex; mode=display">
-R_x(\gamma)=
-\begin{bmatrix}
-1 & 0 & 0 \\ 
-0 & \cos\theta & \sin\theta \\ 
-0 & -\sin\theta & \cos\theta
-\end{bmatrix}</script><h4 id="刚体变换"><a href="#刚体变换" class="headerlink" title="刚体变换"></a>刚体变换</h4><p>这三个旋转矩阵合起来便可以表达一个刚体变换[[3]][Yaw, pitch, and roll rotations]</p>
-<script type="math/tex; mode=display">
-R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元数旋转"><a href="#四元数旋转" class="headerlink" title="四元数旋转"></a>四元数旋转</h3><h2 id="四元数、欧拉角、旋转矩阵的优点和缺点"><a href="#四元数、欧拉角、旋转矩阵的优点和缺点" class="headerlink" title="四元数、欧拉角、旋转矩阵的优点和缺点"></a>四元数、欧拉角、旋转矩阵的优点和缺点</h2><ul>
-<li><strong>矩阵旋转</strong><ul>
-<li>优点：<ul>
+        <h2 id="三维矩阵变换"><a class="header-anchor" href="#三维矩阵变换"></a>三维矩阵变换</h2>
+<p>你可以使用一个4×4的矩阵将任何点变换到另一个点。下面的例子中，我们用一个矩阵对点$(x, y, z)$进行变化，产生了一个新的点$(x’, y’, z’)$：</p>
+<p>$$<br>
+\begin{matrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{matrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+M_{11} &amp; M_{12} &amp; M_{13} &amp; M_{14} \<br>
+M_{21} &amp; M_{22} &amp; M_{23}  &amp; M_{24} \<br>
+M_{31} &amp; M_{32} &amp; M_{33}  &amp; M_{34} \<br>
+M_{41} &amp; M_{42} &amp; M_{43}  &amp; M_{44}<br>
+\end{bmatrix}<br>
+$$</p>
+<p>最常用的变换包括：平移（translation），旋转（rotation）和缩放（scaling）。你可以将这些变换合并起来，组成一个矩阵，同时进行几种变换。</p>
+<h3 id="平移"><a class="header-anchor" href="#平移"></a>平移</h3>
+<p>将一个点$(x, y, z)$平移到另一个点$(x’, y’, z’)$：</p>
+<p>$$<br>
+\begin{bmatrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{bmatrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+1 &amp; 0 &amp; 0 &amp; 0 \<br>
+0 &amp; 1 &amp; 0 &amp; 0 \<br>
+0 &amp; 0 &amp; 1 &amp; 0 \<br>
+T_x &amp; T_y &amp; T_z  &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<h3 id="旋转"><a class="header-anchor" href="#旋转"></a>旋转</h3>
+<p>将一个点$(x, y, z)$沿$x-$轴进行旋转，得到了一个新的点$(x’, y’, z’)$：</p>
+<p>$$<br>
+\begin{bmatrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{bmatrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+1 &amp; 0 &amp; 0 &amp; 0 \<br>
+0 &amp; \cos\theta &amp; \sin\theta &amp; 0 \<br>
+0 &amp; -\sin\theta &amp; \cos\theta &amp; 0 \<br>
+0 &amp; 0 &amp; 0  &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<p>沿$y-$轴进行旋转：</p>
+<p>$$<br>
+\begin{bmatrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{bmatrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+\cos\theta &amp; 0 &amp; \sin\theta &amp; 0 \<br>
+0 &amp; 1 &amp; 0 &amp; 0 \<br>
+-\sin\theta &amp; 0 &amp; \cos\theta &amp; 0 \<br>
+0 &amp; 0 &amp; 0  &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<p>沿$z-$轴进行旋转：</p>
+<p>$$<br>
+\begin{bmatrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{bmatrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+\cos\theta &amp; \sin\theta &amp; 0 &amp; 0 \<br>
+-\sin\theta &amp; \cos\theta &amp; 0 &amp; 0 \<br>
+0 &amp; 0 &amp; 1 &amp; 0 \<br>
+0 &amp; 0 &amp; 0  &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<h3 id="缩放"><a class="header-anchor" href="#缩放"></a>缩放</h3>
+<p>$$<br>
+\begin{bmatrix}<br>
+x’ &amp; y’ &amp; z’ &amp; 1<br>
+\end{bmatrix}=<br>
+\begin{bmatrix}<br>
+x &amp; y &amp; z &amp; 1<br>
+\end{bmatrix}<br>
+\begin{bmatrix}<br>
+s_x &amp; 0 &amp; 0 &amp; 0 \<br>
+0 &amp; s_y &amp; 0 &amp; 0 \<br>
+0 &amp; 0 &amp; s_z &amp; 0 \<br>
+0 &amp; 0 &amp; 0  &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<h3 id="矩阵旋转"><a class="header-anchor" href="#矩阵旋转"></a>矩阵旋转</h3>
+<h3 id="欧拉角旋转"><a class="header-anchor" href="#欧拉角旋转"></a>欧拉角旋转</h3>
+<h4 id="偏航角：yaw"><a class="header-anchor" href="#偏航角：yaw"></a>偏航角：yaw</h4>
+<p>偏航角<code>yaw</code>是绕$z$轴逆时针旋转$\alpha$，对应的旋转矩阵是<br>
+$$<br>
+R_z(\alpha)=<br>
+\begin{bmatrix}<br>
+\cos\theta &amp; \sin\theta &amp; 0\<br>
+-\sin\theta &amp; \cos\theta &amp; 0 \<br>
+0 &amp; 0 &amp; 1<br>
+\end{bmatrix}<br>
+$$</p>
+<h4 id="俯仰角-pitch"><a class="header-anchor" href="#俯仰角-pitch"></a>俯仰角:  pitch</h4>
+<p>俯仰角<code>pitch</code>是绕$y$轴逆时针旋转$\beta$，对应的旋转矩阵是<br>
+$$<br>
+R_y(\beta)=<br>
+\begin{bmatrix}<br>
+\cos\theta &amp; 0 &amp; \sin\theta \<br>
+0 &amp; 1 &amp; 0 \<br>
+-\sin\theta &amp; 0 &amp; \cos\theta<br>
+\end{bmatrix}<br>
+$$</p>
+<h4 id="滚转角-roll"><a class="header-anchor" href="#滚转角-roll"></a>滚转角: roll</h4>
+<p>滚转角<code>roll</code>是绕$x$轴逆时针旋转$\gamma$，对应的旋转矩阵是<br>
+$$<br>
+R_x(\gamma)=<br>
+\begin{bmatrix}<br>
+1 &amp; 0 &amp; 0 \<br>
+0 &amp; \cos\theta &amp; \sin\theta \<br>
+0 &amp; -\sin\theta &amp; \cos\theta<br>
+\end{bmatrix}<br>
+$$</p>
+<h4 id="刚体变换"><a class="header-anchor" href="#刚体变换"></a>刚体变换</h4>
+<p>这三个旋转矩阵合起来便可以表达一个刚体变换[[3]][Yaw, pitch, and roll rotations]<br>
+$$<br>
+R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)<br>
+$$</p>
+<h3 id="四元数旋转"><a class="header-anchor" href="#四元数旋转"></a>四元数旋转</h3>
+<h2 id="四元数-欧拉角-旋转矩阵的优点和缺点"><a class="header-anchor" href="#四元数-欧拉角-旋转矩阵的优点和缺点"></a>四元数、欧拉角、旋转矩阵的优点和缺点</h2>
+<ul>
+<li><strong>矩阵旋转</strong>
+<ul>
+<li>优点：
+<ul>
 <li>旋转轴可以是任意向量；</li>
 </ul>
 </li>
-<li>缺点：<ul>
+<li>缺点：
+<ul>
 <li>旋转其实只需要知道一个向量+一个角度，一共4个值的信息，但矩阵法却使用了16个元素；</li>
 <li>而且在做乘法操作时也会增加计算量，造成了空间和时间上的一些浪费；</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>欧拉旋转</strong><ul>
-<li>优点：<ul>
+<li><strong>欧拉旋转</strong>
+<ul>
+<li>优点：
+<ul>
 <li>很容易理解，形象直观；</li>
 <li>表示更方便，只需要3个值（分别对应x、y、z轴的旋转角度）；但按我的理解，它还是转换到了3个3*3的矩阵做变换，效率不如四元数；</li>
 </ul>
 </li>
-<li>缺点：<ul>
+<li>缺点：
+<ul>
 <li>之前提到过这种方法是要按照一个固定的坐标轴的顺序旋转的，因此不同的顺序会造成不同的结果；</li>
 <li>会造成<a href="http://zh.wikipedia.org/wiki/%E8%90%AC%E5%90%91%E9%8E%96" target="_blank" rel="noopener">万向节锁</a>（Gimbal Lock）的现象。这种现象的发生就是由于上述固定坐标轴旋转顺序造成的。理论上，欧拉旋转可以靠这种顺序让一个物体指到任何一个想要的方向，但如果在旋转中不幸让某些坐标轴重合了就会发生万向节锁，这时就会丢失一个方向上的旋转能力，也就是说在这种状态下我们无论怎么旋转（当然还是要原先的顺序）都不可能得到某些想要的旋转效果，除非我们打破原先的旋转顺序或者同时旋转3个坐标轴。这里有个<a href="http://v.youku.com/v_show/id_XNzkyOTIyMTI=.html" target="_blank" rel="noopener">视频</a>可以直观的理解下；</li>
 <li>由于万向节锁的存在，欧拉旋转<strong>无法实现球面平滑插值</strong>。</li>
@@ -645,14 +683,17 @@ R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元�
 </li>
 </ul>
 </li>
-<li><strong>四元数旋转</strong><ul>
-<li>优点：<ul>
+<li><strong>四元数旋转</strong>
+<ul>
+<li>优点：
+<ul>
 <li>可以避免万向节锁现象；</li>
 <li>只需要一个4维的四元数就可以执行绕任意过原点的向量的旋转，方便快捷，<strong>在某些实现下比旋转矩阵效率更高；</strong></li>
 <li><strong>可以提供平滑插值</strong>。</li>
 </ul>
 </li>
-<li>缺点：<ul>
+<li>缺点：
+<ul>
 <li><strong>比欧拉旋转稍微复杂了一点点，因为多了一个维度；</strong></li>
 <li>理解更困难，不直观；</li>
 </ul>
@@ -660,10 +701,11 @@ R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元�
 </ul>
 </li>
 </ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<h2 id="参考"><a class="header-anchor" href="#参考"></a>参考</h2>
+<ol>
 <li><a href="http://17de.com/library/d3d_6im/d3dim6_5.htm#2.%20%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2" target="_blank" rel="noopener">矩阵与变换</a></li>
 <li><a href="https://blog.csdn.net/csdn_chai/article/details/78028344" target="_blank" rel="noopener">图形学复习要点</a></li>
-<li><a href="http://planning.cs.uiuc.edu/node102.html" target="_blank" rel="noopener">Yaw, pitch, and roll rotations</a> </li>
+<li><a href="http://planning.cs.uiuc.edu/node102.html" target="_blank" rel="noopener">Yaw, pitch, and roll rotations</a></li>
 <li><a href="https://stackoverflow.com/questions/21412169/creating-a-rotation-matrix-with-pitch-yaw-roll-using-eigen" target="_blank" rel="noopener">Creating a rotation matrix with pitch, yaw, roll using Eigen</a></li>
 </ol>
 
@@ -1057,7 +1099,7 @@ R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三维矩阵变换"><span class="nav-number">1.</span> <span class="nav-text">三维矩阵变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.1.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.2.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵旋转"><span class="nav-number">1.4.</span> <span class="nav-text">矩阵旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角旋转"><span class="nav-number">1.5.</span> <span class="nav-text">欧拉角旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#偏航角：yaw"><span class="nav-number">1.5.1.</span> <span class="nav-text">偏航角：yaw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#俯仰角-pitch"><span class="nav-number">1.5.2.</span> <span class="nav-text">俯仰角:  pitch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滚转角-roll"><span class="nav-number">1.5.3.</span> <span class="nav-text">滚转角: roll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#刚体变换"><span class="nav-number">1.5.4.</span> <span class="nav-text">刚体变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四元数旋转"><span class="nav-number">1.6.</span> <span class="nav-text">四元数旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四元数、欧拉角、旋转矩阵的优点和缺点"><span class="nav-number">2.</span> <span class="nav-text">四元数、欧拉角、旋转矩阵的优点和缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三维矩阵变换"><span class="nav-number">1.</span> <span class="nav-text">三维矩阵变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">1.1.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">1.2.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">1.3.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵旋转"><span class="nav-number">1.4.</span> <span class="nav-text">矩阵旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角旋转"><span class="nav-number">1.5.</span> <span class="nav-text">欧拉角旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#偏航角：yaw"><span class="nav-number">1.5.1.</span> <span class="nav-text">偏航角：yaw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#俯仰角-pitch"><span class="nav-number">1.5.2.</span> <span class="nav-text">俯仰角:  pitch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滚转角-roll"><span class="nav-number">1.5.3.</span> <span class="nav-text">滚转角: roll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#刚体变换"><span class="nav-number">1.5.4.</span> <span class="nav-text">刚体变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四元数旋转"><span class="nav-number">1.6.</span> <span class="nav-text">四元数旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四元数-欧拉角-旋转矩阵的优点和缺点"><span class="nav-number">2.</span> <span class="nav-text">四元数、欧拉角、旋转矩阵的优点和缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

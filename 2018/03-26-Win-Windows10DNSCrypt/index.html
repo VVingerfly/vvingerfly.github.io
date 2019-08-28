@@ -521,24 +521,29 @@
 
       
         <p>使用<code>XXNET</code>, <code>dropbox</code>下载不了，看网上说是因为<code>DNS</code>被污染的问题，开启<code>XX-NET</code>，安装并使用<code>DNSCrypt</code>就好了。</p>
-<h2 id="下载dnscrypt-proxy"><a href="#下载dnscrypt-proxy" class="headerlink" title="下载dnscrypt-proxy"></a>下载dnscrypt-proxy</h2><p>地址：<a href="https://download.dnscrypt.org/dnscrypt-proxy/" target="_blank" rel="noopener">https://download.dnscrypt.org/dnscrypt-proxy/</a></p>
+<h2 id="下载dnscrypt-proxy"><a class="header-anchor" href="#下载dnscrypt-proxy"></a>下载dnscrypt-proxy</h2>
+<p>地址：<a href="https://download.dnscrypt.org/dnscrypt-proxy/" target="_blank" rel="noopener">https://download.dnscrypt.org/dnscrypt-proxy/</a></p>
 <p>我选择 <code>LATEST-win64-full.zip</code> 并解压</p>
-<h2 id="下载dnscrypt-winclient"><a href="#下载dnscrypt-winclient" class="headerlink" title="下载dnscrypt-winclient"></a>下载dnscrypt-winclient</h2><p>地址：<a href="https://github.com/Noxwizard/dnscrypt-winclient" target="_blank" rel="noopener">https://github.com/Noxwizard/dnscrypt-winclient</a></p>
+<h2 id="下载dnscrypt-winclient"><a class="header-anchor" href="#下载dnscrypt-winclient"></a>下载dnscrypt-winclient</h2>
+<p>地址：<a href="https://github.com/Noxwizard/dnscrypt-winclient" target="_blank" rel="noopener">https://github.com/Noxwizard/dnscrypt-winclient</a></p>
 <p>将<code>LATEST-win64-full/dnscrypt-proxy-win64</code>文件夹下的文件拷贝到 <code>dnscrypt-winclient/binaries/Release</code>文件夹下</p>
-<h2 id="运行dnscrypt-winclient"><a href="#运行dnscrypt-winclient" class="headerlink" title="运行dnscrypt-winclient"></a>运行dnscrypt-winclient</h2><p><strong>右键管理员</strong>运行<code>dnscrypt-winclient.exe</code>，并做如下操作：</p>
+<h2 id="运行dnscrypt-winclient"><a class="header-anchor" href="#运行dnscrypt-winclient"></a>运行dnscrypt-winclient</h2>
+<p><strong>右键管理员</strong>运行<code>dnscrypt-winclient.exe</code>，并做如下操作：</p>
 <ol>
 <li>在<code>NICs</code>勾选要用的网络</li>
 <li>将<code>Config</code> -&gt; <code>Provider(服务器)</code> 选择为 <code>Cisco OpenDNS</code></li>
 <li>点击<code>Start</code>开始。</li>
 </ol>
-<h2 id="修改DNS服务器地址"><a href="#修改DNS服务器地址" class="headerlink" title="修改DNS服务器地址"></a>修改DNS服务器地址</h2><p>将Windows网络链接<code>TCP/IP</code>的DNS修改为<code>127.0.0.1</code></p>
+<h2 id="修改dns服务器地址"><a class="header-anchor" href="#修改dns服务器地址"></a>修改DNS服务器地址</h2>
+<p>将Windows网络链接<code>TCP/IP</code>的DNS修改为<code>127.0.0.1</code></p>
 <p><code>控制面板</code> -&gt; <code>网络与Internet</code>  -&gt; <code>网络与共享中心</code> -&gt; <code>更改适配器设置</code> -&gt; <code>选择某个本地连接</code></p>
 <p>右键属性，选择<code>Internet协议版本4(TCP/IP)</code>，点击下面的<code>属性</code>。</p>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master//2018-03-26-Windows10-DNSCrypt/tcpip.png" alt="tcp-ip">`</p>
 <p>网络链接TCP/IP的<code>首选DNS服务器</code>修改为<code>127.0.0.1</code></p>
 <p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master//2018-03-26-Windows10-DNSCrypt/dns.png" alt="tcp-ip">`</p>
 <p>顺便记得把 dnscrypt-winclient 里面的 Install （Install Dnscrypt as a Windows service) 点击一下，之后就不用每次重启再运行了。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<h2 id="参考"><a class="header-anchor" href="#参考"></a>参考</h2>
+<ul>
 <li><a href="https://plumz.me/archives/1760/" target="_blank" rel="noopener">DNSCrypt在Windows和Ubuntu下的配置</a></li>
 <li><a href="https://www.2cto.com/article/201502/378458.html" target="_blank" rel="noopener">dnscrypt怎么用？使用dnscrypt解决dns污染问题</a></li>
 <li><a href="https://jingyan.baidu.com/article/1612d50058aa86e20e1eee96.html" target="_blank" rel="noopener">Windows 10怎么设置IP地址与DNS怎么设置</a></li>
@@ -935,7 +940,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载dnscrypt-proxy"><span class="nav-number">1.</span> <span class="nav-text">下载dnscrypt-proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载dnscrypt-winclient"><span class="nav-number">2.</span> <span class="nav-text">下载dnscrypt-winclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行dnscrypt-winclient"><span class="nav-number">3.</span> <span class="nav-text">运行dnscrypt-winclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改DNS服务器地址"><span class="nav-number">4.</span> <span class="nav-text">修改DNS服务器地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载dnscrypt-proxy"><span class="nav-number">1.</span> <span class="nav-text">下载dnscrypt-proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载dnscrypt-winclient"><span class="nav-number">2.</span> <span class="nav-text">下载dnscrypt-winclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行dnscrypt-winclient"><span class="nav-number">3.</span> <span class="nav-text">运行dnscrypt-winclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改dns服务器地址"><span class="nav-number">4.</span> <span class="nav-text">修改DNS服务器地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

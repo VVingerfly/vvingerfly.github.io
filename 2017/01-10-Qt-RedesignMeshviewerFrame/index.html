@@ -529,20 +529,39 @@
       
 
       
-        <h2 id="在-VS-中新建-Qt-项目"><a href="#在-VS-中新建-Qt-项目" class="headerlink" title="在 VS 中新建 Qt 项目"></a>在 VS 中新建 Qt 项目</h2><p>这个就不废话了。</p>
-<h2 id="添加菜单栏"><a href="#添加菜单栏" class="headerlink" title="添加菜单栏"></a>添加菜单栏</h2><p>这个很简单，在 VS 中双击 mainwindow.ui，直接在 Qt Designer 中添加就行。<br>这里就添加一个 File 菜单，下面再添加两个 Action,分别为 Open 和 Save。其他的类似。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_menu.jpg" alt="Kinect v1"></p>
-<h2 id="添加工具栏"><a href="#添加工具栏" class="headerlink" title="添加工具栏"></a>添加工具栏</h2><p>在右侧底部的“<strong>动作编辑器</strong>”中，选中一个 Action，拖放到窗口的工具栏上即可。<br>在“动作编辑器”中还能设置快捷方式。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_toolbar.jpg?imageView2/2/w/640/q/75" alt="Kinect v1"></p>
-<p>在“<strong>资源浏览器</strong>”中，点击上面的铅笔标志，添加应用图标的资源文件。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_resource.jpg" alt></p>
-<p>在“动作编辑器”中双击 Action，如 Open，可以添加应用图标，进行其他一些设置。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_icon.jpg" alt></p>
-<h2 id="添加-Render-Group-Box"><a href="#添加-Render-Group-Box" class="headerlink" title="添加 Render Group Box"></a>添加 Render Group Box</h2><p>首先在 Qt Designer 中拖入几个 Check Box，将对象名作相应修改，如 Point，Edge, Face 等。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic2_add_checkBox_render_1.jpg" alt></p>
-<p>然后选中这三个 Check Box，右击，从“布局”中选中“<strong>垂直布局</strong>”。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic3_add_checkBox_render_2.jpg" alt></p>
-<p>再添加一个 Group Box，将对象名改为 Render，结果如下：<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic4_add_GroupBox_1.jpg" alt></p>
-<p>然后将 Render CheckBox 整个布局拖到 Group Box 中，使其成为 Group Box 的子对象。<br>你还可以在 Group Box 中添加其他一些 Widgets。这里添加了一个 PushBottom，对象名为 OK。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic5_add_GroupBox_2.jpg" alt></p>
-<p>此时右侧的对象查看器中的结果是这样的，注意其中的对象包含关系。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic6_objects_tree.jpg" alt></p>
-<p>最后还要做一个设置，选中 Group Box，右击，从“大小限定”中点击“<strong>设置最小宽度</strong>”和“<strong>设置最小高度</strong>”。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic7_add_GroupBox_3.jpg" alt></p>
+        <h2 id="在-vs-中新建-qt-项目"><a class="header-anchor" href="#在-vs-中新建-qt-项目"></a>在 VS 中新建 Qt 项目</h2>
+<p>这个就不废话了。</p>
+<h2 id="添加菜单栏"><a class="header-anchor" href="#添加菜单栏"></a>添加菜单栏</h2>
+<p>这个很简单，在 VS 中双击 mainwindow.ui，直接在 Qt Designer 中添加就行。<br>
+这里就添加一个 File 菜单，下面再添加两个 Action,分别为 Open 和 Save。其他的类似。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_menu.jpg" alt="Kinect v1"></p>
+<h2 id="添加工具栏"><a class="header-anchor" href="#添加工具栏"></a>添加工具栏</h2>
+<p>在右侧底部的“<strong>动作编辑器</strong>”中，选中一个 Action，拖放到窗口的工具栏上即可。<br>
+在“动作编辑器”中还能设置快捷方式。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_toolbar.jpg?imageView2/2/w/640/q/75" alt="Kinect v1"></p>
+<p>在“<strong>资源浏览器</strong>”中，点击上面的铅笔标志，添加应用图标的资源文件。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_resource.jpg" alt></p>
+<p>在“动作编辑器”中双击 Action，如 Open，可以添加应用图标，进行其他一些设置。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic1_add_icon.jpg" alt></p>
+<h2 id="添加-render-group-box"><a class="header-anchor" href="#添加-render-group-box"></a>添加 Render Group Box</h2>
+<p>首先在 Qt Designer 中拖入几个 Check Box，将对象名作相应修改，如 Point，Edge, Face 等。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic2_add_checkBox_render_1.jpg" alt></p>
+<p>然后选中这三个 Check Box，右击，从“布局”中选中“<strong>垂直布局</strong>”。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic3_add_checkBox_render_2.jpg" alt></p>
+<p>再添加一个 Group Box，将对象名改为 Render，结果如下：<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic4_add_GroupBox_1.jpg" alt></p>
+<p>然后将 Render CheckBox 整个布局拖到 Group Box 中，使其成为 Group Box 的子对象。<br>
+你还可以在 Group Box 中添加其他一些 Widgets。这里添加了一个 PushBottom，对象名为 OK。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic5_add_GroupBox_2.jpg" alt></p>
+<p>此时右侧的对象查看器中的结果是这样的，注意其中的对象包含关系。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic6_objects_tree.jpg" alt></p>
+<p>最后还要做一个设置，选中 Group Box，右击，从“大小限定”中点击“<strong>设置最小宽度</strong>”和“<strong>设置最小高度</strong>”。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic7_add_GroupBox_3.jpg" alt></p>
 <p>然后在 MainWindow 的构造函数中添加一些代码，具体如下。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MainWindow::MainWindow(QWidget *parent)</span><br><span class="line">	: QMainWindow(parent)</span><br><span class="line">&#123;</span><br><span class="line">	ui.setupUi(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">	renderingwidget_ = <span class="keyword">new</span> RenderingWidget(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">	QVBoxLayout *layout_left = <span class="keyword">new</span> QVBoxLayout;</span><br><span class="line">	layout_left-&gt;addWidget(ui.groupBox_render);</span><br><span class="line">	layout_left-&gt;addStretch(<span class="number">4</span>);</span><br><span class="line">	QHBoxLayout *layout_main = <span class="keyword">new</span> QHBoxLayout;</span><br><span class="line">	layout_main-&gt;addLayout(layout_left);</span><br><span class="line">	layout_main-&gt;addWidget(renderingwidget_);</span><br><span class="line">	layout_main-&gt;setStretch(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">this</span>-&gt;centralWidget()-&gt;setLayout(layout_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="预览效果"><a href="#预览效果" class="headerlink" title="预览效果"></a>预览效果</h2><p>这是目前的预览效果。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic8_res.jpg" alt></p>
+<h2 id="预览效果"><a class="header-anchor" href="#预览效果"></a>预览效果</h2>
+<p>这是目前的预览效果。<br>
+<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-01-10-Qt-RedesignMeshviewerFrame/pic8_res.jpg" alt></p>
 
       
     </div>
@@ -934,7 +953,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-VS-中新建-Qt-项目"><span class="nav-number">1.</span> <span class="nav-text">在 VS 中新建 Qt 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加菜单栏"><span class="nav-number">2.</span> <span class="nav-text">添加菜单栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加工具栏"><span class="nav-number">3.</span> <span class="nav-text">添加工具栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-Render-Group-Box"><span class="nav-number">4.</span> <span class="nav-text">添加 Render Group Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览效果"><span class="nav-number">5.</span> <span class="nav-text">预览效果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-vs-中新建-qt-项目"><span class="nav-number">1.</span> <span class="nav-text">在 VS 中新建 Qt 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加菜单栏"><span class="nav-number">2.</span> <span class="nav-text">添加菜单栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加工具栏"><span class="nav-number">3.</span> <span class="nav-text">添加工具栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-render-group-box"><span class="nav-number">4.</span> <span class="nav-text">添加 Render Group Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览效果"><span class="nav-number">5.</span> <span class="nav-text">预览效果</span></a></li></ol></div>
             
 
           </div>

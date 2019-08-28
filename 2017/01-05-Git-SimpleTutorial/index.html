@@ -501,134 +501,166 @@
       
 
       
-        <p><strong><em>转载自<a href="https://try.github.io。" target="_blank" rel="noopener">https://try.github.io。</a></em></strong></p>
+        <p><strong><em>转载自https://try.github.io。</em></strong></p>
 <ul>
-<li>Initializing<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-</li>
+<li>Initializing</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 <p>To initialize a Git repository locally, and local directory now has an empty repository in /.git/. The repository is a hidden directory where Git operates.</p>
 <ul>
-<li><p>Checking the Status</p>
+<li>
+<p>Checking the Status</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-<p>  To see what the current state of our project</p>
+<p>To see what the current state of our project</p>
 </li>
 </ul>
 <ul>
-<li><p>Adding Changes</p>
+<li>
+<p>Adding Changes</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add filename</span><br></pre></td></tr></table></figure>
-<p>  To add filename to the staging area</p>
+<p>To add filename to the staging area</p>
 </li>
-<li><p>Adding All Changes</p>
+<li>
+<p>Adding All Changes</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &apos;*.txt&apos;</span><br></pre></td></tr></table></figure>
-<p>  To add all the new files using a wildcard with git add.</p>
+<p>To add all the new files using a wildcard with git add.</p>
 </li>
 </ul>
 <ul>
-<li><p>Committing</p>
+<li>
+<p>Committing</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;Add cute octocat story&quot;</span><br></pre></td></tr></table></figure>
-<p>  The files in the Staging Area are not in our repository yet. We could add or remove files from the stage before we store them in the repository.<br>  To store staged changes, run the commit command with a message describing what we’ve changed.</p>
+<p>The files in the Staging Area are not in our repository yet. We could add or remove files from the stage before we store them in the repository.<br>
+To store staged changes, run the commit command with a message describing what we’ve changed.</p>
 </li>
 </ul>
 <ul>
-<li><p>Committing All Changes</p>
+<li>
+<p>Committing All Changes</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &apos;Add all the txt files&apos;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>History</p>
+<li>
+<p>History</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-<p>  To browse all the commits to see what we changed. Git’s log remembers all the changes we’ve committed so far, in the order we committed them.</p>
+<p>To browse all the commits to see what we changed. Git’s log remembers all the changes we’ve committed so far, in the order we committed them.</p>
 </li>
 </ul>
 <ul>
-<li><p>Remote Repositories</p>
+<li>
+<p>Remote Repositories</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/try-git/try_git.git</span><br></pre></td></tr></table></figure>
-<p>  To push our local repo to the GitHub server. We need first to create a new empty GitHub repository and then add a remote repository.<br>  This command takes a remote name and a repository URL, which in your case is <a href="https://github.com/try-git/try_git.git" target="_blank" rel="noopener">https://github.com/try-git/try_git.git</a>.</p>
+<p>To push our local repo to the GitHub server. We need first to create a new empty GitHub repository and then add a remote repository.<br>
+This command takes a remote name and a repository URL, which in your case is <a href="https://github.com/try-git/try_git.git" target="_blank" rel="noopener">https://github.com/try-git/try_git.git</a>.</p>
 </li>
 </ul>
 <ul>
-<li><p>Pushing Remotely</p>
+<li>
+<p>Pushing Remotely</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<p>  To push our local changes to our origin repo (on GitHub).<br>  The push command tells Git where to put our commits when we’re ready.<br>  The name of our remote is origin and the default local branch name is master. The -u tells Git to remember the parameters,<br>  so that next time we can simply run <em>git push</em> and Git will know what to do.</p>
+<p>To push our local changes to our origin repo (on GitHub).<br>
+The push command tells Git where to put our commits when we’re ready.<br>
+The name of our remote is origin and the default local branch name is master. The -u tells Git to remember the parameters,<br>
+so that next time we can simply run <em>git push</em> and Git will know what to do.</p>
 </li>
 </ul>
 <ul>
-<li><p>Pulling Remotely</p>
+<li>
+<p>Pulling Remotely</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
-<p>  To pull down any new changes on our GitHub repository.</p>
+<p>To pull down any new changes on our GitHub repository.</p>
 </li>
 </ul>
 <ul>
-<li><p>Differences</p>
+<li>
+<p>Differences</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD</span><br></pre></td></tr></table></figure>
-<p>  To take a look at what is different from our last commit by using the <em>git diff</em> command.<br>  In this case we want the diff of our most recent commit, which we can refer to using the HEAD pointer.</p>
+<p>To take a look at what is different from our last commit by using the <em>git diff</em> command.<br>
+In this case we want the diff of our most recent commit, which we can refer to using the HEAD pointer.</p>
 </li>
 </ul>
 <ul>
-<li><p>Staged Differences</p>
+<li>
+<p>Staged Differences</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add filename</span><br></pre></td></tr></table></figure>
-<p>  To look at changes within files that have already been staged. Remember, staged files are files we have told git that are ready to be committed.</p>
+<p>To look at changes within files that have already been staged. Remember, staged files are files we have told git that are ready to be committed.</p>
 </li>
 </ul>
 <ul>
-<li><p>Staged Differences (cont’d)</p>
+<li>
+<p>Staged Differences (cont’d)</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --staged</span><br></pre></td></tr></table></figure>
-<p>  To see the changes you just staged, run <em>git diff</em> with the <em>—staged</em> option.</p>
+<p>To see the changes you just staged, run <em>git diff</em> with the <em>–staged</em> option.</p>
 </li>
 </ul>
 <ul>
-<li><p>Resetting the Stage</p>
+<li>
+<p>Resetting the Stage</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset filename</span><br></pre></td></tr></table></figure>
-<p>  To remove(unstage) a file, use the <em>git reset</em> command. Notice that the file is still there. It’s just not staged anymore.</p>
+<p>To remove(unstage) a file, use the <em>git reset</em> command. Notice that the file is still there. It’s just not staged anymore.</p>
 </li>
 </ul>
 <ul>
-<li><p>Undo</p>
+<li>
+<p>Undo</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- filename</span><br></pre></td></tr></table></figure>
-<p>  To change things back to how they were at the last commit by using the command: <em>git checkout — <target></target></em>. </p>
+<p>To change things back to how they were at the last commit by using the command: <em>git checkout – <target></target></em>.</p>
 </li>
 </ul>
 <ul>
-<li><p>Branching Out</p>
+<li>
+<p>Branching Out</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch clean_up</span><br></pre></td></tr></table></figure>
-<p>  To create a branch called clean_up.<br>  When developers are working on a feature or bug they’ll often create a copy (aka. <em>branch</em>) of their code they can make separate commits to.<br>  Then when they’re done they can merge this branch back into their main <em>master</em> branch.</p>
+<p>To create a branch called clean_up.<br>
+When developers are working on a feature or bug they’ll often create a copy (aka. <em>branch</em>) of their code they can make separate commits to.<br>
+Then when they’re done they can merge this branch back into their main <em>master</em> branch.</p>
 </li>
 </ul>
 <ul>
-<li><p>Switching Branches</p>
+<li>
+<p>Switching Branches</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout clean_up</span><br></pre></td></tr></table></figure>
-<p>  To switch branches using the <em>git checkout <branch></branch></em> command.<br>  Now if you type git branch you’ll see two local branches: a main branch named <em>master</em> and your new branch named <em>clean_up</em>.</p>
+<p>To switch branches using the <em>git checkout <branch></branch></em> command.<br>
+Now if you type git branch you’ll see two local branches: a main branch named <em>master</em> and your new branch named <em>clean_up</em>.</p>
 </li>
 </ul>
 <ul>
-<li><p>Removing All The Things</p>
+<li>
+<p>Removing All The Things</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm &apos;*.txt&apos;</span><br></pre></td></tr></table></figure>
-<p>  To remove all the txt file in the clean_up branch, use the <em>git rm</em> command which will not only remove the actual files from disk,<br>  but will also stage the removal of the files for us.</p>
+<p>To remove all the txt file in the clean_up branch, use the <em>git rm</em> command which will not only remove the actual files from disk,<br>
+but will also stage the removal of the files for us.</p>
 </li>
 </ul>
 <ul>
-<li><p>Commiting Branch Changes</p>
+<li>
+<p>Commiting Branch Changes</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;Remove all the txt file&quot;</span><br></pre></td></tr></table></figure>
-<p>  To commit changes.</p>
+<p>To commit changes.</p>
 </li>
 </ul>
 <ul>
-<li><p>Switching Back to master</p>
+<li>
+<p>Switching Back to master</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Preparing to Merge</p>
+<li>
+<p>Preparing to Merge</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge clean_up</span><br></pre></td></tr></table></figure>
-<p>  To merge your changes from the clean_up branch into the master branch.</p>
+<p>To merge your changes from the clean_up branch into the master branch.</p>
 </li>
 </ul>
 <ul>
-<li><p>Keeping Things Clean</p>
+<li>
+<p>Keeping Things Clean</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d clean_up</span><br></pre></td></tr></table></figure>
-<p>  To delete a branch, use <em>git branch -d <branch name></branch></em> command.</p>
+<p>To delete a branch, use <em>git branch -d <branch name></branch></em> command.</p>
 </li>
 </ul>
 <ul>
-<li><p>The Final Push</p>
+<li>
+<p>The Final Push</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
-<p>  To push everything you’ve been working on to your remote repository.</p>
+<p>To push everything you’ve been working on to your remote repository.</p>
 </li>
 </ul>
 
