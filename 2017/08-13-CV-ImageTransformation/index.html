@@ -504,142 +504,119 @@
       
 
       
-        <h2 id="等距变换"><a class="header-anchor" href="#等距变换"></a>等距变换</h2>
-<p>等距变换 (Isometric Transformation) 保持欧氏距离不变。<br>
-等距变换就是对图像的旋转和平移。</p>
+        <h2 id="等距变换"><a href="#等距变换" class="headerlink" title="等距变换"></a>等距变换</h2><p>等距变换 (Isometric Transformation) 保持欧氏距离不变。<br>等距变换就是对图像的旋转和平移。</p>
 <ul>
 <li>变换矩阵</li>
 </ul>
-<p>$$<br>
-H_E = \left(<br>
-\begin{matrix}<br>
-R &amp; t\<br>
-0^T &amp; 1<br>
-\end{matrix}<br>
-\right)<br>
-=\left(<br>
-\begin{matrix}<br>
-\epsilon \cos \theta &amp; -\sin \theta &amp; t_x \<br>
-\epsilon \sin \theta &amp;  \cos \theta &amp; t_y \<br>
-0                   &amp; 0            &amp;  1<br>
-\end{matrix}<br>
-\right)<br>
-$$<br>
-其中 $R$ 是单位旋转矩阵，$t$ 是平移向量，$\epsilon=\pm1$, 当$\epsilon=1$时保向，变换由旋转和平移组成，当$\epsilon=-1$时逆向，变换还包含一个镜像。</p>
+<script type="math/tex; mode=display">
+H_E = \left(
+\begin{matrix}
+R & t\\ 
+0^T & 1
+\end{matrix}
+\right)
+=\left(
+\begin{matrix}
+\epsilon \cos \theta & -\sin \theta & t_x \\ 
+\epsilon \sin \theta &  \cos \theta & t_y \\
+ 0                   & 0            &  1
+\end{matrix}
+\right)</script><p>其中 $R$ 是单位旋转矩阵，$t$ 是平移向量，$\epsilon=\pm1$, 当$\epsilon=1$时保向，变换由旋转和平移组成，当$\epsilon=-1$时逆向，变换还包含一个镜像。</p>
 <ul>
 <li>不变量：长度，角度，面积</li>
 <li>自由度：3个自由度（1个旋转角+2个平移），至少需要2组点共4个方程求解。</li>
 </ul>
-<h2 id="相似变换"><a class="header-anchor" href="#相似变换"></a>相似变换</h2>
-<p>相似变换（Similarity Transformation）是在等距变换的基础上加上一个缩放。<br>
-等距变换就是对图像的旋转+平移+缩放。</p>
+<h2 id="相似变换"><a href="#相似变换" class="headerlink" title="相似变换"></a>相似变换</h2><p>相似变换（Similarity Transformation）是在等距变换的基础上加上一个缩放。<br>等距变换就是对图像的旋转+平移+缩放。</p>
 <ul>
 <li>变换矩阵</li>
 </ul>
-<p>$$<br>
-H_S = \left(<br>
-\begin{matrix}<br>
-s\cdot R &amp; t\<br>
-0^T      &amp; 1<br>
-\end{matrix}<br>
-\right)<br>
-=\left(<br>
-\begin{matrix}<br>
-s \cos \theta &amp; -s\sin \theta &amp; t_x \<br>
-s \sin \theta &amp;  s\cos \theta &amp; t_y \<br>
-0                   &amp; 0            &amp;  1<br>
-\end{matrix}<br>
-\right)<br>
-$$</p>
-<p>其中 $R$ 是单位旋转矩阵，$t$ 是平移向量, $s$ 是缩放因子。</p>
+<script type="math/tex; mode=display">
+H_S = \left(
+\begin{matrix}
+s\cdot R & t\\ 
+  0^T      & 1
+\end{matrix}
+\right)
+=\left(
+\begin{matrix}
+s \cos \theta & -s\sin \theta & t_x \\ 
+s \sin \theta &  s\cos \theta & t_y \\
+ 0                   & 0            &  1
+\end{matrix}
+\right)</script><p>其中 $R$ 是单位旋转矩阵，$t$ 是平移向量, $s$ 是缩放因子。</p>
 <ul>
 <li>不变量：角度，长度的比例，面积的比例，平行线关系</li>
 <li>自由度：4个自由度（1个旋转角+2个平移+1个缩放尺度），至少需要2组点4个方程求解.</li>
 </ul>
-<h2 id="仿射变换"><a class="header-anchor" href="#仿射变换"></a>仿射变换</h2>
-<p>仿射变换（Affine Transformation）<br>
-仿射变换就是对图像的旋转+平移+缩放+切变（shear），相比前两种变换图像的形状发生了改变，但是原图中的平行线仍然保持平行。</p>
+<h2 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h2><p>仿射变换（Affine Transformation）<br>仿射变换就是对图像的旋转+平移+缩放+切变（shear），相比前两种变换图像的形状发生了改变，但是原图中的平行线仍然保持平行。</p>
 <ul>
 <li>变换矩阵</li>
 </ul>
-<p>$$<br>
-H_A = \left(<br>
-\begin{matrix}<br>
-A &amp; t\<br>
-0 &amp; 1<br>
-\end{matrix}<br>
-\right)<br>
-=\left(<br>
-\begin{matrix}<br>
-a_{11} &amp; a_{12} &amp; t_x \<br>
-a_{21} &amp; a_{22} &amp; t_y \<br>
-0                   &amp; 0            &amp;  1<br>
-\end{matrix}<br>
-\right)<br>
-$$<br>
-其中 $A$ 是仿射矩阵，$t$ 是平移向量。</p>
+<script type="math/tex; mode=display">
+H_A = \left(
+\begin{matrix}
+A & t\\ 
+0 & 1
+\end{matrix}
+\right)
+=\left(
+\begin{matrix}
+a_{11} & a_{12} & t_x \\ 
+a_{21} & a_{22} & t_y \\
+ 0                   & 0            &  1
+\end{matrix}
+\right)</script><p>其中 $A$ 是仿射矩阵，$t$ 是平移向量。</p>
 <p>仿射变换的 $A$ 矩阵可以做SVD分解，即</p>
-<p>$$<br>
-A = UDV^T = (UV<sup>T)(VDV</sup>T) = R(\theta)R(-\phi)DR(\phi), \quad D=diag(\lambda_1, \lambda_2)<br>
-$$</p>
-<p>所以仿射变换 $A$ 可以看成先旋转 $\phi$，再沿着 $x, y$ 方向按照比例 $\lambda_1, \lambda_2$ 进行缩放，然后再旋转 $-\phi$，最后旋转 $\theta$。<br>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-ImageTransformation/affine.png" width="440" height alt></p>
+<script type="math/tex; mode=display">
+A = UDV^T = (UV^T)(VDV^T) = R(\theta)R(-\phi)DR(\phi), \quad D=diag(\lambda_1, \lambda_2)</script><p>所以仿射变换 $A$ 可以看成先旋转 $\phi$，再沿着 $x, y$ 方向按照比例 $\lambda_1, \lambda_2$ 进行缩放，然后再旋转 $-\phi$，最后旋转 $\theta$。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-ImageTransformation/affine.png" width="440" height alt></p>
 <ul>
 <li>不变量：平行线关系，平行线长度的比例，面积的比例</li>
 <li>自由度：6个自由度（2个旋转角+2个平移+2个缩放因子），至少需要3组点6个方程求解.</li>
 </ul>
-<h2 id="投影变换"><a class="header-anchor" href="#投影变换"></a>投影变换</h2>
-<p>投影变换（Projective Transformation）又叫2D homographies，是把点从一个平面映射到另一个平面，如世界坐标系下的平面到相机的成像平面。<br>
-投影变换就是对图像的旋转+平移+缩放+切变+射影，相比前三种变换图像的形变更为自由，原图中的平行线经过变换之后已经不在平行，而可能相交于一点，射影变换就是把理想点（平行直线在无穷远处相交）变换到图像上。<br>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-ImageTransformation/projective.png" width="400" height alt></p>
+<h2 id="投影变换"><a href="#投影变换" class="headerlink" title="投影变换"></a>投影变换</h2><p>投影变换（Projective Transformation）又叫2D homographies，是把点从一个平面映射到另一个平面，如世界坐标系下的平面到相机的成像平面。<br>投影变换就是对图像的旋转+平移+缩放+切变+射影，相比前三种变换图像的形变更为自由，原图中的平行线经过变换之后已经不在平行，而可能相交于一点，射影变换就是把理想点（平行直线在无穷远处相交）变换到图像上。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-08-13-CV-ImageTransformation/projective.png" width="400" height alt></p>
 <ul>
 <li>变换矩阵</li>
 </ul>
-<p>$$<br>
-H_P = \left(<br>
-\begin{matrix}<br>
-A   &amp; t\<br>
-v^T &amp; c<br>
-\end{matrix}<br>
-\right)<br>
-=\left(<br>
-\begin{matrix}<br>
-h_{11} &amp; h_{12} &amp; h_{13} \<br>
-h_{21} &amp; h_{22} &amp; h_{23} \<br>
-h_{31} &amp; h_{32} &amp; h_{33}<br>
-\end{matrix}<br>
-\right)<br>
-$$</p>
-<p>其中 $A$ 是仿射矩阵，$t$ 是平移向量，$v=(v_1, v_2)^T$，$c$ 是一个常数。</p>
+<script type="math/tex; mode=display">
+H_P = \left(
+\begin{matrix}
+A   & t\\ 
+v^T & c
+\end{matrix}
+\right)
+=\left(
+\begin{matrix}
+h_{11} & h_{12} & h_{13} \\ 
+h_{21} & h_{22} & h_{23} \\
+h_{31} & h_{32} & h_{33}
+\end{matrix}
+\right)</script><p>其中 $A$ 是仿射矩阵，$t$ 是平移向量，$v=(v_1, v_2)^T$，$c$ 是一个常数。</p>
 <ul>
 <li>不变量：长度的交比（比例的比例）</li>
 <li>自由度：8个自由度（2个旋转角+2个平移+2个缩放因子+2个无穷远的线），至少需要4组点8个方程求解.</li>
 </ul>
 <p>对于理想点 $(x_1,x_2,0)^T$ 的映射:</p>
-<p>$$<br>
-H_P = \left(<br>
-\begin{matrix}<br>
-A   &amp; t\<br>
-v^T &amp; c<br>
-\end{matrix}<br>
-\right)<br>
-\left(<br>
-\begin{matrix}<br>
-x_1 \<br>
-x_2 \<br>
-0<br>
-\end{matrix}<br>
-\right)<br>
-=\left(<br>
-\begin{matrix}<br>
-A(x_1,x_2)^T  \<br>
-v_1x_1+v_2x_2<br>
-\end{matrix}<br>
-\right)<br>
-$$</p>
-<p>所以对于仿射变换，$v=0$，所有的理想点仍然被映射到理想点，对于投影变换，$v\neq 0$，一些理想点被映射到无穷远处。</p>
-<h2 id="参考"><a class="header-anchor" href="#参考"></a>参考</h2>
-<ul>
+<script type="math/tex; mode=display">
+H_P = \left(
+\begin{matrix}
+A   & t\\ 
+v^T & c
+\end{matrix}
+\right)
+\left(
+\begin{matrix}
+x_1 \\ 
+x_2 \\
+0
+\end{matrix}
+\right)
+=\left(
+\begin{matrix}
+A(x_1,x_2)^T  \\ 
+v_1x_1+v_2x_2 
+\end{matrix}
+\right)</script><p>所以对于仿射变换，$v=0$，所有的理想点仍然被映射到理想点，对于投影变换，$v\neq 0$，一些理想点被映射到无穷远处。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="http://blog.csdn.net/u014096352/article/details/53526747" target="_blank" rel="noopener">图像的等距变换，相似变换，仿射变换，射影变换及其matlab实现</a></li>
 <li><a href="https://www8.cs.umu.se/kurser/5DV055/VT08/" target="_blank" rel="noopener">Geometrical Image Analysis, Spring 08</a></li>
 <li><a href="https://ags.cs.uni-kl.de/fileadmin/inf_ags/3dcv-ws11-12/3DCV_WS11-12_lec04.pdf" target="_blank" rel="noopener">2D projective transformations</a></li>
@@ -732,8 +709,8 @@ $$</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01-10-Qt-RedesignMeshviewerFrame/" rel="next" title="MeshViewer框架搭建">
-                <i class="fa fa-chevron-left"></i> MeshViewer框架搭建
+              <a href="/2017/08-13-ML-Regularization/" rel="next" title="贝叶斯角度看 L1 & L2 正则化">
+                <i class="fa fa-chevron-left"></i> 贝叶斯角度看 L1 & L2 正则化
               </a>
             
           </div>
@@ -742,8 +719,8 @@ $$</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08-13-ML-Regularization/" rel="prev" title="贝叶斯角度看 L1 & L2 正则化">
-                贝叶斯角度看 L1 & L2 正则化 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08-14-ML-AlgorithmsSummary/" rel="prev" title="Machine Learning Algorithm Summary">
+                Machine Learning Algorithm Summary <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1310,7 +1287,7 @@ $$</p>
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {

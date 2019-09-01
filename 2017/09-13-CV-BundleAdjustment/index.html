@@ -504,24 +504,19 @@
       
 
       
-        <h2 id="bundle-adjustment简述"><a class="header-anchor" href="#bundle-adjustment简述"></a>Bundle Adjustment简述</h2>
-<p>在SFM (structure from motion)的计算中BA (Bundle Adjustment)作为最后一步优化具有很重要的作用，在近几年兴起的基于图的SLAM (simultaneous localization and mapping)算法里面使用了图优化替代了原来的滤波器，这里所谓的图优化其实也是指BA。其实很多经典的文献对于BA都有深深浅浅的介绍，如果想对BA的全过程做一个全面的更深层次的了解，推荐阅读 Bundle Adjustment —A Modern Synthesis.</p>
-<h2 id="什么是ba"><a class="header-anchor" href="#什么是ba"></a>什么是BA</h2>
-<p>Bundle Adjustment中文译为光束法平差，还有其他一些翻译如束调整、捆集调整或者捆绑调整等等。</p>
+        <h2 id="Bundle-Adjustment简述"><a href="#Bundle-Adjustment简述" class="headerlink" title="Bundle Adjustment简述"></a>Bundle Adjustment简述</h2><p>在SFM (structure from motion)的计算中BA (Bundle Adjustment)作为最后一步优化具有很重要的作用，在近几年兴起的基于图的SLAM (simultaneous localization and mapping)算法里面使用了图优化替代了原来的滤波器，这里所谓的图优化其实也是指BA。其实很多经典的文献对于BA都有深深浅浅的介绍，如果想对BA的全过程做一个全面的更深层次的了解，推荐阅读 Bundle Adjustment —A Modern Synthesis.</p>
+<h2 id="什么是BA"><a href="#什么是BA" class="headerlink" title="什么是BA"></a>什么是BA</h2><p>Bundle Adjustment中文译为光束法平差，还有其他一些翻译如束调整、捆集调整或者捆绑调整等等。</p>
 <p>所谓bundle，来源于bundle of light，其本意就是指的光束，这些光束指的是三维空间中的点投影到像平面上的光束，而重投影误差正是利用这些光束来构建的，因此称为光束法强调光束也正是描述其优化模型是如何建立的。</p>
-<p>用一句话来描述BA那就是，BA的本质是一个优化模型，其目的是<strong>最小化重投影误差</strong>。重投影也就是指的第二次投影，<br>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-13-CV-BundleAdjustment/proj.png" width="420" height alt="Projection"></p>
+<p>用一句话来描述BA那就是，BA的本质是一个优化模型，其目的是<strong>最小化重投影误差</strong>。重投影也就是指的第二次投影，<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-13-CV-BundleAdjustment/proj.png" width="420" height alt="Projection"></p>
 <ul>
 <li>第一次投影指的是相机在拍照的时候三维空间点投影到图像上</li>
 <li>然后我们利用这些图像对一些特征点进行三角定位 (triangulation)，利用几何信息构建三角形来确定三维空间点的位置，参考对极几何</li>
 <li>最后利用计算得到的三维点的坐标（注意不是真实的）和我们计算得到的相机矩阵（当然也不是真实的）进行第二次投影，也就是重投影</li>
 </ul>
 <p>重投影误差指的就是真实三维空间点在图像平面上的投影（也就是图像上的像素点）和重投影（其实是用我们的计算值得到的虚拟的像素点）的差值，因为种种原因计算得到的值和实际情况不会完全相符，也就是这个差值不可能恰好为0，此时也就需要将这些差值的和最小化获取 <strong>最优的相机参数及三维空间点的坐标</strong>。</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-13-CV-BundleAdjustment/graph.png" width="400" height alt="Graph">
-<p>$$<br>
-\min_{a_j, b_i} \sum_{i=1}^n \sum_{j=1}^m v_{ij} d(Q(a_j, b_i), x_{ij})^2<br>
-$$</p>
-<p>其中，</p>
+<p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-13-CV-BundleAdjustment/graph.png" width="400" height alt="Graph"></p>
+<script type="math/tex; mode=display">
+\min_{a_j, b_i} \sum_{i=1}^n \sum_{j=1}^m v_{ij} d(Q(a_j, b_i), x_{ij})^2</script><p>其中，</p>
 <ul>
 <li>$n$个3D点在$m$个view（拍摄场景）中，</li>
 <li>向量$X_{ij}$：图像j上的第i个点projection（坐标）</li>
@@ -531,8 +526,7 @@ $$</p>
 <li>$Q(a_i,b_j)$:点i在图像j上的predicted projection</li>
 <li>$d(x,y)$:向量$x,y$的欧式距离</li>
 </ul>
-<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
-<ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="http://blog.csdn.net/abcjennifer/article/details/7588865" target="_blank" rel="noopener"> Bundle Adjustment - 基于feature的3D场景重建算法</a></li>
 <li><a href="http://blog.csdn.net/OptSolution/article/details/64442962" target="_blank" rel="noopener">Bundle Adjustment 简述</a></li>
 </ul>
@@ -927,7 +921,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#bundle-adjustment简述"><span class="nav-number">1.</span> <span class="nav-text">Bundle Adjustment简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是ba"><span class="nav-number">2.</span> <span class="nav-text">什么是BA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bundle-Adjustment简述"><span class="nav-number">1.</span> <span class="nav-text">Bundle Adjustment简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是BA"><span class="nav-number">2.</span> <span class="nav-text">什么是BA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1202,7 +1196,7 @@ $$</p>
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {

@@ -528,73 +528,53 @@
 <li>ISODATA：ISODATA的全称是迭代自组织数据分析法，该算法有效地解决了k-means算法的第一个缺陷，通过类的自动合并和分裂，得到较为合理的类型数目k。</li>
 <li>Kernel K-means：传统K-means采用欧式距离进行样本间的相似度度量，显然并不是所有的数据集都适用于这种度量方式。参照支持向量机中核函数的思想，该算法将所有样本映射到另外一个特征空间中再进行聚类，就有可能改善聚类效果。</li>
 </ul>
-<h2 id="k-means算法原理分析"><a class="header-anchor" href="#k-means算法原理分析"></a><code>k-means</code>算法原理分析</h2>
-<p><code>k-means</code>算法是聚类分析中使用最广泛的算法之一。它把<code>n</code>个对象根据它们的属性分为<code>k</code>个聚类以便使得所获得的聚类满足：同一聚类中的对象相似度较高；而不同聚类中的对象相似度较小。</p>
-<p>给定训练样本$X={x^{(1)}, x^{(2)}, \cdots, x^{(m)}}$，<code>k-means</code>算法的基本过程如下所示：</p>
+<h2 id="k-means算法原理分析"><a href="#k-means算法原理分析" class="headerlink" title="k-means算法原理分析"></a><code>k-means</code>算法原理分析</h2><p><code>k-means</code>算法是聚类分析中使用最广泛的算法之一。它把<code>n</code>个对象根据它们的属性分为<code>k</code>个聚类以便使得所获得的聚类满足：同一聚类中的对象相似度较高；而不同聚类中的对象相似度较小。</p>
+<p>给定训练样本$X=\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}$，<code>k-means</code>算法的基本过程如下所示：</p>
 <blockquote>
 <p>(1) 任意选择$k$个初始类中心 $c_{1},c_{2},…,c_{k}$</p>
-<p>(2) 计算$X$中的每个对象$x<sup>{(i)}$与这些中心对象的距离，并根据最小距离重新对相应对象$x</sup>{(i)}$进行划分确定其所属类$C^{(i)}$；<br>
-$$<br>
-C^{(i)} = \arg\min_j ||x^{(i)} - c_j||^2<br>
-$$</p>
-<p>(3) 重新计算每个类$C_{i}​$的中心$c_{i}​$的值<br>
-$$<br>
-C_i: c_i = \frac{1}{|C_i|} \sum_{x \in C_i} x<br>
-$$</p>
-<p>(4) 计算标准测度函数，当满足一定条件，如函数收敛时，则算法终止；如果条件不满足则重复步骤(2)，(3)。</p>
+<p>(2) 计算$X$中的每个对象$x^{(i)}$与这些中心对象的距离，并根据最小距离重新对相应对象$x^{(i)}$进行划分确定其所属类$C^{(i)}$；</p>
+<script type="math/tex; mode=display">
+  C^{(i)} = \arg\min_j ||x^{(i)} - c_j||^2</script><p>(3) 重新计算每个类$C_{i}​$的中心$c_{i}​$的值</p>
+<script type="math/tex; mode=display">
+  C_i: c_i = \frac{1}{|C_i|} \sum_{x \in C_i} x</script><p>(4) 计算标准测度函数，当满足一定条件，如函数收敛时，则算法终止；如果条件不满足则重复步骤(2)，(3)。</p>
 </blockquote>
-<h3 id="k-means算法的缺点"><a class="header-anchor" href="#k-means算法的缺点"></a><code>k-means</code>算法的缺点</h3>
-<p><code>k-means</code>算法虽然简单快速，但是存在下面的缺点：</p>
+<h3 id="k-means算法的缺点"><a href="#k-means算法的缺点" class="headerlink" title="k-means算法的缺点"></a><code>k-means</code>算法的缺点</h3><p><code>k-means</code>算法虽然简单快速，但是存在下面的缺点：</p>
 <ul>
-<li>
-<p>聚类中心的个数<code>K</code>需要事先给定，但在实际中<code>K</code>值的选定是非常困难的，特别是遇到高维度、海量的数据集时。</p>
+<li><p>聚类中心的个数<code>K</code>需要事先给定，但在实际中<code>K</code>值的选定是非常困难的，特别是遇到高维度、海量的数据集时。</p>
 </li>
-<li>
-<p><code>k-means</code>算法随机地确定初始聚类中心，但不同的初始聚类中心可能导致完全不同的聚类结果。</p>
+<li><p><code>k-means</code>算法随机地确定初始聚类中心，但不同的初始聚类中心可能导致完全不同的聚类结果。</p>
 </li>
 </ul>
-<h2 id="k-means-算法原理分析"><a class="header-anchor" href="#k-means-算法原理分析"></a><code>k-means++</code>算法原理分析</h2>
-<p><code>k-means++</code>算法选择初始聚类中心的基本原则是：初始的聚类中心之间的相互距离要尽可能的远。它选择初始聚类中心的步骤是：</p>
+<h2 id="k-means-算法原理分析"><a href="#k-means-算法原理分析" class="headerlink" title="k-means++算法原理分析"></a><code>k-means++</code>算法原理分析</h2><p><code>k-means++</code>算法选择初始聚类中心的基本原则是：初始的聚类中心之间的相互距离要尽可能的远。它选择初始聚类中心的步骤是：</p>
 <blockquote>
 <p>(1) 从输入的数据点集合中随机选择一个点作为第一个聚类中心$c_1$</p>
 <p>(2) 对于数据集$X$中的每一个点$x$，计算它与当前已有聚类中心之间的最短距离（即与最近的一个聚类中心的距离），用$D(x)$表示，接着计算每个样本被选为下一个聚类中心的概率 $\frac{D(x)^2}{\sum_{x \ in X} D(x)^2}$，并根据概率选择出下一个聚类中心$c_{i}$ 。即选择的原则是：$D(x)$较大的点，被选取作为聚类中心的概率较大。</p>
 <p>(3) 重复过程(2)直到找到$k$个聚类中心。</p>
 </blockquote>
-<p>算法的关键是第(2)步，依次计算每个数据点与最近的种子点（聚类中心）的距离，依次得到$D(1),D(2),\cdots,D(m)$构成的集合$D$，其中$m$表示数据集的大小。在$D$中，为了避免噪声，不能直接选取值最大的元素，应该选择值较大的元素，然后将其对应的数据点作为种子点。<br>
-如何选择值较大的元素呢，一种算法如下。</p>
+<p>算法的关键是第(2)步，依次计算每个数据点与最近的种子点（聚类中心）的距离，依次得到$D(1),D(2),\cdots,D(m)$构成的集合$D$，其中$m$表示数据集的大小。在$D$中，为了避免噪声，不能直接选取值最大的元素，应该选择值较大的元素，然后将其对应的数据点作为种子点。<br>如何选择值较大的元素呢，一种算法如下。</p>
 <ul>
-<li>
-<p>求所有的距离和<code>Sum(D(x))</code></p>
+<li><p>求所有的距离和<code>Sum(D(x))</code></p>
 </li>
-<li>
-<p>取一个随机值，用权重的方式来取计算下一个“种子点”。这个算法的实现是，先取一个能落在<code>Sum(D(x))</code>中的随机值<code>Random</code>，然后用<code>Random -= D(x)</code>，直到其<code>Random&lt;=0</code>，此时的点就是下一个“种子点”。</p>
+<li><p>取一个随机值，用权重的方式来取计算下一个“种子点”。这个算法的实现是，先取一个能落在<code>Sum(D(x))</code>中的随机值<code>Random</code>，然后用<code>Random -= D(x)</code>，直到其<code>Random&lt;=0</code>，此时的点就是下一个“种子点”。</p>
 </li>
 </ul>
 <p>为什么用这样的方式呢？我们换一种比较好理解的方式来说明。把集合<code>D</code>中的每个元素<code>D(x)</code>想象为一根线<code>L(x)</code>，线的长度就是元素的值。将这些线依次按照<code>L(1)、L(2)、...、L(n)</code>的顺序连接起来，组成长线<code>L</code>。<code>L(1)、L(2)、…、L(n)</code>称为<code>L</code>的子线。根据概率的相关知识，如果我们在<code>L</code>上随机选择一个点，那么这个点所在的子线很有可能是比较长的子线，而这个子线对应的数据点就可以作为种子点。</p>
-<p><a href="./code/20171103-Alg-kmeans/kmeanspp.cpp" title="k-means++参考代码">k-means++参考代码</a></p>
-<h3 id="k-means-算法的缺点"><a class="header-anchor" href="#k-means-算法的缺点"></a><code>k-means++</code>算法的缺点</h3>
-<p>虽然<code>k-means++</code>算法可以确定地初始化聚类中心，但是从可扩展性来看，它存在一个缺点，那就是它内在的有序性特性：下一个中心点的选择依赖于已经选择的中心点。<br>
-针对这种缺陷，<code>k-means||</code>算法提供了解决方法。</p>
-<h2 id="isodata算法"><a class="header-anchor" href="#isodata算法"></a>ISODATA算法</h2>
-<p>ISODATA算法在运行过程中能够根据各个类别的实际情况进行两种操作来调整聚类中心数K：(1)分裂操作，对应着增加聚类中心数；(2)合并操作，对应着减少聚类中心数。</p>
+<p><a href="./code/20171103-Alg-kmeans/kmeanspp.cpp" title="k-means++参考代码">k-means++参考代码</a>    </p>
+<h3 id="k-means-算法的缺点"><a href="#k-means-算法的缺点" class="headerlink" title="k-means++算法的缺点"></a><code>k-means++</code>算法的缺点</h3><p>虽然<code>k-means++</code>算法可以确定地初始化聚类中心，但是从可扩展性来看，它存在一个缺点，那就是它内在的有序性特性：下一个中心点的选择依赖于已经选择的中心点。<br>针对这种缺陷，<code>k-means||</code>算法提供了解决方法。</p>
+<h2 id="ISODATA算法"><a href="#ISODATA算法" class="headerlink" title="ISODATA算法"></a>ISODATA算法</h2><p>ISODATA算法在运行过程中能够根据各个类别的实际情况进行两种操作来调整聚类中心数K：(1)分裂操作，对应着增加聚类中心数；(2)合并操作，对应着减少聚类中心数。</p>
 <p>下面首先给出ISODATA算法的输入（输入的数据和迭代次数不再单独介绍）：</p>
 <ol>
-<li>
-<p>预期的聚类中心数目$K_o$：虽然在ISODATA运行过程中聚类中心数目是可变的，但还是需要由用户指定一个参考标准。事实上，该算法的聚类中心数目变动范围也由$K_o$决定。具体地，最终输出的聚类中心数目范围是 $[K_o/2, 2K_o]$。</p>
+<li><p>预期的聚类中心数目$K_o$：虽然在ISODATA运行过程中聚类中心数目是可变的，但还是需要由用户指定一个参考标准。事实上，该算法的聚类中心数目变动范围也由$K_o$决定。具体地，最终输出的聚类中心数目范围是 $[K_o/2, 2K_o]$。</p>
 </li>
-<li>
-<p>每个类所要求的最少样本数目$N_{min}$：用于判断当某个类别所包含样本分散程度较大时是否可以进行分裂操作。如果分裂后会导致某个子类别所包含样本数目小于$N_{min}$，就不会对该类别进行分裂操作。</p>
+<li><p>每个类所要求的最少样本数目$N_{min}$：用于判断当某个类别所包含样本分散程度较大时是否可以进行分裂操作。如果分裂后会导致某个子类别所包含样本数目小于$N_{min}$，就不会对该类别进行分裂操作。</p>
 </li>
-<li>
-<p>最大方差$Sigma$：用于衡量某个类别中样本的分散程度。当样本的分散程度超过这个值时，则有可能进行分裂操作（注意同时需要满足[2]中所述的条件）。</p>
+<li><p>最大方差$Sigma$：用于衡量某个类别中样本的分散程度。当样本的分散程度超过这个值时，则有可能进行分裂操作（注意同时需要满足[2]中所述的条件）。</p>
 </li>
-<li>
-<p>两个类别对应聚类中心之间所允许最小距离$d_{min}$：如果两个类别靠得非常近（即这两个类别对应聚类中心之间的距离非常小），则需要对这两个类别进行合并操作。是否进行合并的阈值就是由$d_{min}$决定。</p>
+<li><p>两个类别对应聚类中心之间所允许最小距离$d_{min}$：如果两个类别靠得非常近（即这两个类别对应聚类中心之间的距离非常小），则需要对这两个类别进行合并操作。是否进行合并的阈值就是由$d_{min}$决定。</p>
 </li>
 </ol>
 <p>ISODATA算法的原理非常直观，不过由于它和其他两个方法相比需要额外指定较多的参数，并且某些参数同样很难准确指定出一个较合理的值，因此ISODATA算法在实际过程中并没有K-means++受欢迎。</p>
-<h2 id="参考文献"><a class="header-anchor" href="#参考文献"></a>参考文献</h2>
-<ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
 <li><a href="http://www.cnblogs.com/yixuan-xu/p/6272208.html" target="_blank" rel="noopener">K-means聚类算法的三种改进介绍与对比</a></li>
 <li><a href="https://github.com/endymecy/spark-ml-source-analysis/blob/master/%E8%81%9A%E7%B1%BB/k-means/k-means.md" target="_blank" rel="noopener">k-means、k-means++以及k-means算法分析</a></li>
 <li><a href="http://www.cnblogs.com/luxiaoxun/archive/2013/05/09/3069594.html" target="_blank" rel="noopener">k-means聚类算法C++实现</a></li>
@@ -993,7 +973,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means算法原理分析"><span class="nav-number">1.</span> <span class="nav-text">k-means算法原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-means算法的缺点"><span class="nav-number">1.1.</span> <span class="nav-text">k-means算法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means-算法原理分析"><span class="nav-number">2.</span> <span class="nav-text">k-means++算法原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-means-算法的缺点"><span class="nav-number">2.1.</span> <span class="nav-text">k-means++算法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isodata算法"><span class="nav-number">3.</span> <span class="nav-text">ISODATA算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means算法原理分析"><span class="nav-number">1.</span> <span class="nav-text">k-means算法原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-means算法的缺点"><span class="nav-number">1.1.</span> <span class="nav-text">k-means算法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means-算法原理分析"><span class="nav-number">2.</span> <span class="nav-text">k-means++算法原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-means-算法的缺点"><span class="nav-number">2.1.</span> <span class="nav-text">k-means++算法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ISODATA算法"><span class="nav-number">3.</span> <span class="nav-text">ISODATA算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
@@ -1268,7 +1248,7 @@ $$</p>
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {

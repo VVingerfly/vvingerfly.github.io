@@ -519,26 +519,20 @@
       
 
       
-        <h2 id="结构体类型"><a class="header-anchor" href="#结构体类型"></a>结构体类型</h2>
-<h2 id="结构体对象"><a class="header-anchor" href="#结构体对象"></a>结构体对象</h2>
-<h3 id="结构体对象的定义形式"><a class="header-anchor" href="#结构体对象的定义形式"></a>结构体对象的定义形式</h3>
-<p>定义结构体对象有三种形式：</p>
+        <h2 id="结构体类型"><a href="#结构体类型" class="headerlink" title="结构体类型"></a>结构体类型</h2><h2 id="结构体对象"><a href="#结构体对象" class="headerlink" title="结构体对象"></a>结构体对象</h2><h3 id="结构体对象的定义形式"><a href="#结构体对象的定义形式" class="headerlink" title="结构体对象的定义形式"></a>结构体对象的定义形式</h3><p>定义结构体对象有三种形式：</p>
 <ol>
-<li>先定义结构体类型，再定义结构体对象</li>
-</ol>
+<li><p>先定义结构体类型，再定义结构体对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DATE</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> year, month, day;</span><br><span class="line">&#125;;</span><br><span class="line">DATE a, b;         <span class="comment">// C++的方式</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DATE</span> <span class="title">c</span>, <span class="title">d</span>;</span>  <span class="comment">// C语言的方式</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>定义结构体类型的同时定义结构体对象</li>
-</ol>
+</li>
+<li><p>定义结构体类型的同时定义结构体对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DATE</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> year, month, day;</span><br><span class="line">&#125;d1, d2;</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>直接定义结构体对象</li>
-</ol>
+</li>
+<li><p>直接定义结构体对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> year, month, day;</span><br><span class="line">&#125;d1, d2;</span><br></pre></td></tr></table></figure>
-<h3 id="结构体对象的内存形式"><a class="header-anchor" href="#结构体对象的内存形式"></a>结构体对象的内存形式</h3>
-<p>结构体各成员是根据在结构体定义时出现的顺序依次分配空间的，其内存长度是各个成员内存长度之和，推荐使用<code>sizeof</code>运算，由编译器自动确定内存长度。</p>
-<p><strong>注意</strong>：在有的编译器中，<code>sizeof</code>得到的结构体内存长度可能比理论值大。如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="结构体对象的内存形式"><a href="#结构体对象的内存形式" class="headerlink" title="结构体对象的内存形式"></a>结构体对象的内存形式</h3><p>结构体各成员是根据在结构体定义时出现的顺序依次分配空间的，其内存长度是各个成员内存长度之和，推荐使用<code>sizeof</code>运算，由编译器自动确定内存长度。</p>
+<p><strong>注意</strong>：在有的编译器中，<code>sizeof</code>得到的结构体内存长度可能比理论值大。如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>这两个结构体类型成员相同（仅顺序不同），理论上它们的内存长度都是<code>4+1+2=7</code>。但实际上<code>sizeof(A)</code>的结构为8，<code>sizeof(B)</code>的结构为12。</p>
 <p><strong>原因</strong>：为了加快数据存储的速度，编译器默认情况下会对结构体成员和结构体本身（其他数据成员也是如此）存储位置进行处理，<strong>使其存放的起始位置是一定字节数的倍数</strong>，而不是顺序存放，称为<strong>字节对齐</strong>。</p>
 <p>设对齐字节数为<code>n(n=1, 2, 4, 8, 16)</code>，每个字节内存长度为<code>Li</code>,<code>Max(Li)</code>为最大的成员内存长度。字节对齐的规则是：</p>
@@ -554,31 +548,23 @@
 <li>第二个成员b为<code>char</code>，对齐值<code>min(n, sizeof(char))=1</code>，b紧接着a后面从偏移4开始，满足1字节对齐要求；</li>
 <li>第三个成员c为<code>short</code>，对齐值<code>min(n, sizeof(short))=2</code>，如果c紧接着b后面从偏移5开始就不满足2字节对齐要求，因此需要补充一个字节，从偏移6开始存储。</li>
 </ul>
-</blockquote>
-<blockquote>
 <blockquote>
 <p>结构体A的内存长度为<em>4+1+1(补充)+2=8</em>。</p>
 </blockquote>
-</blockquote>
-<blockquote>
 <ul>
 <li>B的第一个成员b为<code>char</code>，对齐值<code>min(n, sizeof(char))=1</code>，成员b相对于结构体起始地址从0偏移开始，满足1字节对齐要求；</li>
 <li>第二个成员a为<code>int</code>，对齐值<code>min(n, sizeof(int))=4</code>，如果a紧接着b后面从偏移1开始，不满足4字节对齐要求，因此补充3个字节，从偏移4开始存储；</li>
 <li>第三个成员c为<code>short</code>，对齐值<code>min(n, sizeof(short))=2</code>，c紧接着a后面从偏移8开始，满足2字节对齐要求。</li>
 <li>则当前总的内存长度为1+3(补充)+4+2=10，由于n大于最大的成员内存长度4，故结构体长度应是4的倍数，因此最后需要再补充2个字节。</li>
 </ul>
-</blockquote>
-<blockquote>
 <blockquote>
 <p>结构体B的内存长度为<em>1+3(补充)+4+2+2(补充)=12</em>。</p>
 </blockquote>
 </blockquote>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-23-CppStruct/struct.jpg" width="400" height alt="A与B字节对齐示意">
-<p>使用预处理命令<code>#progma pack(n)</code>可以设定对齐字节数<code>n(n=1, 2, 4, 8, 16)</code>。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#progma pack(push) <span class="comment">// 保存对齐字节数</span></span></span><br><span class="line"><span class="meta">#progma pack(1)    <span class="comment">// 设定对齐字节数为1</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#progma pack(pop) <span class="comment">// 恢复对齐字节数</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-23-CppStruct/struct.jpg" width="400" height alt="A与B字节对齐示意"></p>
+<p>使用预处理命令<code>#progma pack(n)</code>可以设定对齐字节数<code>n(n=1, 2, 4, 8, 16)</code>。例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#progma pack(push) <span class="comment">// 保存对齐字节数</span></span></span><br><span class="line"><span class="meta">#progma pack(1)    <span class="comment">// 设定对齐字节数为1</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;   <span class="comment">// 4 字节</span></span><br><span class="line">    <span class="keyword">char</span> b;  <span class="comment">// 1 字节</span></span><br><span class="line">    <span class="keyword">short</span> c; <span class="comment">// 2 字节</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#progma pack(pop) <span class="comment">// 恢复对齐字节数</span></span></span><br></pre></td></tr></table></figure></p>
 <p>此时<code>sizeof(A)</code>的结果为7。</p>
-<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
-<ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href>C++程序设计</a></li>
 </ul>
 
@@ -972,7 +958,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体类型"><span class="nav-number">1.</span> <span class="nav-text">结构体类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体对象"><span class="nav-number">2.</span> <span class="nav-text">结构体对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体对象的定义形式"><span class="nav-number">2.1.</span> <span class="nav-text">结构体对象的定义形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体对象的内存形式"><span class="nav-number">2.2.</span> <span class="nav-text">结构体对象的内存形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体类型"><span class="nav-number">1.</span> <span class="nav-text">结构体类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体对象"><span class="nav-number">2.</span> <span class="nav-text">结构体对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体对象的定义形式"><span class="nav-number">2.1.</span> <span class="nav-text">结构体对象的定义形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体对象的内存形式"><span class="nav-number">2.2.</span> <span class="nav-text">结构体对象的内存形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1247,7 +1233,7 @@
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {

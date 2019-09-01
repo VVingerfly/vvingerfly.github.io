@@ -510,43 +510,28 @@
 
       
         <p><em>文章转载自知乎<a href="https://zhuanlan.zhihu.com/p/25110450" target="_blank" rel="noopener">聊一聊深度学习的activation function</a>。</em></p>
-<h2 id="神经网络激活函数"><a class="header-anchor" href="#神经网络激活函数"></a>神经网络激活函数</h2>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/func_curves.jpg" width="460" height alt="Activation Function Curves">
+<h2 id="神经网络激活函数"><a href="#神经网络激活函数" class="headerlink" title="神经网络激活函数"></a>神经网络激活函数</h2><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/func_curves.jpg" width="460" height alt="Activation Function Curves"></p>
 <p>深度学习的基本原理是基于人工神经网络，信号从一个神经元进入，经过非线性的activation function，传入到下一层神经元；再经过该层神经元的activate，继续往下传递，如此循环往复，直到输出层。正是由于这些非线性函数的反复叠加，才使得神经网络有足够的capacity来抓取复杂的pattern，在各个领域取得state-of-the-art的结果。显而易见，activation function在深度学习中举足轻重，也是很活跃的研究领域之一。目前来讲，选择怎样的activation function不在于它能否模拟真正的神经元，而在于能否便于优化整个深度神经网络。下面我们简单聊一下各类函数的特点以及为什么现在优先推荐ReLU函数。</p>
-<h2 id="sigmoid"><a class="header-anchor" href="#sigmoid"></a>sigmoid</h2>
-<p>$$<br>
-\sigma(x) = \frac{1}{1+e^{-x}}<br>
-$$</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/sigmoid.png" width="680" height alt="sigmoid function">
+<h2 id="sigmoid"><a href="#sigmoid" class="headerlink" title="sigmoid"></a>sigmoid</h2><script type="math/tex; mode=display">
+\sigma(x) = \frac{1}{1+e^{-x}}</script><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/sigmoid.png" width="680" height alt="sigmoid function"></p>
 <p>Sigmoid函数是深度学习领域开始时使用频率最高的activation function。它是便于求导的平滑函数，其导数为$\sigma(x)(1-\sigma(x))$，这是优点。然而，Sigmoid有三大缺点：</p>
 <ul>
 <li>容易出现gradient vanishing</li>
 <li>函数输出并不是zero-centered</li>
 <li>幂运算相对来讲比较耗时</li>
 </ul>
-<p><strong>Gradient Vanishing</strong><br>
-优化神经网络的方法是Back Propagation，即导数的后向传递：先计算输出层对应的loss，然后将loss以导数的形式不断向上一层网络传递，修正相应的参数，达到降低loss的目的。 Sigmoid函数在深度网络中常常会导致导数逐渐变为0，使得参数无法被更新，神经网络无法被优化。原因在于两点：</p>
+<p><strong>Gradient Vanishing</strong><br>优化神经网络的方法是Back Propagation，即导数的后向传递：先计算输出层对应的loss，然后将loss以导数的形式不断向上一层网络传递，修正相应的参数，达到降低loss的目的。 Sigmoid函数在深度网络中常常会导致导数逐渐变为0，使得参数无法被更新，神经网络无法被优化。原因在于两点：</p>
 <ul>
-<li>在上图中容易看出，当$\sigma(x)$中$x$较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0</li>
+<li>在上图中容易看出，当$\sigma(x)$中$x$较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0 </li>
 <li>Sigmoid导数的最大值是0.25，这意味着导数在每一层至少会被压缩为原来的1/4，通过两层后被变为1/16，…，通过10层后为1/1048576。请注意这里是“至少”，导数达到最大值这种情况还是很少见的。</li>
 </ul>
-<p><strong>输出不是zero-centered</strong><br>
-Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变慢。举例来讲，对$\sigma(\sum_i w_i x_i + b)$，如果所有$x_i$均为正数或负数，那么其对$w_i$的导数总是正数或负数，这会导致如下图红色箭头所示的阶梯式更新，这显然并非一个好的优化路径。深度学习往往需要大量时间来处理大量数据，模型的收敛速度是尤为重要的。所以，总体上来讲，训练深度学习网络尽量使用zero-centered数据 (可以经过数据预处理实现) 和zero-centered输出。<br>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/dir.png" width="360" height alt="sigmoid function"></p>
-<p><strong>幂运算相对耗时</strong><br>
-相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。</p>
-<h2 id="tanh"><a class="header-anchor" href="#tanh"></a>tanh</h2>
-<p>$$<br>
-\tanh(x) = \frac{e<sup>x-e</sup>{-x}}{e<sup>x+e</sup>{-x}}<br>
-$$</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/tanh.png" width="680" height alt="sigmoid function">
+<p><strong>输出不是zero-centered</strong><br>Sigmoid函数的输出值恒大于0，这会导致模型训练的收敛速度变慢。举例来讲，对$\sigma(\sum_i w_i x_i + b)$，如果所有$x_i$均为正数或负数，那么其对$w_i$的导数总是正数或负数，这会导致如下图红色箭头所示的阶梯式更新，这显然并非一个好的优化路径。深度学习往往需要大量时间来处理大量数据，模型的收敛速度是尤为重要的。所以，总体上来讲，训练深度学习网络尽量使用zero-centered数据 (可以经过数据预处理实现) 和zero-centered输出。<br><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/dir.png" width="360" height alt="sigmoid function"></p>
+<p><strong>幂运算相对耗时</strong><br>相对于前两项，这其实并不是一个大问题，我们目前是具备相应计算能力的，但面对深度学习中庞大的计算量，最好是能省则省。之后我们会看到，在ReLU函数中，需要做的仅仅是一个thresholding，相对于幂运算来讲会快很多。</p>
+<h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><script type="math/tex; mode=display">
+\tanh(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}}</script><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/tanh.png" width="680" height alt="sigmoid function"></p>
 <p>tanh读作Hyperbolic Tangent(双曲正切函数)，如上图所示，它解决了zero-centered的输出问题，然而，gradient vanishing的问题和幂运算的问题仍然存在。</p>
-<h2 id="relu-rectified-linear-unit"><a class="header-anchor" href="#relu-rectified-linear-unit"></a>ReLU (Rectified Linear Unit)</h2>
-<p>$$<br>
-\text{ReLU}(x) = \max(0, x)<br>
-$$</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/relu.png" width="680" height alt="sigmoid function">
-ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点：
+<h2 id="ReLU-Rectified-Linear-Unit"><a href="#ReLU-Rectified-Linear-Unit" class="headerlink" title="ReLU (Rectified Linear Unit)"></a>ReLU (Rectified Linear Unit)</h2><script type="math/tex; mode=display">
+\text{ReLU}(x) = \max(0, x)</script><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/relu.png" width="680" height alt="sigmoid function"><br>ReLU函数其实就是一个取最大值函数，注意这并不是全区间可导的，但是我们可以取sub-gradient，如上图所示。ReLU虽然简单，但却是近几年的重要成果，有以下几大优点：</p>
 <ul>
 <li>解决了gradient vanishing问题 (在正区间)</li>
 <li>计算速度非常快，只需要判断输入是否大于0</li>
@@ -555,37 +540,29 @@ ReLU函数其实就是一个取最大值函数，注意这并不是全区间可�
 <p>ReLU也有几个需要特别注意的问题：</p>
 <ul>
 <li>ReLU的输出不是zero-centered</li>
-<li>Dead ReLU Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。有两个主要原因可能导致这种情况产生:
-<ul>
-<li>非常不幸的参数初始化，这种情况比较少见</li>
+<li>Dead ReLU Problem，指的是某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。有两个主要原因可能导致这种情况产生: <ul>
+<li>非常不幸的参数初始化，这种情况比较少见 </li>
 <li>learning rate太高导致在训练过程中参数更新太大，不幸使网络进入这种状态。解决方法是可以采用Xavier初始化方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。</li>
 </ul>
 </li>
 </ul>
 <p>尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！</p>
-<h2 id="leaky-relu"><a class="header-anchor" href="#leaky-relu"></a>Leaky ReLU</h2>
-<p>$$<br>
-f(x) = \max(0.01x, x)<br>
-$$</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/lrelu.png" width="680" height alt="sigmoid function">
+<h2 id="Leaky-ReLU"><a href="#Leaky-ReLU" class="headerlink" title="Leaky ReLU"></a>Leaky ReLU</h2><script type="math/tex; mode=display">
+f(x) = \max(0.01x, x)</script><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/lrelu.png" width="680" height alt="sigmoid function"></p>
 <p>人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为$0.01x$而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU: $f(x) = \max(\alpha x, x)$，其中$\alpha$可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。</p>
-<h2 id="elu-exponential-linear-units"><a class="header-anchor" href="#elu-exponential-linear-units"></a>ELU (Exponential Linear Units)</h2>
-<p>$$<br>
-f(x) =<br>
-\begin{cases}<br>
-x, \qquad \qquad \text{if} ,x&gt;0 \<br>
-\alpha(e^x-1), ,,; \textrm{otherwise}<br>
-\end{cases}<br>
-$$</p>
-<img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/elu.png" width="680" height alt="sigmoid function">
+<h2 id="ELU-Exponential-Linear-Units"><a href="#ELU-Exponential-Linear-Units" class="headerlink" title="ELU (Exponential Linear Units)"></a>ELU (Exponential Linear Units)</h2><script type="math/tex; mode=display">
+f(x) =
+\begin{cases}
+x, \qquad \qquad \text{if} \,x>0 \\ 
+\alpha(e^x-1), \,\,\; \textrm{otherwise}
+\end{cases}</script><p><img src="https://raw.githubusercontent.com/VVingerfly/blog_images/master/2017-09-17-ML-ActivationFunction/elu.png" width="680" height alt="sigmoid function"></p>
 <p>ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及:</p>
 <ul>
 <li>不会有Deal ReLU问题</li>
 <li>输出的均值接近0，zero-centered</li>
 </ul>
 <p>它的一个小问题在于计算量稍大。类似于Leaky ReLU，理论上虽然好于ReLU，但在实际使用中目前并没有好的证据ELU总是优于ReLU。</p>
-<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
-<ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://www.zhihu.com/question/29021768" target="_blank" rel="noopener">知乎</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/25110450" target="_blank" rel="noopener">聊一聊深度学习的activation function</a></li>
 </ul>
@@ -980,7 +957,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络激活函数"><span class="nav-number">1.</span> <span class="nav-text">神经网络激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">2.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">3.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relu-rectified-linear-unit"><span class="nav-number">4.</span> <span class="nav-text">ReLU (Rectified Linear Unit)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leaky-relu"><span class="nav-number">5.</span> <span class="nav-text">Leaky ReLU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elu-exponential-linear-units"><span class="nav-number">6.</span> <span class="nav-text">ELU (Exponential Linear Units)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络激活函数"><span class="nav-number">1.</span> <span class="nav-text">神经网络激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">2.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">3.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReLU-Rectified-Linear-Unit"><span class="nav-number">4.</span> <span class="nav-text">ReLU (Rectified Linear Unit)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leaky-ReLU"><span class="nav-number">5.</span> <span class="nav-text">Leaky ReLU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELU-Exponential-Linear-Units"><span class="nav-number">6.</span> <span class="nav-text">ELU (Exponential Linear Units)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1255,7 +1232,7 @@ $$</p>
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {

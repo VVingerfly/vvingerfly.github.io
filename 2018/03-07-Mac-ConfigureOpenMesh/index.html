@@ -510,16 +510,13 @@
       
 
       
-        <h2 id="安装openmesh库"><a class="header-anchor" href="#安装openmesh库"></a>安装OpenMesh库</h2>
-<p>使用Homebrew安装，非常简单，一个命令搞定</p>
+        <h2 id="安装OpenMesh库"><a href="#安装OpenMesh库" class="headerlink" title="安装OpenMesh库"></a>安装OpenMesh库</h2><p>使用Homebrew安装，非常简单，一个命令搞定</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install open-mesh</span><br></pre></td></tr></table></figure>
 <p>安装后可能不知道库的具体位置，通过下面命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew info open-mesh</span><br></pre></td></tr></table></figure>
 <p>可以查看库的信息，其中就包括了库的路径，我得到的是</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/Cellar/open-mesh/6.3</span><br></pre></td></tr></table></figure>
-<h2 id="用qt-creator测试openmesh"><a class="header-anchor" href="#用qt-creator测试openmesh"></a>用Qt Creator测试OpenMesh</h2>
-<p>Creator的安装这里不再赘述，新建控制台项目，如test。<br>
-在test.pro中添加保护目录和库文件</p>
+<h2 id="用Qt-Creator测试OpenMesh"><a href="#用Qt-Creator测试OpenMesh" class="headerlink" title="用Qt Creator测试OpenMesh"></a>用Qt Creator测试OpenMesh</h2><p>Creator的安装这里不再赘述，新建控制台项目，如test。<br>在test.pro中添加保护目录和库文件</p>
 <figure class="highlight qt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INCLUDEPATH += <span class="regexp">/usr/</span>local/Cellar/open-mesh/<span class="number">6.3</span>/include</span><br><span class="line"></span><br><span class="line">LIBS += <span class="regexp">/usr/</span>local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshCore.a</span><br><span class="line">LIBS += <span class="regexp">/usr/</span>local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshTools.a</span><br></pre></td></tr></table></figure>
 <p>main函数中的代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;OpenMesh/Core/IO/MeshIO.hh&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    OpenMesh::IO::_OBJReader_();</span><br><span class="line">    OpenMesh::IO::_OBJWriter_();</span><br><span class="line">    MyMesh mesh;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> file = <span class="string">"bunny.obj"</span>;</span><br><span class="line">    <span class="keyword">if</span> (!OpenMesh::IO::read_mesh(mesh, file))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Failed to read mesh"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> a.exec();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!OpenMesh::IO::write_mesh(mesh, <span class="string">"out.obj"</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Failed to save mesh"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> a.exec();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -529,11 +526,9 @@
 <p>和</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OpenMesh::IO::_OBJReader_();</span><br><span class="line">OpenMesh::IO::_OBJWriter_();</span><br></pre></td></tr></table></figure>
 <p>运行时报错<code>[OpenMesh::IO::_IOManager_] No reading modules available!</code>，搜索<a href="https://mailman.rwth-aachen.de/pipermail/openmesh/2010-November/000469.html" target="_blank" rel="noopener">这里</a>发现需要加上面的内容。</p>
-<h2 id="在cmake中使用openmesh"><a class="header-anchor" href="#在cmake中使用openmesh"></a>在Cmake中使用OpenMesh</h2>
-<p>在Cmake中使用OpenMesh，CmakeList.txt如下所示：</p>
+<h2 id="在Cmake中使用OpenMesh"><a href="#在Cmake中使用OpenMesh" class="headerlink" title="在Cmake中使用OpenMesh"></a>在Cmake中使用OpenMesh</h2><p>在Cmake中使用OpenMesh，CmakeList.txt如下所示：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.9</span>)</span><br><span class="line"><span class="keyword">project</span>(testOpenMeshCMake)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(SOURCE_FILES main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(testOpenMeshCMake main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span> (testOpenMeshCMake</span><br><span class="line">        /usr/local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshTools.<span class="number">6.3</span>.dylib</span><br><span class="line">        /usr/local/Cellar/open-mesh/<span class="number">6.3</span>/lib/libOpenMeshCore.<span class="number">6.3</span>.dylib</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
-<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
-<ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="http://brewformulas.org/OpenMesh" target="_blank" rel="noopener">OpenMesh — BrewFormulas - Homebrew Formulas</a></li>
 <li><a href="https://mailman.rwth-aachen.de/pipermail/openmesh/2010-November/000469.html" target="_blank" rel="noopener">[OpenMesh] A question about the Examples</a></li>
 </ul>
@@ -625,8 +620,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02-16-Tex-imageTypesetting/" rel="next" title="LaTeX文档多图排版">
-                <i class="fa fa-chevron-left"></i> LaTeX文档多图排版
+              <a href="/2018/03-07-Mac-Tips4Homebrew/" rel="next" title="Tips for Homebrew">
+                <i class="fa fa-chevron-left"></i> Tips for Homebrew
               </a>
             
           </div>
@@ -635,8 +630,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03-07-Mac-Tips4Homebrew/" rel="prev" title="Tips for Homebrew">
-                Tips for Homebrew <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03-14-License/" rel="prev" title="开源协议">
+                开源协议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -928,7 +923,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装openmesh库"><span class="nav-number">1.</span> <span class="nav-text">安装OpenMesh库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用qt-creator测试openmesh"><span class="nav-number">2.</span> <span class="nav-text">用Qt Creator测试OpenMesh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在cmake中使用openmesh"><span class="nav-number">3.</span> <span class="nav-text">在Cmake中使用OpenMesh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OpenMesh库"><span class="nav-number">1.</span> <span class="nav-text">安装OpenMesh库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用Qt-Creator测试OpenMesh"><span class="nav-number">2.</span> <span class="nav-text">用Qt Creator测试OpenMesh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Cmake中使用OpenMesh"><span class="nav-number">3.</span> <span class="nav-text">在Cmake中使用OpenMesh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1203,7 +1198,7 @@
       }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
 .MathJax_Display {
