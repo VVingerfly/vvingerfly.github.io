@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Tips for Git]]></title>
+    <url>%2F2019%2F08-21-Tips4Git%2F</url>
+    <content type="text"><![CDATA[管理文件丢弃untracked文件12git clean -f # 删除 untracked filesgit clean -fd # 删除 untracked 文件和目录 在用上述git clean前，强烈建议==加上-n参数==来先看看会删掉哪些文件，防止重要文件被误删，即12git clean -nfgit clean -nfd 然后再执行删除命令。 丢弃工作区修改丢弃针对工作区文件的修改，使文件恢复到未修改前的状态 12git checkout -- &lt;file&gt; # restore &lt;file&gt;git checkout . # restore all files, 不包括untracked files 丢弃暂存区修改使用如下命令可以把暂存区的修改撤销掉（unstage file），重新放回工作区123git reset # unstage all the filesgit reset &lt;file&gt; # unstage file, 重置暂存区的指定文件，与上一次commit保持一致git reset HEAD &lt;file&gt; # unstage &lt;file&gt; only 删除远程仓库文件夹在更新本地.gitignore文件后，可能会忽略本地的某个文件夹，但此时该文件夹可能已经存在于远程仓库了，此时需要删除掉远程仓库中的对应文件夹 123git rm -r --cached some-directorygit commit -m "Remove the now ignored directory some-directory"git push origin master 版本回退12git reset --hard HEAD^ # 回退到上个版本git reset --hard commit_id # 退到/进到指定commit_id 更新/合并代码远程 -&gt; 本地克隆远程仓库到本地12git clone repo-url # Clone the repositorygit clone --recursive repo-url # Clone the repository with submodules 更新子模块：12git submodule update --init --recursivegit submodule update --recursive --remote 合并远程分支到本地1234(master)$ git fetch origin master:temp # 从远程origin仓库的master分支下载到本地并新建一个分支temp(master)$ git diff temp # 比较本地的仓库和远程仓库的区别(master)$ git merge temp # 合并temp分支到master分支(master)$ git branch -d temp # 如果不想要temp分支了，可以删除此分支 拉取远程分支到本地拉取远程分支到本地，并在本地创建分支12git checkout -b temp1 origin/temp2 # 拉取远程temp1分支到本地创建temp2分支，并切换到temp2分支git fetch origin temp1:temp2 # 拉取远程temp1分支到本地创建temp2分支 本地 -&gt; 远程推送本地分支到远程1(dev)$ git push origin dev:dev # 推送本地dev分支到远程dev分支 分支操作常用命令123456789git branch # 查看本地分支git branch -r # 查看远程分支git branch --all # 查看所有分支git branch [name] # 创建本地分支git checkout [name] # 切换到某分支git checkout -b [name] # 创建新分支并立即切换到该分支git branch -d [name] # 删除已有分支，-d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项git merge [name] # 合并分支，将名称为[name]的分支与当前分支合并git push origin [name] # 创建远程分支(本地分支push到远程) 创建分支在本地仓库创建分支1git checkout -b temp # 新建并切换到temp分支 如果想在本地仓库新建一个空白分支123git checkout --orphan tmep # 新建并切换到temp分支# 但此时分支中的文件处于staged，未commit的状态，需要清空indexgit reset --hard # 删除分支123git branch -d temp # 删除本地temp分支git branch -D temp # 强制删除本地temp分支git push origin --delete temp # 删除远程temp分支 本地仓库连接远程仓库123456cd existing_foldergit initgit remote add origin git@git.arcsoft.com.cn:arc3d/body_reshaping.gitgit add .git commit -m "Initial commit"git push -u origin master tag123456git tag #查看版本git tag [name] #创建版本 git tag -d [name] #删除版本git tag -r #查看远程版本git push origin [name] #创建远程版本(本地版本push到远程)git push origin :refs/tags/[name] #删除远程版本 gitignore更新.gitignore文件 123git rm -r --cached .git add -Agit commit -m "update .gitignore" submodule添加/更新子模块1234git submodule add [url] [path]# 如git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libsgit submodule init # 初始化子模块，只在首次检出仓库时运行一次就行git submodule update #更新子模块，每次更新或切换分支后都需要运行一下 删除子模块删除项目中的一个子模块分四步走：1) git rm --cached [path]2) 编辑“.gitmodules”文件，将子模块的相关配置节点删除掉3) 编辑“.git/config”文件，将子模块的相关配置节点删除掉4) 手动删除子模块残留的目录 其他命令12git statusgit ls-files # 查看git追踪的文件 Key Generate Key 1ssh-keygen -t rsa -C &quot;your.email@example.com&quot; -b 4096 然后提示Enter file in which to save the key，输入文件名（包括文件路径），如Windows系统一般是/c/Users/your_user_name/.ssh/id_rsa，按回车，提示Enter passphrase (empty for no passphrase):，直接回车，提示Enter same passphrase again:，再按回车，完成。 Add key 用文本编辑器打开/c/Users/your_user_name/.ssh/id_rsa，全选复制，再打开Gitlab网页端，点击右上角Setting, 点击左侧SSH Keys，粘贴， 点击Add Key，完成。]]></content>
+      <categories>
+        <category>tips</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[基于Hexo搭建个人博客网站]]></title>
     <url>%2F2019%2F02-18-Mis-HexoBlog%2F</url>
     <content type="text"><![CDATA[准备工作首先下载nodejs,一路next安装即可。验证是否安装成功：12node -v # 输出 v10.15.1npm -v # 输出 6.8.0 接下来更改npm的安装源，这能大大加快安装包的速度。123npm get registry # 输出默认源 https://registry.npmjs.org/npm config set registry http://registry.npm.taobao.orgnpm get registry # 输出 http://registry.npm.taobao.org/，说明已更改为淘宝源 再运行npm install hexo-cli -g。 如果出现permission error，不要急着用sudo npm install hexo-cli -g，运行命令sudo chown -R &#39;whoami&#39; /usr/local/lib/node_modules，&#39;whoami&#39;即你的用户名，通过whoami命令查看。然后再运行npm install hexo-cli -g。 验证是否安装成功，命令行输入node -v，输出hexo-cli等众多包即对应的版本则OK。 创建本地博文服务在本地新建你的博客文件夹如blog_hexo，进入该文件夹执行下列命令：123hexo initnpm installhexo server 此时访问http://localhost:4000就能打开博文了，Ctrl+C关闭服务器。 添加新页面如要添加tags页面，首先运行下面命令1hexo new page tags 这时会在sources/tags里面生成index.md的文件，打开这个文件编辑，添加type: tags，即12345---title: tagsdate: 2016-11-11 21:40:58type: tags--- 最后再在主题配置文件中，在menu项下，把tags页打开。1234menu: home: / || home archives: /archives/ || archive tags: /tags/ || tags emoji支持Hexo默认是采用hexo-renderer-marked，这个渲染器不支持插件扩展，还有一个支持插件扩展的是 hexo-renderer-markdown-it，可以使用这个渲染引擎来支持emoji表情，具体实现过程如下：首先进入blog跟目录，执行如下命令12npm un hexo-renderer-marked --savenpm i hexo-renderer-markdown-it --save 再安装emoji插件，执行如下命令1npm install markdown-it-emoji --save 最后再编辑站点配置文件，就是编辑根目录的_config.yml文件，添加如下内容1234567891011121314151617181920212223# Markdown-it config## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wikimarkdown: render: html: true xhtmlOut: false breaks: true linkify: true typographer: true quotes: '“”‘’' plugins: - markdown-it-abbr - markdown-it-footnote - markdown-it-ins - markdown-it-sub - markdown-it-sup - markdown-it-emoji # add emoji anchors: level: 2 collisionSuffix: 'v' permalink: true permalinkClass: header-anchor permalinkSymbol: ¶ 关联github首先在GitHub中新建username.github.io仓库，其中username为自己的用户名。再进入blog_hexo根目录，安装npm install hexo-deployer-git --save，然后打开根目录下的_config.yml，拉到最下面, 修改Deployment设置：123456# Deployment## Docs: http://hexo.io/docs/deployment.htmldeploy: type: git repository: https://github.com/username/username.github.io branch: master 再进入根目录执行如下命令123hexo cleanhexo generatehexo deploy 第一次上传可能会让你输入git的用户名和密码。如果成功，就可以打开http://username.github.io,username替换成自己用户名。 Hexo命令常用命令123hexo n '文章名' == hexo new '文章名' #新建文章hexo g == hexo generate #生成静态页hexo d == hexo deploy #部署发布 #可与hexo g合并为hexo d -g 服务器1234hexo s == hexo server # Hexo会监视文件变动并自动更新，您无须重启服务器。hexo s -s #静态模式hexo s -p 5000 #更改端口hexo s -i 192.168.1.1 #自定义 ip 模板123hexo n '文章名' #新建文章hexo n page '页面名' #新建页面hexo n photo '页面名' #新建photo页面 参考 Hexo awesome-hexo Hexo部署github博客 亲测Hexo+Github个人博客搭建 HEXO+Github,搭建属于自己的博客 搭建Hexo博客进阶篇—API和一些小部件（四） 使用hexo+github搭建免费个人博客详细教程]]></content>
@@ -19,6 +30,17 @@
       <categories>
         <category>tips</category>
       </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tips for TMUX]]></title>
+    <url>%2F2018%2F10-23-Tips4TMUX%2F</url>
+    <content type="text"><![CDATA[常用命令123456789101112131415161718tmux ls # 显示后台session列表tmux new -t [name] # 新建sessiontmux a -t [name] # 进入sessiontmux kill-session -t [name] # 关闭sessionprefix + $ # 重命名sessionprefix + s # 从当前session查看所有sessionprefix + d # 断开当前session连接prefix + c # 新建windowprefix + &amp; # 关闭当前windowprefix + , # 重命名当前windowprefix + " # 当前pane下侧新建paneprefix + % # 当前pane右侧新建paneprefix + x # 关闭当前paneprefix + 方向键 # 根据方向键切换panepredix + z # 进入或退出当前pane最大化 基本概念tmux采用C/S模型构建，输入tmux命令就相当于开启了一个服务器，此时默认将新建一个会话，然后会话中默认新建一个窗口，窗口中默认新建一个面板。会话、窗口、面板之间的联系如下： 一个tmux session（会话）可以包含多个window（窗口），窗口默认充满会话界面，因此这些窗口中可以运行相关性不大的任务。 一个window又可以包含多个pane（面板），窗口下的面板，都处于同一界面下，这些面板适合运行相关性高的任务，以便同时观察到它们的运行情况。 会话新建会话新建一个tmux session非常简单，语法为tmux new -s session-name，也可以简写为tmux，为了方便管理，建议指定会话名称，如下。 12tmux # 新建一个无名称的会话tmux new -s demo # 新建一个名称为demo的会话 断开当前会话会话中操作了一段时间，我希望断开会话同时下次还能接着用，怎么做？此时可以使用detach命令。 1tmux detach # 断开当前会话，会话在后台运行 也许你觉得这个太麻烦了，是的，tmux的会话中，我们已经可以使用tmux快捷键了。使用快捷键组合Ctrl+b + d，三次按键就可以断开当前会话。 进入之前的会话断开会话后，想要接着上次留下的现场继续工作，就要使用到tmux的attach命令了，语法为tmux attach-session -t session-name，可简写为tmux a -t session-name 或 tmux a。通常我们使用如下两种方式之一即可： 12tmux a # 默认进入第一个会话tmux a -t demo # 进入到名称为demo的会话 关闭会话会话的使命完成后，一定是要关闭的。我们可以使用tmux的kill命令，kill命令有kill-pane、kill-server、kill-session 和 kill-window共四种，其中kill-session的语法为tmux kill-session -t session-name。如下： 12tmux kill-session -t demo # 关闭demo会话tmux kill-server # 关闭服务器，所有的会话都将关闭 查看所有的会话管理会话的第一步就是要查看所有的会话，我们可以使用如下命令： 12tmux list-session # 查看所有会话tmux ls # 查看所有会话，提倡使用简写形式 如果刚好处于会话中怎么办？别担心，我们可以使用对应的tmux快捷键Ctrl+b + s，此时tmux将打开一个会话列表，按上下键(⬆︎⬇︎)或者鼠标滚轮，可选中目标会话，按左右键（⬅︎➜）可收起或展开会话的窗口，选中目标会话或窗口后，按回车键即可完成切换。 快捷指令关于快捷指令，首先要认识到的是：tmux的所有指令，都包含同一个前缀，默认为Ctrl+b，输入完前缀过后，控制台激活，命令按键才能生效。前面tmux会话相关的操作中，我们共用到了两个快捷键Ctrl+b + d、Ctrl+b + s，但这仅仅是冰山一角，欲窥tmux庞大的快捷键体系，请看下表。 系统指令 前缀 指令 描述 Ctrl+b ? 显示快捷键帮助文档 Ctrl+b d 断开当前会话 Ctrl+b D 选择要断开的会话 Ctrl+b Ctrl+z 挂起当前会话 Ctrl+b r 强制重载当前会话 Ctrl+b s 显示会话列表用于选择并切换 Ctrl+b : 进入命令行模式，此时可直接输入ls等命令 Ctrl+b [ 进入复制模式，按q退出 Ctrl+b ] 粘贴复制模式中复制的文本 Ctrl+b ~ 列出提示信息缓存 窗口（window）指令 前缀 指令 描述 Ctrl+b c 新建窗口 Ctrl+b &amp; 关闭当前窗口（关闭前需输入y or n确认） Ctrl+b 0~9 切换到指定窗口 Ctrl+b p 切换到上一窗口 Ctrl+b n 切换到下一窗口 Ctrl+b w 打开窗口列表，用于且切换窗口 Ctrl+b , 重命名当前窗口 Ctrl+b . 修改当前窗口编号（适用于窗口重新排序） Ctrl+b f 快速定位到窗口（输入关键字匹配窗口名称） 面板（pane）指令 前缀 指令 描述 Ctrl+b &quot; 当前面板上下一分为二，下侧新建面板 Ctrl+b % 当前面板左右一分为二，右侧新建面板 Ctrl+b x 关闭当前面板（关闭前需输入y or n确认） Ctrl+b z 最大化当前面板，再重复一次按键后恢复正常（v1.8版本新增） Ctrl+b ! 将当前面板移动到新的窗口打开（原窗口中存在两个及以上面板有效） Ctrl+b ; 切换到最后一次使用的面板 Ctrl+b q 显示面板编号，在编号消失前输入对应的数字可切换到相应的面板 Ctrl+b { 向前置换当前面板 Ctrl+b } 向后置换当前面板 Ctrl+b Ctrl+o 顺时针旋转当前窗口中的所有面板 Ctrl+b 方向键 移动光标切换面板 Ctrl+b o 选择下一面板 Ctrl+b 空格键 在自带的面板布局中循环切换 Ctrl+b Alt+方向键 以5个单元格为单位调整当前面板边缘 Ctrl+b Ctrl+方向键 以1个单元格为单位调整当前面板边缘（Mac下被系统快捷键覆盖） Ctrl+b t 显示时钟 参考 Tmux使用手册 Tmux 快捷键 &amp; 速查表 tmux shortcuts &amp; cheatsheet]]></content>
+      <categories>
+        <category>tips</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[机器学习中的数据标准化]]></title>
@@ -236,11 +258,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++函数中使用指针]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
-    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 使用指针做函数返回值1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如：12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; 使用指针做函数参数1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为&#39;a&#39;；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如：1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; 参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
+    <title><![CDATA[C++指针作为函数参数]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
+    <content type="text"><![CDATA[指针作为函数参数1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 参考 c++函数中new申请的内存是如何释放的？]]></content>
       <categories>
-        <category>repost</category>
+        <category>coding</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -248,11 +270,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[C++指针作为函数参数]]></title>
-    <url>%2F2018%2F04-14-Cpp-PointerWithinFunctions%2F</url>
-    <content type="text"><![CDATA[指针作为函数参数1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;using namespace std;int* test1(int* i)&#123; i = new int; *i = 1; return i;&#125;void test2(int* i)&#123; *i = 2;&#125;void test3(int* i)&#123; i = new int; *i = 3;&#125;void test4(int** i)&#123; *i = new int; **i = 4;&#125;void test5(int*&amp; i)&#123; i = new int; *i = 5;&#125;int main()&#123; int *a; a = test1(a); cout &lt;&lt; "test1: " &lt;&lt; *a &lt;&lt; endl; // 1 int *b; b = new int; test2(b); cout &lt;&lt; "test2: " &lt;&lt; *b &lt;&lt; endl; // 2 int *c; test3(c); cout &lt;&lt; "test3: " &lt;&lt; *c &lt;&lt; endl; // Error int *d; test4(&amp;d); cout &lt;&lt; "test4: " &lt;&lt; *d &lt;&lt; endl; // 4 int *e; test5(e); cout &lt;&lt; "test5: " &lt;&lt; *e &lt;&lt; endl; // 5&#125; C++在创建指针的时候，只分配存储地址的内存，并不会分配存储数据的内存，所以指针可能指向任何位置。 test1中，函数形参i只是实参a的拷贝，但在函数内部，我们为i重新分配了地址，然后为这个地址指向的位置赋值为1，然后将这个新分配的地址返回，即赋值给a，此时的a已经不是原来的a了。 test2中，我们首先为实参b分配了一个int内存，然后传入test2，形参i同样是是实参b的拷贝，在函数内部，为i指向的位置赋值2。 test3中，函数形参i只是实参c的一个拷贝，但在函数中，我们为i重新分配了一个int内存，此时i和c指向两个不同的地方，给这个新的位置赋值为3，跟*c没有什么关系。 参考 c++函数中new申请的内存是如何释放的？]]></content>
+    <title><![CDATA[C++函数中使用指针]]></title>
+    <url>%2F2018%2F04-14-Cpp-PointerAsFunctionParameters%2F</url>
+    <content type="text"><![CDATA[转载自c/c++使用指针做函数返回值和指针作函数参数问题 使用指针做函数返回值1、当使用指针做为函数的返回值时，主函数处的char *p;将获得调用函数char *pf;的值，即一个地址值，如oxAE72。此时需要我们注意的是该地址值所指向的空间是否存在(即已向操作系统声明注册，不会被释放，即可能被其他操作修改)； 2、使用栈内存返回指针是明显错误的，因为栈内存将在调用结束后自动释放，从而主函数使用该地址空间将很危险。 12345678910char* GetMemory()&#123; char p[] = "hi"; return p;&#125;void main()&#123; char *str = GetMemory(); //出错! 得到一块已释放的内存 printf(str);&#125; 3、使用堆内存返回指针是正确的，但是注意可能产生内存泄露问题，在使用完毕后主函数中释放该段内存。 例如：12345678910char* GetMemory()&#123; char *p = new char[100]; return p;&#125;void main()&#123; char *str = GetMemory(); delete [] str; //防止内存泄露!&#125; 使用指针做函数参数1、有的情况下我们可能需要需要在调用函数中分配内存，而在主函数中使用，而针对的指针此时为函数的参数。此时应注意形参与实参的问题，因为在C语言中，形参只是继承了实参的值，是另外一个量(ps:返回值也是同理，传递了一个地址值(指针)或实数值)，形参的改变并不能引起实参的改变。 2、直接使用形参分配内存的方式显然是错误的，因为实参的值并不会改变，如下则实参一直为NULL: 12345678910void GetMemory(char* p)&#123; char *p = new char[100];&#125;void main()&#123; char *str; GetMemory(str); strcpy(str, "hi"); // str = NULL&#125; 3、由于通过指针是可以传值的，因为此时该指针的地址是在主函数中申请的栈内存，我们通过指针对该栈内存进行操作，从而改变了实参的值。 1234567891011void Change(char *p)&#123; *p = 'b';&#125;void main()&#123; char a = 'a'; char* p = &amp;a; Change(p); printf("%c\n", a); //值a改变!&#125; 4、根据上述的启发，我们也可以采用指向指针的指针来进行在调用函数中申请，在主函数中应用。如下：假设a的地址为ox23，内容为&#39;a&#39;；而str的地址是ox46，内容为ox23；而pstr的地址是ox79，内容为ox46。 我们通过调用函数GetMemory，从而将pstr的内容赋给了p，此时p = ox46。通过对*p(ox23)的操作，即将内存地址为ox23之中的值改为char[100]的首地址，从而完成了对char* str地址的分配。 123456789101112void GetMemory(char** p)&#123; char *p = new char[100];&#125;void main()&#123; char a = 'a'; char* str = &amp;a; char** pstr = &amp;str; GetMemory(pstr); strcpy(str, "hi");&#125; 5、注意指针的释放问题，可能形成悬浮指针。 当我们释放掉一个指针p后，只是告诉操作系统该段内存可以被其他程序使用，而该指针p的地址值(如ox23)仍然存在。如果再次给这块地址赋值是危险的，应该将p指针置为NULL。 调用函数删除主函数中的内存块时，虽然可以通过地址传递直接删除，但由于无法对该指针赋值(形参不能传值)，可能造成悬浮指针，所以此时也应该采用指向指针的指针的形参。 例如：1234567891011void MemoryFree(char** p)&#123; delete *p; *p = NULL;&#125;void main()&#123; char *str = new char[100]; char *pstr = &amp;str; MemoryFree(pstr);&#125; 参考 c/c++使用指针做函数返回值和指针作函数参数问题]]></content>
       <categories>
-        <category>coding</category>
+        <category>repost</category>
         <category>cpp</category>
       </categories>
       <tags>
@@ -492,17 +514,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[macOS配置OpenMesh]]></title>
-    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
-    <content type="text"><![CDATA[安装OpenMesh库使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 用Qt Creator测试OpenMeshCreator的安装这里不再赘述，新建控制台项目，如test。在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 在Cmake中使用OpenMesh在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
-      <categories>
-        <category>tutorials</category>
-      </categories>
-      <tags>
-        <tag>openmesh</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Tips for Homebrew]]></title>
     <url>%2F2018%2F03-07-Mac-Tips4Homebrew%2F</url>
     <content type="text"><![CDATA[更新Homebrew要获取最新的包的列表，首先得更新Homebrew自己，这可以用brew update办到。1brew update 安装包安装包的命令如下：1brew install $FORMULA # 安装指定的包 可以在Homebrew Formulas搜索你需要安装的包。比如你要安装OpenMesh库，在该网页中输入OpenMesh点击搜索，会得到一个搜索结果，点击进去，可以看到安装命令如下：1brew install open-mesh 但通过brew install安装某些包提示找不到，可能已经废弃了，如ann，通过下面命令可以安装，参考这里.1brew install brewsci/science/ann 12brew unlink opencvbrew link --force opencv@3 卸载包1brew uninstall $FORMULA # 卸载指定的包 注意：卸载一个包不会同时卸载其依赖的包。 更新包通过下面命令可以查看所有可更新的包1brew outdated 然后就可以用brew upgrade去更新了。Homebrew会安装新版本的包，但旧版本仍然会保留。12brew upgrade # 更新所有的包brew upgrade $FORMULA # 更新指定的包 清理旧版本一般情况下，新版本安装了，旧版本就不需要了。可以用brew cleanup清理旧版本和缓存文件。Homebrew只会清除比当前安装的包更老的版本，所以不用担心有些包没更新但被删了。123brew cleanup # 清理所有包的旧版本brew cleanup $FORMULA # 清理指定包的旧版本brew cleanup -n # 查看可清理的旧版本包，不执行实际操作 锁定包如果经常更新的话，brew update一次更新所有的包是非常方便的。但有时候会担心自动升级把一些不希望更新的包更新了，这时可用brew pin去锁定这个包，然后brew update就会略过它了。12brew pin $FORMULA # 锁定某个包brew unpin $FORMULA # 取消锁定 查看包信息brew info可以查看包的相关信息，包括包依赖和相应的命令。12brew info $FORMULA # 显示某个包的信息brew info # 显示安装了包数量，文件数量，和总占用空间 brew deps可以显示包的依赖关系，可以用来查看已安装的包的依赖，然后判断哪些包是可以安全删除的。1brew deps --installed --tree # 查看已安装的包的依赖，树形显示 如输出的python依赖如下：1234567python├── gdbm├── openssl├── readline├── sqlite│ └── readline└── xz 查看包列表1brew list # 列出所有安装的包 brew list命令还有一些可选参数[--unbrewed][--versions [--multiple]] [--pinned][formulae] 如果给定[formulae]参数，将列出该包的所安装的文件，如果加上--verbose参数，将进一步列出该包所有子文件夹中的文件。 如果给定--unbrewed，list all files in the Homebrew prefix not installed by Homebrew. 如果给定--versions，显示所有包或者某个包([formulae]参数指定)的版本号，如果进一步给定—multiple参数，将只显示多版本安装的包。 如果给定--pinned参数，将现实所有或者某个包被pin的包。 安装其他仓库的包一般情况下我们安装的都是主仓库(Homebrew’s master repository)中的包，但有些包可能在其他仓库，如brewsci/science和homebrew/core。这时可以通过brew tap命令做到，比如：1brew tap brewsci/science 然后你就可以直接用brew install安装brewsci/science中的包：1brew install $FORMULA 参考 你应该定期更新Homebrew Keeping Your Homebrew Up to Date Homebrew-OpenMesh]]></content>
@@ -512,6 +523,17 @@
       <tags>
         <tag>macOS</tag>
         <tag>homebrew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[macOS配置OpenMesh]]></title>
+    <url>%2F2018%2F03-07-Mac-ConfigureOpenMesh%2F</url>
+    <content type="text"><![CDATA[安装OpenMesh库使用Homebrew安装，非常简单，一个命令搞定 1brew install open-mesh 安装后可能不知道库的具体位置，通过下面命令 1brew info open-mesh 可以查看库的信息，其中就包括了库的路径，我得到的是 1/usr/local/Cellar/open-mesh/6.3 用Qt Creator测试OpenMeshCreator的安装这里不再赘述，新建控制台项目，如test。在test.pro中添加保护目录和库文件 1234INCLUDEPATH += /usr/local/Cellar/open-mesh/6.3/includeLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.aLIBS += /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.a main函数中的代码如下： 12345678910111213141516171819202122232425262728293031#include &lt;QCoreApplication&gt;#include &lt;iostream&gt;#include &lt;string&gt;#include &lt;OpenMesh/Core/IO/MeshIO.hh&gt;#include &lt;OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh&gt;#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt;typedef OpenMesh::PolyMesh_ArrayKernelT&lt;&gt; MyMesh;int main(int argc, char *argv[])&#123; QCoreApplication a(argc, argv); OpenMesh::IO::_OBJReader_(); OpenMesh::IO::_OBJWriter_(); MyMesh mesh; std::string file = "bunny.obj"; if (!OpenMesh::IO::read_mesh(mesh, file)) &#123; std::cout &lt;&lt; "Failed to read mesh" &lt;&lt; std::endl; return a.exec(); &#125; if (!OpenMesh::IO::write_mesh(mesh, "out.obj")) &#123; std::cout &lt;&lt; "Failed to save mesh" &lt;&lt; std::endl; return a.exec(); &#125; return a.exec();&#125; 程序正确运行。 注意：一开始程序中没加 12#include &lt;OpenMesh/Core/IO/reader/OBJReader.hh&gt;#include &lt;OpenMesh/Core/IO/writer/OBJWriter.hh&gt; 和 12OpenMesh::IO::_OBJReader_();OpenMesh::IO::_OBJWriter_(); 运行时报错[OpenMesh::IO::_IOManager_] No reading modules available!，搜索这里发现需要加上面的内容。 在Cmake中使用OpenMesh在Cmake中使用OpenMesh，CmakeList.txt如下所示： 12345678910111213cmake_minimum_required(VERSION 3.9)project(testOpenMeshCMake)set(SOURCE_FILES main.cpp)set(CMAKE_CXX_STANDARD 11)add_executable(testOpenMeshCMake main.cpp)target_link_libraries (testOpenMeshCMake /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshTools.6.3.dylib /usr/local/Cellar/open-mesh/6.3/lib/libOpenMeshCore.6.3.dylib ) Reference OpenMesh — BrewFormulas - Homebrew Formulas [OpenMesh] A question about the Examples]]></content>
+      <categories>
+        <category>tutorials</category>
+      </categories>
+      <tags>
+        <tag>openmesh</tag>
       </tags>
   </entry>
   <entry>
@@ -538,18 +560,6 @@
       <tags>
         <tag>latex</tag>
         <tag>writing</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Useful Git Commands]]></title>
-    <url>%2F2018%2F01-06-Git-UsefulGitCommands%2F</url>
-    <content type="text"><![CDATA[查看git追踪的文件1git ls-files 更新gitignore文件123git rm -r --cached .git add -Agit commit -m &quot;update .gitignore&quot; 远程仓库相关命令检出仓库：$ git clone git://github.com/jquery/jquery.git 查看远程仓库：$ git remote -v 添加远程仓库：$ git remote add [name][url] 删除远程仓库：$ git remote rm [name] 拉取远程仓库：$ git pull [remoteName] [localBranchName] 推送远程仓库：$ git push [remoteName] [localBranchName] 移除远程仓库的文件夹123git rm -r --cached some-directorygit commit -m "Remove the now ignored directory some-directory"git push origin master 分支操作相关命令查看本地分支：$ git branch 查看远程分支：$ git branch -r 查看所有分支：$ git branch --all 创建本地分支：$ git branch [name] 切换到某分支：$ git checkout [name] 创建新分支并立即切换到该分支：$ git checkout -b [name] 删除已有分支：$ git branch -d [name] —— -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项 合并分支：$ git merge [name] ——将名称为[name]的分支与当前分支合并 创建远程分支(本地分支push到远程)：$ git push origin [name] 参考 Stackoverflow: Remove directory from remote repository after adding them to .gitignore git 常用命令]]></content>
-      <categories>
-        <category>tools</category>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -735,9 +745,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
-    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
-    <content type="text"><![CDATA[算法简介尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别，差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
+    <title><![CDATA[随机抽样一致算法]]></title>
+    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
+    <content type="text"><![CDATA[算法简介算法步骤Reference wikipedia：随机抽样一致算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv/cg</category>
@@ -747,9 +757,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[随机抽样一致算法]]></title>
-    <url>%2F2017%2F08-20-CV-RANSAC%2F</url>
-    <content type="text"><![CDATA[算法简介算法步骤Reference wikipedia：随机抽样一致算法]]></content>
+    <title><![CDATA[SIFT-尺度不变特征转换]]></title>
+    <url>%2F2017%2F08-20-CV-SIFT%2F</url>
+    <content type="text"><![CDATA[算法简介尺度不变特征转换(Scale-invariant feature transform 或 SIFT)是一种电脑视觉的算法用来侦测与描述影像中的局部性特征，它在空间尺度中寻找极值点，并提取出其位置、尺度、旋转不变量，此算法由 David Lowe 在1999年所发表，2004年完善总结。 Sift算法就是用不同尺度（标准差）的高斯函数对图像进行平滑，然后比较平滑后图像的差别，差别大的像素就是特征明显的点。 Sift（Scale Invariant Feature Transform）是一个很好的图像匹配算法，同时能处理亮度、平移、旋转、尺度的变化，利用特征点来提取特征描述符，最后在特征描述符之间寻找匹配。 算法步骤 构建尺度空间，检测极值点，获得尺度不变性 特征点过滤并进行精确定位，剔除不稳定的特征点 在特征点处提取特征描述符，为特征点分配方向值 生成特征描述子，利用特征描述符寻找匹配点 计算变换参数 Reference wikipedia：尺度不变特征转换 经典算法研究系列：九、图像特征提取与匹配之SIFT算法]]></content>
       <categories>
         <category>algorithm</category>
         <category>cv/cg</category>
@@ -807,18 +817,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[图像的变换]]></title>
-    <url>%2F2017%2F08-13-CV-ImageTransformation%2F</url>
-    <content type="text"><![CDATA[等距变换等距变换 (Isometric Transformation) 保持欧氏距离不变。等距变换就是对图像的旋转和平移。 变换矩阵 H_E = \left( \begin{matrix} R & t\\ 0^T & 1 \end{matrix} \right) =\left( \begin{matrix} \epsilon \cos \theta & -\sin \theta & t_x \\ \epsilon \sin \theta & \cos \theta & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $R$ 是单位旋转矩阵，$t$ 是平移向量，$\epsilon=\pm1$, 当$\epsilon=1$时保向，变换由旋转和平移组成，当$\epsilon=-1$时逆向，变换还包含一个镜像。 不变量：长度，角度，面积 自由度：3个自由度（1个旋转角+2个平移），至少需要2组点共4个方程求解。 相似变换相似变换（Similarity Transformation）是在等距变换的基础上加上一个缩放。等距变换就是对图像的旋转+平移+缩放。 变换矩阵 H_S = \left( \begin{matrix} s\cdot R & t\\ 0^T & 1 \end{matrix} \right) =\left( \begin{matrix} s \cos \theta & -s\sin \theta & t_x \\ s \sin \theta & s\cos \theta & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $R$ 是单位旋转矩阵，$t$ 是平移向量, $s$ 是缩放因子。 不变量：角度，长度的比例，面积的比例，平行线关系 自由度：4个自由度（1个旋转角+2个平移+1个缩放尺度），至少需要2组点4个方程求解. 仿射变换仿射变换（Affine Transformation）仿射变换就是对图像的旋转+平移+缩放+切变（shear），相比前两种变换图像的形状发生了改变，但是原图中的平行线仍然保持平行。 变换矩阵 H_A = \left( \begin{matrix} A & t\\ 0 & 1 \end{matrix} \right) =\left( \begin{matrix} a_{11} & a_{12} & t_x \\ a_{21} & a_{22} & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $A$ 是仿射矩阵，$t$ 是平移向量。 仿射变换的 $A$ 矩阵可以做SVD分解，即 A = UDV^T = (UV^T)(VDV^T) = R(\theta)R(-\phi)DR(\phi), \quad D=diag(\lambda_1, \lambda_2)所以仿射变换 $A$ 可以看成先旋转 $\phi$，再沿着 $x, y$ 方向按照比例 $\lambda_1, \lambda_2$ 进行缩放，然后再旋转 $-\phi$，最后旋转 $\theta$。 不变量：平行线关系，平行线长度的比例，面积的比例 自由度：6个自由度（2个旋转角+2个平移+2个缩放因子），至少需要3组点6个方程求解. 投影变换投影变换（Projective Transformation）又叫2D homographies，是把点从一个平面映射到另一个平面，如世界坐标系下的平面到相机的成像平面。投影变换就是对图像的旋转+平移+缩放+切变+射影，相比前三种变换图像的形变更为自由，原图中的平行线经过变换之后已经不在平行，而可能相交于一点，射影变换就是把理想点（平行直线在无穷远处相交）变换到图像上。 变换矩阵 H_P = \left( \begin{matrix} A & t\\ v^T & c \end{matrix} \right) =\left( \begin{matrix} h_{11} & h_{12} & h_{13} \\ h_{21} & h_{22} & h_{23} \\ h_{31} & h_{32} & h_{33} \end{matrix} \right)其中 $A$ 是仿射矩阵，$t$ 是平移向量，$v=(v_1, v_2)^T$，$c$ 是一个常数。 不变量：长度的交比（比例的比例） 自由度：8个自由度（2个旋转角+2个平移+2个缩放因子+2个无穷远的线），至少需要4组点8个方程求解. 对于理想点 $(x_1,x_2,0)^T$ 的映射: H_P = \left( \begin{matrix} A & t\\ v^T & c \end{matrix} \right) \left( \begin{matrix} x_1 \\ x_2 \\ 0 \end{matrix} \right) =\left( \begin{matrix} A(x_1,x_2)^T \\ v_1x_1+v_2x_2 \end{matrix} \right)所以对于仿射变换，$v=0$，所有的理想点仍然被映射到理想点，对于投影变换，$v\neq 0$，一些理想点被映射到无穷远处。 参考 图像的等距变换，相似变换，仿射变换，射影变换及其matlab实现 Geometrical Image Analysis, Spring 08 2D projective transformations]]></content>
-      <categories>
-        <category>algorithm</category>
-        <category>cv/cg</category>
-      </categories>
-      <tags>
-        <tag>cv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[贝叶斯角度看 L1 & L2 正则化]]></title>
     <url>%2F2017%2F08-13-ML-Regularization%2F</url>
     <content type="text"><![CDATA[贝叶斯角度看 L1 &amp; L2 正则化从贝叶斯的角度来看，正则化等价于对模型参数引入先验分布。其中, L1正则化对应于拉普拉斯分布， L2正则化对应于高斯分布。 频率学派 VS 贝叶斯学派频率学派(Frequentists)与贝叶斯学派(Bayesians)都基于样本数据做分析。其不同点主要在于对于 $X\sim F(x;\theta)$，概率学派将样本看作随机变量，而将 $\theta$ 看作常数，而贝叶斯学派将样本和 $\theta$ 均看作随机变量。概率学派的着眼点在样本空间，基本依托于大数定律和中心极限定理，其贵在于得到越多越好的样本，然后计算其频率来逼近该事件的真实概率。而贝叶斯学派的着眼点在参数空间，更加重视参数 $\theta$ 的分布，表现在对事件有一定的先验知识了解，然后再用似然度去修正之前的知识了解，如果当前的观测值越符合我们的先验知识，那么似然度就越大，得到的后验概率也就越大，反之亦然。 贝叶斯概率论假设观察者对某事件处于某个知识状态中（例如：有一个袋子里面装了红球和黑球，已知这个袋子里面是5黑5红的概率是0.8，是10黑5红的概率是0.2），之后观察者开始新的观测或实验（有放回抽取100次，得到80次黑的，20次红的）。经过中间的独立重复试验，观察者获得了一些新的观测结果，这些新的观测将以含有不确定性的逻辑推断的方式影响观察者原有的信念（即观测者一开始认为袋子里是5黑5红的可能性更大，但是经过了上面的事实之后，修正了原有的信念，认为是10黑5红可能性更大）。上面的例子用贝叶斯概率论的语言来描述，就是观察者持有某个前置信念（prior belief），通过观测获得统计证据（evidence），通过满足一定条件的逻辑一致推断得出的关于该陈述的「合理性」，从而得出后置信念（posterior belief）来最好的表征观测后的知识状态（state of knowledge）。 看似贝叶斯框架比较的完美，而且可以克服一些频率派困难（比如投骰子次数不多，那么计算的频率显然与真实的分布想去甚远，但是贝叶斯的先验知识可以缓和这种极端情况）。但是贝叶斯的先验知识没有具体、规则化的获得方法，每个人的先验知识都可能是不一样的，而不良的先验概率甚至会使得最终的估计偏离真实的值。对此，贝叶斯的先验知识最好是客观计算出来的，抑或者拿不准时候用弱信息甚至无信息的先验假设来尽可能避免这类问题。 Linear Regression最原始的 Linear Regression 模型如下这就导出了我们原始的 least-squares 损失函数，但这是在我们对参数 w 没有加入任何先验分布的情况下。在数据维度很高的情况下，我们的模型参数很多，模型复杂度高，容易发生过拟合。比如我们常说的 “small n, large p problem”。（我们一般用 n 表示数据点的个数，用 p 表示变量的个数 ，即数据维度。当 的时候，不做任何其他假设或者限制的话，学习问题基本上是没法进行的。因为如果用上所有变量的话， p 越大，通常会导致模型越复杂，但是反过来 n 又很小，于是就会出现很严重的 overfitting 问题。 这个时候，我们可以对参数 w 引入先验分布，降低模型复杂度。 Ridge Regression我们对参数 $w$ 引入协方差为 $\alpha$ 的零均值高斯先验。 看我们得到的参数，在零附近是不是很密集，老实说 ridge regression 并不具有产生稀疏解的能力，也就是说参数并不会真出现很多零。假设我们的预测结果与两个特征相关，L2正则倾向于综合两者的影响，给影响大的特征赋予高的权重；而L1正则倾向于选择影响较大的参数，而舍弃掉影响较小的那个。实际应用中 L2正则表现往往会优于 L1正则，但 L1正则会大大降低我们的计算量。 Typically ridge or $l2$ penalties are much better for minimizing prediction error rather than ℓ1 penalties. The reason for this is that when two predictors are highly correlated, ℓ1 regularizer will simply pick one of the two predictors. In contrast, the ℓ2 regularizer will keep both of them and jointly shrink the corresponding coefficients a little bit. Thus, while the ℓ1 penalty can certainly reduce overfitting, you may also experience a loss in predictive power. 那现在我们知道了，对参数引入 高斯先验 等价于L2正则化。 LASSO Elastic Net 总结正则化参数等价于对参数引入 先验分布，使得 模型复杂度 变小（缩小解空间），对于噪声以及 outliers 的鲁棒性增强（泛化能力）。整个最优化问题从贝叶斯观点来看是一种贝叶斯最大后验估计，其中 正则化项 对应后验估计中的 先验信息，损失函数对应后验估计中的似然函数，两者的乘积即对应贝叶斯最大后验估计的形式。 参考 知乎 Charles Xiao 知乎 bsdelf 统计学之边角料——频率派和贝叶斯派 贝叶斯角度看L1，L2正则化]]></content>
@@ -828,6 +826,18 @@
       </categories>
       <tags>
         <tag>ml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[图像的变换]]></title>
+    <url>%2F2017%2F08-13-CV-ImageTransformation%2F</url>
+    <content type="text"><![CDATA[等距变换等距变换 (Isometric Transformation) 保持欧氏距离不变。等距变换就是对图像的旋转和平移。 变换矩阵 H_E = \left( \begin{matrix} R & t\\ 0^T & 1 \end{matrix} \right) =\left( \begin{matrix} \epsilon \cos \theta & -\sin \theta & t_x \\ \epsilon \sin \theta & \cos \theta & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $R$ 是单位旋转矩阵，$t$ 是平移向量，$\epsilon=\pm1$, 当$\epsilon=1$时保向，变换由旋转和平移组成，当$\epsilon=-1$时逆向，变换还包含一个镜像。 不变量：长度，角度，面积 自由度：3个自由度（1个旋转角+2个平移），至少需要2组点共4个方程求解。 相似变换相似变换（Similarity Transformation）是在等距变换的基础上加上一个缩放。等距变换就是对图像的旋转+平移+缩放。 变换矩阵 H_S = \left( \begin{matrix} s\cdot R & t\\ 0^T & 1 \end{matrix} \right) =\left( \begin{matrix} s \cos \theta & -s\sin \theta & t_x \\ s \sin \theta & s\cos \theta & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $R$ 是单位旋转矩阵，$t$ 是平移向量, $s$ 是缩放因子。 不变量：角度，长度的比例，面积的比例，平行线关系 自由度：4个自由度（1个旋转角+2个平移+1个缩放尺度），至少需要2组点4个方程求解. 仿射变换仿射变换（Affine Transformation）仿射变换就是对图像的旋转+平移+缩放+切变（shear），相比前两种变换图像的形状发生了改变，但是原图中的平行线仍然保持平行。 变换矩阵 H_A = \left( \begin{matrix} A & t\\ 0 & 1 \end{matrix} \right) =\left( \begin{matrix} a_{11} & a_{12} & t_x \\ a_{21} & a_{22} & t_y \\ 0 & 0 & 1 \end{matrix} \right)其中 $A$ 是仿射矩阵，$t$ 是平移向量。 仿射变换的 $A$ 矩阵可以做SVD分解，即 A = UDV^T = (UV^T)(VDV^T) = R(\theta)R(-\phi)DR(\phi), \quad D=diag(\lambda_1, \lambda_2)所以仿射变换 $A$ 可以看成先旋转 $\phi$，再沿着 $x, y$ 方向按照比例 $\lambda_1, \lambda_2$ 进行缩放，然后再旋转 $-\phi$，最后旋转 $\theta$。 不变量：平行线关系，平行线长度的比例，面积的比例 自由度：6个自由度（2个旋转角+2个平移+2个缩放因子），至少需要3组点6个方程求解. 投影变换投影变换（Projective Transformation）又叫2D homographies，是把点从一个平面映射到另一个平面，如世界坐标系下的平面到相机的成像平面。投影变换就是对图像的旋转+平移+缩放+切变+射影，相比前三种变换图像的形变更为自由，原图中的平行线经过变换之后已经不在平行，而可能相交于一点，射影变换就是把理想点（平行直线在无穷远处相交）变换到图像上。 变换矩阵 H_P = \left( \begin{matrix} A & t\\ v^T & c \end{matrix} \right) =\left( \begin{matrix} h_{11} & h_{12} & h_{13} \\ h_{21} & h_{22} & h_{23} \\ h_{31} & h_{32} & h_{33} \end{matrix} \right)其中 $A$ 是仿射矩阵，$t$ 是平移向量，$v=(v_1, v_2)^T$，$c$ 是一个常数。 不变量：长度的交比（比例的比例） 自由度：8个自由度（2个旋转角+2个平移+2个缩放因子+2个无穷远的线），至少需要4组点8个方程求解. 对于理想点 $(x_1,x_2,0)^T$ 的映射: H_P = \left( \begin{matrix} A & t\\ v^T & c \end{matrix} \right) \left( \begin{matrix} x_1 \\ x_2 \\ 0 \end{matrix} \right) =\left( \begin{matrix} A(x_1,x_2)^T \\ v_1x_1+v_2x_2 \end{matrix} \right)所以对于仿射变换，$v=0$，所有的理想点仍然被映射到理想点，对于投影变换，$v\neq 0$，一些理想点被映射到无穷远处。 参考 图像的等距变换，相似变换，仿射变换，射影变换及其matlab实现 Geometrical Image Analysis, Spring 08 2D projective transformations]]></content>
+      <categories>
+        <category>algorithm</category>
+        <category>cv/cg</category>
+      </categories>
+      <tags>
+        <tag>cv</tag>
       </tags>
   </entry>
   <entry>
