@@ -599,8 +599,8 @@ s_x & 0 & 0 & 0 \\
 <script type="math/tex; mode=display">
 R_z(\alpha)=
 \begin{bmatrix}
-\cos\theta & \sin\theta & 0\\ 
--\sin\theta & \cos\theta & 0 \\ 
+\cos\theta & -\sin\theta & 0\\ 
+\sin\theta & \cos\theta & 0 \\ 
 0 & 0 & 1
 \end{bmatrix}</script><h4 id="俯仰角-pitch"><a href="#俯仰角-pitch" class="headerlink" title="俯仰角:  pitch"></a>俯仰角:  pitch</h4><p>俯仰角<code>pitch</code>是绕$y$轴逆时针旋转$\beta$，对应的旋转矩阵是</p>
 <script type="math/tex; mode=display">
@@ -614,8 +614,8 @@ R_y(\beta)=
 R_x(\gamma)=
 \begin{bmatrix}
 1 & 0 & 0 \\ 
-0 & \cos\theta & \sin\theta \\ 
-0 & -\sin\theta & \cos\theta
+0 & \cos\theta & -\sin\theta \\ 
+0 & \sin\theta & \cos\theta
 \end{bmatrix}</script><h4 id="刚体变换"><a href="#刚体变换" class="headerlink" title="刚体变换"></a>刚体变换</h4><p>这三个旋转矩阵合起来便可以表达一个刚体变换[[3]][Yaw, pitch, and roll rotations]</p>
 <script type="math/tex; mode=display">
 R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元数旋转"><a href="#四元数旋转" class="headerlink" title="四元数旋转"></a>四元数旋转</h3><h2 id="四元数、欧拉角、旋转矩阵的优点和缺点"><a href="#四元数、欧拉角、旋转矩阵的优点和缺点" class="headerlink" title="四元数、欧拉角、旋转矩阵的优点和缺点"></a>四元数、欧拉角、旋转矩阵的优点和缺点</h2><ul>
@@ -845,7 +845,7 @@ R(\alpha,\beta,\gamma)=R_z(\alpha)R_y(\beta)R_x(\gamma)</script><h3 id="四元�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">73</span>
+                    <span class="site-state-item-count">71</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
