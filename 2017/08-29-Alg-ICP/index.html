@@ -552,7 +552,7 @@ E_{two-plane}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right
 E_{symm-RN}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cdot\left(\mathrm{R} n_{p_i}+\mathrm{R}^{-1} n_{q_i}\right)\right]^{2}</script><p>另一种更简单但效果差不多的版本是</p>
 <script type="math/tex; mode=display">
 E_{symm}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cdot\left(n_{p_i}+n_{q_i}\right)\right]^{2}</script><p>将旋转拆分为两个相同的部分在进行目标函数线性化估计时会带来一些好处，因为在线性化时假设旋转角度很小，优化拆分的旋转即角度的一半使得近似误差更小。</p>
-<h2 id="Solve"><a href="#Solve" class="headerlink" title="Solve"></a>Solve</h2><p>ICP算法在极小化能量时通常都需要求解一个非线性最小二乘问题，但可以线性化，假设$\theta \approx 0$，则$\sin(\theta) \approx 0$，$\cos(\theta) \approx 1$，忽略二次项，可以得到一个线性的最小二乘问题，再用Gauss-Newton或者Levenberg-Marquardt算法求解。</p>
+<h2 id="Solve"><a href="#Solve" class="headerlink" title="Solve"></a>Solve</h2><p>ICP算法在极小化能量时通常都需要求解一个非线性最小二乘问题，但可以线性化，假设$\theta \approx 0$，则$\sin(\theta) \approx \theta$，$\cos(\theta) \approx 1$，忽略二次项，可以得到一个线性的最小二乘问题，再用Gauss-Newton或者Levenberg-Marquardt算法求解。</p>
 <h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><h2 id="Go-ICP"><a href="#Go-ICP" class="headerlink" title="Go-ICP"></a>Go-ICP</h2><p>Go-ICP即Globally optimal ICP，提出了在L2误差度量下欧式空间中匹配两组点云的全局最优算法。</p>
 <h3 id="Sparse-ICP"><a href="#Sparse-ICP" class="headerlink" title="Sparse ICP"></a>Sparse ICP</h3><h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><ul>
 <li>ICP: <a href="https://github.com/symao/libicp" target="_blank" rel="noopener">libicp</a>  <a href="https://github.com/Gregjksmith/Iterative-Closest-Point" target="_blank" rel="noopener">Iterative-Closest-Point</a>  <a href="https://github.com/yangjiaolong/Go-ICP" target="_blank" rel="noopener">Go-ICP</a></li>
@@ -992,7 +992,7 @@ E_{symm}=\sum_{i}\left[\left(\mathrm{R} p_{i}-\mathrm{R}^{-1} q_{i}+t\right) \cd
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
