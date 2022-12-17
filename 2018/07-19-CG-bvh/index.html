@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '3LK81CNDL7',
+      apiKey: '1e4db2b317be6f71728401d2f4ea1a24',
+      indexName: 'VVingerfly_hexo_blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="bvh骨骼动画文件格式介绍">
+<meta name="keywords" content="cg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bvh骨骼动画文件格式">
+<meta property="og:url" content="https://VVingerfly.github.io/2018/07-19-CG-bvh/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="bvh骨骼动画文件格式介绍">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-19T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bvh骨骼动画文件格式">
+<meta name="twitter:description" content="bvh骨骼动画文件格式介绍">
+
+
+
+
+
+
+  <link rel="canonical" href="https://VVingerfly.github.io/2018/07-19-CG-bvh/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>bvh骨骼动画文件格式 | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2018/07-19-CG-bvh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei LI">
+      <meta itemprop="description" content="好记性不如烂笔头">
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bvh骨骼动画文件格式
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-19 00:33:00" itemprop="dateCreated datePublished" datetime="2018-07-19T00:33:00+08:00">2018-07-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-19 08:00:00" itemprop="dateModified" datetime="2018-07-19T08:00:00+08:00">2018-07-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/repost/" itemprop="url" rel="index"><span itemprop="name">repost</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/repost/cv-cg/" itemprop="url" rel="index"><span itemprop="name">cv/cg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/07-19-CG-bvh/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/07-19-CG-bvh/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-description">bvh骨骼动画文件格式介绍</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h2><p>BVH是BioVision等设备<strong>对人体运动进行捕获后</strong>产生文件格式的文件扩展名。</p>
+<p>BVH文件<strong>包含角色的骨骼和肢体关节旋转数据</strong>。BVH 是一种通用的人体特征动画文件格式，广泛地被当今流行的各种动画制作软件支持，如3DMax。</p>
+<h2 id="文件格式"><a href="#文件格式" class="headerlink" title="文件格式"></a><strong>文件格式</strong></h2><h3 id="文件主要部分"><a href="#文件主要部分" class="headerlink" title="文件主要部分"></a><strong>文件主要部分</strong></h3><p><strong>骨架信息</strong> 和 <strong>数据块</strong></p>
+<ul>
+<li><strong>骨架信息</strong>：按照层次关系，定义了如<code>root</code>、<code>hip</code>、<code>leg</code>等位置和旋转分量，从而形成一个完整的骨架</li>
+<li><strong>数据块</strong>：对应上面的骨架各部位标出每帧的数据信息</li>
+</ul>
+<p>一个BVH文件包含两部分，<strong>头部部分</strong>和<strong>数据部分</strong>，<strong>头部部分</strong>描述了骨架的层次关系和初始姿势，<strong>数据部分</strong>包含了动作(motion)的数据.</p>
+<h3 id="文件示例"><a href="#文件示例" class="headerlink" title="文件示例"></a><strong>文件示例</strong></h3><p>可以参考<a href="http://research.cs.wisc.edu/graphics/Courses/cs-838-1999/Jeff/Example1.bvh" target="_blank" rel="noopener"><strong>文件示例</strong></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">HIERARCHY</span><br><span class="line">ROOT Hips</span><br><span class="line">&#123;</span><br><span class="line">    OFFSET  0.00    0.00    0.00</span><br><span class="line">    CHANNELS 6 Xposition Yposition Zposition Zrotation Xrotation Yrotation</span><br><span class="line">    JOINT Chest</span><br><span class="line">    &#123;</span><br><span class="line">        OFFSET   0.00    5.21    0.00</span><br><span class="line">        CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">        JOINT Neck</span><br><span class="line">        &#123;</span><br><span class="line">            OFFSET   0.00    18.65   0.00</span><br><span class="line">            CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">            JOINT Head</span><br><span class="line">            &#123;</span><br><span class="line">                OFFSET   0.00    5.45    0.00</span><br><span class="line">                CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                End Site </span><br><span class="line">                &#123;</span><br><span class="line">                    OFFSET   0.00    3.87    0.00</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        JOINT LeftCollar</span><br><span class="line">        &#123;</span><br><span class="line">            OFFSET   1.12    16.23   1.87</span><br><span class="line">            CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">            JOINT LeftUpArm</span><br><span class="line">            &#123;</span><br><span class="line">                OFFSET   5.54    0.00    0.00</span><br><span class="line">                CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                JOINT LeftLowArm</span><br><span class="line">                &#123;</span><br><span class="line">                    OFFSET   0.00   -11.96   0.00</span><br><span class="line">                    CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                    JOINT LeftHand</span><br><span class="line">                    &#123;</span><br><span class="line">                        OFFSET   0.00   -9.93    0.00</span><br><span class="line">                        CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                        End Site </span><br><span class="line">                        &#123;</span><br><span class="line">                            OFFSET   0.00   -7.00    0.00</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        JOINT RightCollar</span><br><span class="line">        &#123;</span><br><span class="line">            OFFSET  -1.12    16.23   1.87</span><br><span class="line">            CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">            JOINT RightUpArm</span><br><span class="line">            &#123;</span><br><span class="line">                OFFSET  -6.07    0.00    0.00</span><br><span class="line">                CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                JOINT RightLowArm</span><br><span class="line">                &#123;</span><br><span class="line">                    OFFSET   0.00   -11.82   0.00</span><br><span class="line">                    CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                    JOINT RightHand</span><br><span class="line">                    &#123;</span><br><span class="line">                        OFFSET   0.00   -10.65   0.00</span><br><span class="line">                        CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                        End Site </span><br><span class="line">                        &#123;</span><br><span class="line">                            OFFSET   0.00   -7.00    0.00</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    JOINT LeftUpLeg</span><br><span class="line">    &#123;</span><br><span class="line">        OFFSET   3.91    0.00    0.00</span><br><span class="line">        CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">        JOINT LeftLowLeg</span><br><span class="line">        &#123;</span><br><span class="line">            OFFSET   0.00   -18.34   0.00</span><br><span class="line">            CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">            JOINT LeftFoot</span><br><span class="line">            &#123;</span><br><span class="line">                OFFSET   0.00   -17.37   0.00</span><br><span class="line">                CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                End Site </span><br><span class="line">                &#123;</span><br><span class="line">                    OFFSET   0.00   -3.46    0.00</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    JOINT RightUpLeg</span><br><span class="line">    &#123;</span><br><span class="line">        OFFSET  -3.91    0.00    0.00</span><br><span class="line">        CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">        JOINT RightLowLeg</span><br><span class="line">        &#123;</span><br><span class="line">            OFFSET   0.00   -17.63   0.00</span><br><span class="line">            CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">            JOINT RightFoot</span><br><span class="line">            &#123;</span><br><span class="line">                OFFSET   0.00   -17.14   0.00</span><br><span class="line">                CHANNELS 3 Zrotation Xrotation Yrotation</span><br><span class="line">                End Site </span><br><span class="line">                &#123;</span><br><span class="line">                    OFFSET   0.00   -3.75    0.00</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">MOTION</span><br><span class="line">Frames：    2</span><br><span class="line">Frame Time： 0.033333</span><br><span class="line"> 8.03    35.01   88.36  -3.41    14.78  -164.35  13.09   40.30  -24.60   7.88    43.80   0.00   -3.61   -41.45   5.82    10.08   0.00    10.21   97.95  -23.53  -2.14   -101.86 -80.77  -98.91   0.69    0.03    0.00   -14.04   0.00   -10.50  -85.52  -13.72  -102.93  61.91  -61.18   65.18  -1.57    0.69    0.02    15.00   22.78  -5.92    14.93   49.99   6.60    0.00   -1.14    0.00   -16.58  -10.51  -3.11    15.38   52.66  -21.80   0.00   -23.95   0.00   </span><br><span class="line"> 7.81    35.10   86.47  -3.78    12.94  -166.97  12.64   42.57  -22.34   7.67    43.61   0.00   -4.23   -41.41   4.89    19.10   0.00    4.16    93.12  -9.69   -9.43    132.67 -81.86   136.80  0.70    0.37    0.00   -8.62    0.00   -21.82  -87.31  -27.57  -100.09  56.17  -61.56   58.72  -1.63    0.95    0.03    13.16   15.44  -3.56    7.97    59.29   4.97    0.00    1.64    0.00   -17.18  -10.02  -3.08    13.56   53.38  -18.07   0.00   -25.93   0.00</span><br></pre></td></tr></table></figure>
+<h3 id="头部部分"><a href="#头部部分" class="headerlink" title="头部部分"></a><strong>头部部分</strong></h3><ol>
+<li>头部部分开头包含”<strong>HIERARCHY</strong>“关键词</li>
+<li>接着一行开头为”<strong>ROOT”</strong>关键词，后面跟着root的名字.当然，一个root段(segment)之后，允许再定义另一个段，也可以定义为”ROOT”.原理上，BVH文件能够包含任何数量的骨架段.</li>
+<li>BVH文件的格式为递归的格式，层次结构的每一个segment包含了一些相关数据，该segment要递归定义它的子segment.</li>
+<li>关键词”<strong>ROOT</strong>“后以大括号开头，下行以tab填充，能够增加可读性.</li>
+<li>segment的第一个信息是<strong>该segment相对于父segment的偏移量(OFFSET)</strong>， 如果是根ROOT segment则偏移量OFFSET则通常为0，OFFSET指定了X，Y，Z方向上与父segment的偏移量，偏移量也指示用于绘制父segment的长度和方向.</li>
+<li>BVH文件中没有明确的信息能够描述一个segment该怎样画，通常通过从第一个segment的偏移量来定义父segment，典型的，只有ROOT和上部主体的segment将有多个子segment.</li>
+<li>接下来一是”<strong>CHANNEL</strong>“头部信息，后面跟着的数字表明channels的数目，后面的标签表明每一个channel的类型.</li>
+<li>一个BVH文件解析器必须跟踪channel的数目和channel的类型，在后面MOTION信息被解析的时候，这个顺序在解析每一行的MOTION数据的时候需要用到.这种格式规定很明显具有灵活性，能够允许segment拥有任何数目的channel，且能够按照任何顺序.</li>
+<li>channel旋转的次序是：Z X Y，</li>
+<li>接下来能看到”<strong>JOINT</strong>“和”<strong>END SITE</strong>“关键词，一个JOINT的定义和ROOT的定义是相同的，除了CHANNEL的数目不同，JOINT正是递归开始的地方，剩下部分对JOINT的解析和ROOT一样的.</li>
+<li>END SITE结束了递归，它的定义还包含了一些数据，它提供了前segment的长度，就像前面子segment提供了offset用于绘制父segment的长度和方向</li>
+<li>JOINT的结尾以右括号结束，BVH中，空间被定义成了右旋坐标系与Y轴作为世界矢量.</li>
+</ol>
+<h3 id="数据部分"><a href="#数据部分" class="headerlink" title="数据部分"></a><strong>数据部分</strong></h3><ol>
+<li>数据部分以<strong>MOTION</strong>开头，后面的数字表示了帧率，下一行<strong>Frame Time</strong>定义了采样频率</li>
+<li>文件剩余的部分包含了motion的数据，每一行是一个motion数据的样本， The numbers appear in the order of the channel specifications as the skeleton hierarchy was parsed.</li>
+</ol>
+<hr>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a><strong>关键词</strong></h2><ul>
+<li><code>HIERARCHY</code> ： 开头</li>
+<li><code>ROOT</code> ： 根关节</li>
+<li><code>JOINT</code> ： 根关节下的关节</li>
+<li><code>OFFSET</code> ： 子关节相对父关节的偏移，也可以表示对应父关节的长度和方向，当子关节不止一个时，采用第一个子关节的数据.</li>
+<li><code>CHANNELS</code> ： 给出了关于channel的个数和名称(ROOT总是拥有6个channels，而一般JOINT只有3个，较之ROOT缺少了XYZ的position信息，因为子关节只需要根据它相对于父关节的偏移就可以算出它在坐标系中的具体位置了)</li>
+</ul>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h2><ul>
+<li>rotation channel的顺序是：Zrotation Xrotation Yrotation</li>
+<li>BVH格式的运动采取的旋转方式比较特别<br>-<code>End Site</code> 表示终结递归，该关节的定义到此为止，可看作一个终端效应器</li>
+<li>数据块以 <code>MOTION</code> 关键字开始<br>-<code>Frames</code>： 定义帧数，<code>Frame Time</code>：定义数据采样速率－每帧的时间长度，如0.033333则表示BVH文件的一般采样速率，每秒30帧</li>
+<li>接下来的数据就是实际的运动数据，对应骨架信息的层次结构</li>
+<li>对于子关节来说，平移信息存储在骨架信息的OFFSET中，旋转信息则来自于MOTION部分；</li>
+<li>对于根结点来说，平移量是OFFSET和Motion section中定义的平移量之和。</li>
+<li>BVH不考虑Scale变换。</li>
+</ul>
+<hr>
+<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a><strong>数据</strong></h2><p>计算segment的位置，需要从局部的平移和旋转信息创建一个变换矩阵.对于任何joint，平移的信息将会是层次部分中定义的offset，旋转信息则从motion部分得到</p>
+<p>对于根ROOT，平移数据为offset的总和，而旋转的消息来自motion部分，BVH不需要考虑比例因子的计算.</p>
+<p>创建变换矩阵的直接方法是创建3个单独的旋转矩阵，每个矩阵对应每根轴 <code>vR = vYXZ</code></p>
+<hr>
+<h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a><strong>解析器</strong></h2><p>可以参考：<a href="http://blog.csdn.net/u012336923/article/details/50979894" target="_blank" rel="noopener">BVH java解析器</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a><strong>参考</strong></h2><ul>
+<li><a href="http://research.cs.wisc.edu/graphics/Courses/cs-838-1999/Jeff/BVH.html" target="_blank" rel="noopener">Biovision BVH</a></li>
+<li><a href="https://blog.csdn.net/u012336923/article/details/50972968" target="_blank" rel="noopener">BVH文件格式解析</a></li>
+<li><a href="https://omid.al/projects/PyMO.html" target="_blank" rel="noopener">PyMO-A library for using motion capture data for machine learning</a></li>
+</ul>
+<p>文章转载自 <a href="https://blog.csdn.net/u012336923/article/details/50972968" target="_blank" rel="noopener">BVH文件格式解析</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Wei LI WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Wei LI Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者:  </strong>Wei LI</li>
+  <li class="post-copyright-link">
+    <strong>本文链接: </strong>
+    
+    <a href="https://VVingerfly.github.io/2018/07-19-CG-bvh/" title="bvh骨骼动画文件格式">https://VVingerfly.github.io/2018/07-19-CG-bvh/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cg/" rel="tag"># cg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07-19-TF-Functions/" rel="next" title="Tensorflow Funstions for Tensor Operations">
+                <i class="fa fa-chevron-left"></i> Tensorflow Funstions for Tensor Operations
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07-19-ML-TensorFlowConv/" rel="prev" title="Convolutional Neural Network in TensorFlow">
+                Convolutional Neural Network in TensorFlow <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei LI">
+            
+              <p class="site-author-name" itemprop="name">Wei LI</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/VVingerfly" title="GitHub &rarr; https://github.com/VVingerfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:wei587me@163.com" title="E-Mail &rarr; mailto:wei587me@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件格式"><span class="nav-number">2.</span> <span class="nav-text">文件格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件主要部分"><span class="nav-number">2.1.</span> <span class="nav-text">文件主要部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件示例"><span class="nav-number">2.2.</span> <span class="nav-text">文件示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#头部部分"><span class="nav-number">2.3.</span> <span class="nav-text">头部部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据部分"><span class="nav-number">2.4.</span> <span class="nav-text">数据部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键词"><span class="nav-number">3.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据"><span class="nav-number">5.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析器"><span class="nav-number">6.</span> <span class="nav-text">解析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei LI</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://VVingerfly.github.io/2018/07-19-CG-bvh/";
+    this.page.identifier = "2018/07-19-CG-bvh/";
+    this.page.title = 'bvh骨骼动画文件格式';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.0"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
