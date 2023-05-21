@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '3LK81CNDL7',
+      apiKey: '1e4db2b317be6f71728401d2f4ea1a24',
+      indexName: 'VVingerfly_hexo_blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="OpenCV 和 PyTorch3D 相机投影的区别与转换">
+<meta name="keywords" content="cg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV 和 PyTorch3D 相机投影">
+<meta property="og:url" content="https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/index.html">
+<meta property="og:site_name" content="Wei&#39;s Blog">
+<meta property="og:description" content="OpenCV 和 PyTorch3D 相机投影的区别与转换">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://docs.opencv.org/3.4/pinhole_camera_model.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/669761/145090051-67b506d7-6d73-4826-a677-5873b7cb92ba.png">
+<meta property="og:updated_time" content="2023-05-21T16:05:27.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV 和 PyTorch3D 相机投影">
+<meta name="twitter:description" content="OpenCV 和 PyTorch3D 相机投影的区别与转换">
+<meta name="twitter:image" content="https://docs.opencv.org/3.4/pinhole_camera_model.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OpenCV 和 PyTorch3D 相机投影 | Wei's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wei's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei LI">
+      <meta itemprop="description" content="好记性不如烂笔头">
+      <meta itemprop="image" content="/images/avatar_heart.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wei's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenCV 和 PyTorch3D 相机投影
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2022-05-05 08:00:00" itemprop="dateCreated datePublished" datetime="2022-05-05T08:00:00+08:00">2022-05-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2023-05-22 00:05:27" itemprop="dateModified" datetime="2023-05-22T00:05:27+08:00">2023-05-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/" itemprop="url" rel="index"><span itemprop="name">coding</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2022/05-05-CG-opencv_pytorch3d_projection/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/05-05-CG-opencv_pytorch3d_projection/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-description">OpenCV 和 PyTorch3D 相机投影的区别与转换</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="OpenCV-和-PyTorch3D-相机投影"><a href="#OpenCV-和-PyTorch3D-相机投影" class="headerlink" title="OpenCV 和 PyTorch3D 相机投影"></a>OpenCV 和 PyTorch3D 相机投影</h1><p>OpenCV Pinhole Camera: <a href="https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html" target="_blank" rel="noopener">https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html</a></p>
+<p>Pytorch3D Camera: <a href="https://pytorch3d.org/docs/cameras" target="_blank" rel="noopener">https://pytorch3d.org/docs/cameras</a></p>
+<h2 id="OpenCV-坐标系"><a href="#OpenCV-坐标系" class="headerlink" title="OpenCV 坐标系"></a>OpenCV 坐标系</h2><p>OpenCV 的世界坐标系、相机坐标系都是右手系，+X 指向右侧，+Y 指向下方。<br>图像坐标系 +X 指向右侧，+Y 指向下方，原点在主点 (cx,cy)。</p>
+<p><img src="https://docs.opencv.org/3.4/pinhole_camera_model.png" alt="OpenCV Pinhole Camera Model"></p>
+<h2 id="Pytorch3D-坐标系"><a href="#Pytorch3D-坐标系" class="headerlink" title="Pytorch3D 坐标系"></a>Pytorch3D 坐标系</h2><p>Pytorch3D 的世界坐标系、相机坐标系、NDC 坐标系都是右手系，+X 指向左侧，+Y 指向上方。<br>屏幕坐标系 +X 指向右侧，+Y 指向下方，原点在左上方角落。</p>
+<p><img src="https://user-images.githubusercontent.com/669761/145090051-67b506d7-6d73-4826-a677-5873b7cb92ba.png" alt="Pytorch3D Coordinate Systems"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> pytorch3d.renderer <span class="keyword">import</span> PerspectiveCameras, camera_conversions</span><br><span class="line"></span><br><span class="line">_R = torch.eye(<span class="number">3</span>)[<span class="keyword">None</span>]  <span class="comment"># (1, 3, 3)</span></span><br><span class="line">_T = torch.zeros(<span class="number">1</span>, <span class="number">3</span>)   <span class="comment"># (1, 3)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">opencv_project</span><span class="params">(points, opencv_camera)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Project 3D points with OpenCV pinhole camera.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        points: Tensor of shape (P, 3) or (N, P, 3)</span></span><br><span class="line"><span class="string">        opencv_camera: Tensor of shape (3, 3) or (N, 3, 3)</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        new_points: projected 3D points with the same shape as the input</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    points_batch = points.clone()</span><br><span class="line">    <span class="keyword">if</span> points_batch.dim() != <span class="number">2</span> <span class="keyword">and</span> points_batch.dim() != <span class="number">3</span> <span class="keyword">and</span> points_batch.shape[<span class="number">-1</span>] != <span class="number">3</span>:</span><br><span class="line">        msg = <span class="string">"Expected points to have shape (P, 3) or (N, P, 3): got shape %r"</span></span><br><span class="line">        <span class="keyword">raise</span> ValueError(msg % repr(points.shape))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> points_batch.dim() == <span class="number">2</span>:</span><br><span class="line">        opencv_pix = opencv_camera.mm(points_batch.transpose(<span class="number">0</span>, <span class="number">1</span>))  <span class="comment"># (3,3)*(3,P) -&gt; (3,P)</span></span><br><span class="line">        opencv_pix = opencv_pix.transpose(<span class="number">0</span>, <span class="number">1</span>)  <span class="comment"># (3,P) -&gt; (P,3)</span></span><br><span class="line">    <span class="keyword">if</span> points_batch.dim() == <span class="number">3</span>:</span><br><span class="line">        N, P, _3 = points_batch.shape</span><br><span class="line">        <span class="keyword">if</span> opencv_camera.dim() == <span class="number">2</span>:</span><br><span class="line">            opencv_camera = torch.cat(N*[opencv_camera[<span class="keyword">None</span>]])</span><br><span class="line">        opencv_pix = opencv_camera.bmm(points_batch.transpose(<span class="number">1</span>, <span class="number">2</span>))  <span class="comment"># (N,3,3)*(N,3,P) -&gt; (N,3,P)</span></span><br><span class="line">        opencv_pix = opencv_pix.transpose(<span class="number">1</span>, <span class="number">2</span>)  <span class="comment"># (N,3,P) -&gt; (N,P,3)</span></span><br><span class="line">    opencv_pix[..., :<span class="number">2</span>] = opencv_pix[..., :<span class="number">2</span>] / opencv_pix[..., <span class="number">2</span>:]  <span class="comment"># divide z</span></span><br><span class="line">    opencv_pix[..., <span class="number">2</span>:] = <span class="number">1.0</span> / opencv_pix[..., <span class="number">2</span>:]  <span class="comment"># keep the same as Pytorch3D</span></span><br><span class="line">    <span class="keyword">return</span> opencv_pix</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">W, H = <span class="number">256</span>, <span class="number">256</span></span><br><span class="line">cx, cy = <span class="number">0.5</span> * W, <span class="number">0.5</span> * H</span><br><span class="line">f = <span class="number">1000</span></span><br><span class="line">cam_mat = torch.tensor([[f, <span class="number">0</span>, cx], [<span class="number">0</span>, f, cy], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]])  <span class="comment"># (3, 3)</span></span><br><span class="line"></span><br><span class="line">points = torch.tensor([[<span class="number">2.0</span>, <span class="number">1.0</span>, <span class="number">3.0</span>], [<span class="number">1.2</span>, <span class="number">3.2</span>, <span class="number">1.5</span>]])  <span class="comment"># (2, 3)</span></span><br><span class="line"><span class="comment"># points = torch.rand((2, 2, 3))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_projection</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'Input 3D points\n'</span>, points.shape)</span><br><span class="line"></span><br><span class="line">    ocvcam_pix = opencv_project(points, cam_mat)</span><br><span class="line">    print(<span class="string">'\nOpenCV projection\n'</span>, ocvcam_pix.shape, <span class="string">'\n'</span>, ocvcam_pix)</span><br><span class="line"></span><br><span class="line">    p3docv_cam = camera_conversions._cameras_from_opencv_projection(_R, _T, cam_mat[<span class="keyword">None</span>], torch.tensor([[W, H]]))</span><br><span class="line">    p3docv_pix = p3docv_cam.transform_points_screen(points)</span><br><span class="line">    print(<span class="string">'\nPytorch3D opencv projection\n'</span>, p3docv_pix.shape, <span class="string">'\n'</span>, p3docv_pix)</span><br><span class="line"></span><br><span class="line">    p3dpsp_cam = PerspectiveCameras(focal_length=f, principal_point=((cx, cy),), image_size=((W, H),), in_ndc=<span class="keyword">False</span>)</span><br><span class="line">    points_flipxy = points.clone()</span><br><span class="line">    points_flipxy[..., <span class="number">0</span>:<span class="number">2</span>] = -points_flipxy[..., <span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># Convert points from OpenCV (+X right, +Y down) to Pytorch3D (+X left, +Y up) camera space</span></span><br><span class="line">    p3dpsp_pix = p3dpsp_cam.transform_points_screen(points_flipxy)</span><br><span class="line">    print(<span class="string">'\nPytorch3D PerspectiveCameras projection\n'</span>, p3dpsp_pix.shape, <span class="string">'\n'</span>, p3dpsp_pix)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'\nCompare OpenCV projection and Pytorch3D opencv projection:'</span>, ocvcam_pix.allclose(p3docv_pix))</span><br><span class="line">    print(<span class="string">'Compare OpenCV projection and PerspectiveCameras projection:'</span>, ocvcam_pix.allclose(p3dpsp_pix))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">test_projection()</span><br></pre></td></tr></table></figure>
+<pre><code>Input 3D points
+ torch.Size([2, 3])
+
+OpenCV projection
+ torch.Size([2, 3]) 
+ tensor([[7.9467e+02, 4.6133e+02, 3.3333e-01],
+        [9.2800e+02, 2.2613e+03, 6.6667e-01]])
+
+Pytorch3D opencv projection
+ torch.Size([2, 3]) 
+ tensor([[7.9467e+02, 4.6133e+02, 3.3333e-01],
+        [9.2800e+02, 2.2613e+03, 6.6667e-01]])
+
+Pytorch3D PerspectiveCameras projection
+ torch.Size([2, 3]) 
+ tensor([[7.9467e+02, 4.6133e+02, 3.3333e-01],
+        [9.2800e+02, 2.2613e+03, 6.6667e-01]])
+
+Compare OpenCV projection and Pytorch3D opencv projection: True
+Compare OpenCV projection and PerspectiveCameras projection: True
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Wei LI WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Wei LI Alipay">
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者:  </strong>Wei LI</li>
+  <li class="post-copyright-link">
+    <strong>本文链接: </strong>
+    
+    <a href="https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/" title="OpenCV 和 PyTorch3D 相机投影">https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明:  </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cg/" rel="tag"># cg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05-03-CG-opencv_opengl_projection/" rel="next" title="OpenCV 和 OpenGL 相机投影">
+                <i class="fa fa-chevron-left"></i> OpenCV 和 OpenGL 相机投影
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/07-19-ML-FCN/" rel="prev" title="使用Eigen实现简单的全连接网络">
+                使用Eigen实现简单的全连接网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar_heart.JPG" alt="Wei LI">
+            
+              <p class="site-author-name" itemprop="name">Wei LI</p>
+              <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/VVingerfly" title="GitHub &rarr; https://github.com/VVingerfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:wei587me@163.com" title="E-Mail &rarr; mailto:wei587me@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenCV-和-PyTorch3D-相机投影"><span class="nav-number">1.</span> <span class="nav-text">OpenCV 和 PyTorch3D 相机投影</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV-坐标系"><span class="nav-number">1.1.</span> <span class="nav-text">OpenCV 坐标系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pytorch3D-坐标系"><span class="nav-number">1.2.</span> <span class="nav-text">Pytorch3D 坐标系</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei LI</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65448947";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+  <script id="dsq-count-scr" src="https://wei587.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://VVingerfly.github.io/2022/05-05-CG-opencv_pytorch3d_projection/";
+    this.page.identifier = "2022/05-05-CG-opencv_pytorch3d_projection/";
+    this.page.title = 'OpenCV 和 PyTorch3D 相机投影';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wei587.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.0"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
